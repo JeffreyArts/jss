@@ -1,0 +1,91 @@
+//
+//
+//	Lists
+//
+//	1. Justified List
+//	2. Horizontal List
+//	3. Vertical List
+//	4. Double List ( 2 columns )
+//	5. Quatro List ( 4 columns )
+//
+////////////////////////////////////////////////////////////////////////////
+
+
+.list-item {
+	display: inline-block;
+	margin: 0;
+}
+
+
+
+
+/**
+ * 1. Justified List
+ */
+.justified-list {
+	display: inline-block;
+	width: 100%;
+	text-align: justify;
+	margin: 0;
+	padding: 0;
+	&:after {
+	    content: "";
+	    display: inline-block;
+	    height: 0;
+	    width: 100%;
+	}
+}
+
+
+
+
+/**
+ * 2. Horizontal List
+ */
+.hor-list {
+	display: inline-block;
+	margin: 0;
+	padding: 0;
+}
+
+/**
+ * 3. Vertical List
+ */
+.vert-list, .vert-list-md {
+	display: inline-block;
+	margin: 0;
+	padding: 0;
+}
+.vert-list .list-item {
+	width: 100%;
+}
+
+
+
+/**
+ * 4. Double List
+ *
+ * Displays a list in 2 columns
+ */
+.double-list {
+	display: inline-block;
+	margin: 0;
+	padding: 0;
+}
+.double-list .list-item {
+	float: left;
+	width: 50%;
+	padding-right: 5px;
+}
+
+
+
+
+
+
+
+@media screen and (min-width: $md) {
+	.vert-list-md .list-item{
+		width: 100%;
+	}
+}

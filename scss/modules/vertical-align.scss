@@ -1,0 +1,17 @@
+// Vertical Align
+// ---------------------------------------
+// How to use:
+// <div class="va-container">
+//	 	<div class="va-cell">
+// 			<!-- ... -->
+// 		</div>
+// </div>
+﻿.va-container {
+	display: table;
+}
+
+.va-cell {
+	display: table-cell;
+	vertical-align: middle;
+	height: 100%;
+}

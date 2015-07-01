@@ -1,0 +1,19 @@
+{
+  "name": "JSS",
+  "version": "0.0.1",
+  "authors": [
+    "Jeffrey Arts <sjeffff@gmail.com>"
+  ],
+  "description": "Javascript CSS Framework",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap-sass": "~3.3.5"
+  }
+}

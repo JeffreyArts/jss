@@ -1,0 +1,64 @@
+// Font Definitions
+// ---------------------------------------------
+$font1: "Arimo";
+$font2: "Oswald";
+
+@import url(http://fonts.googleapis.com/css?family=Arimo:400,700|Oswald:400,700);
+
+
+// Color Definitrions
+// ---------------------------------------------
+$color1: #ff9f09;
+$color2: #28265a;
+
+$imageUrl:"../images/site";
+
+html, body {
+	padding: 0;
+	margin: 0;
+	min-height: 100%;
+	background-color: #fff;
+}
+
+
+// Bootstrap
+// ---------------------------------------------
+
+@import "./bootstrap";
+
+// Bootstrap breakpoint definitions
+$xxs: 319px;
+$xs: 480px;
+$sm: 768px;
+$md: 992px;
+$lg: 1200px;
+
+// Bootstrap extension
+@media screen and (max-width: $xs/2) {
+
+	.col-xxs-12 {
+		width: 100%;
+	}
+}
+
+
+
+// Import Less Files
+// ---------------------------------------------
+
+// Pages
+@import "./pages/home";
+
+// Layout
+@import "./layout/default";
+
+// Modules
+@import "./modules/lists";
+@import "./modules/inGrid";
+@import "./modules/vertical-align";
+@import "./modules/expand";
+
+// Styles
+@import "./styles/bg";
+@import "./styles/buttons";
+

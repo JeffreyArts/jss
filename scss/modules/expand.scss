@@ -1,0 +1,35 @@
+.isNinja {
+	display: none;
+}
+
+.expand--trigger {
+	cursor: pointer;
+}
+
+
+.expand--container {
+	float: left;
+	width: 100%;
+	margin-bottom: 15px;
+}
+
+.expand--container .expand__trigger {
+	border-bottom: 2px solid $color2;
+    font-size: 1.2em;
+    padding-bottom: 0.75em;
+
+	&:after {
+		color: $color1;
+		content: "+";
+		float: right;
+		font-size: 2em;
+		font-weight: bold;
+		margin-top: -0.3em;
+	}
+
+	&.active {
+		&:after {
+			content:"-";
+		}
+	}
+}

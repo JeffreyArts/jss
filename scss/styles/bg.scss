@@ -1,0 +1,25 @@
+
+.bg {
+	width: 100%;
+	height: 100%;
+}
+.bg-viewport {
+	width: 100vw;
+	height: 100vh;
+}
+
+
+.bg_visual__isFullscreen {
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+}
+
+.bg__isDark {
+    color: #fff;
+    background-color: #111;
+}
+
+.bg_visual--home {
+	background-image: url('#{$imageUrl}/home-visual.jpg');
+}

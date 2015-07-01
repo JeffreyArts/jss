@@ -1,0 +1,25 @@
+$buttonStyle: solid;
+
+
+.btn {
+    border-style: $buttonStyle;
+    outline:0;
+    text-decoration: none;
+}
+
+.btn-lg {
+    display: inline-block;
+    border-width: 1px;
+    font-size:1.2em;
+    padding:.5em;
+}
+
+.btn-primary {
+    border-color: #fff;
+    background-color: transparentize($color1,.2);
+    color: #fff;
+}
+.btn-default.btn-naked {
+    color: #fff;
+    background-color: transparentize(#fff,.8);
+}

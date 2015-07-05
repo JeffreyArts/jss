@@ -5,6 +5,7 @@
 
 var Expand = function(element) {
     var self = this;
+    this.moduleName = "expand";
 
     this.element    = element;
     this.moduleName = false;
@@ -52,7 +53,7 @@ var Expand = function(element) {
 
             if (selfClasses.indexOf("isClosed") > -1) {
                 self.removeStatus();
-                self.element.className = self.setStatus("open");
+                self.element.className = self.setState("open");
 
                 self.trigger.element.className = triggerClasses.replace(self.triggerClass,  "");
                 self.target.element.className = targetClasses.replace(self.targetClass,  "") + self.targetClass;
@@ -106,4 +107,4 @@ for (var i=0; i < allElements.length; i++) {
     }
 }
 
-console.log(test);
+console.log("test",test);

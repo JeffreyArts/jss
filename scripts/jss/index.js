@@ -3,7 +3,7 @@
 
 var Jss = function(element) {
     /*this.element    = element;
-    this.statusList = {
+    this.stateList = {
         hidden: "isNinja",
         active: "isActive",
         open: "isOpen",
@@ -11,12 +11,12 @@ var Jss = function(element) {
         hover: "isHover",
         click: "isClicked",
     };
-    this.status = undefined;*/
+    this.state = undefined;*/
 }
 
 Jss.prototype.element = undefined;
-Jss.prototype.status = undefined;
-Jss.prototype.actionsList = {
+Jss.prototype.state = undefined;
+Jss.prototype.actionList = {
     hover:      ['hover',    'mouseOver',   'onMouseOver'],
     click:      ['click',    'onClick'      ],
     focus:      ['focus',    'onFocus'      ],
@@ -24,7 +24,7 @@ Jss.prototype.actionsList = {
     mouseIn:    ['mouseIn',  'onMouseIn'    ],
     mouseOut:   ['mouseOut', 'onMouseOut'   ],
 };
-Jss.prototype.statusList = {
+Jss.prototype.stateList = {
     hidden: "isNinja",
     active: "isActive",
     open: "isOpen",
@@ -35,29 +35,41 @@ Jss.prototype.statusList = {
 
 
 
-Jss.prototype.setStatus = function(string) {
-    var element;
+Jss.prototype.setState = function(string) {
+    var element, verifiedState, state, className;
 
-    element = this.element;
-    if (typeof this.statusList[string.toLowerCase()] != "string") {
-        console.warning("`" + string.toLowerCase() + "` is not a possible status. Try one of these instead: ", this.statusList)
+    element         = this.element;
+    state           = string.toLowerCase();
+    verifiedState   = this.stateList[string.toLowerCase()];
+    className       = this.moduleName + "__" + state;
+
+    if (typeof verifiedState != "string") {
+        console.error("`" + verifiedState + "` is not a possible state. Try one of these instead: ", this.stateList)
+        return false;
     }
 
-    var currentClasses = element.className.split(" ");
-    console.log(currentClasses, string);
+    // This if statement prevents that the same state is being set twice or more
+    if (element.className.indexOf(className) <= 0) {
+        this.addClassName(className)
+        this.state = state;
+        this.removeState("all");
+    }
+    console.log(this.state);
 }
 
 
 
-Jss.prototype.removeStatus = function(string) {
-    var status;
+Jss.prototype.removeState = function(string) {
+    var classList;
+
+    classList = [this.moduleName];
+    if (typeof this.moduleAction != "undefined" && this.moduleAction.length >= 0) {
+        this.classList.push(this.moduleName + "--" + this.moduleAction)
+    }
 
     if (string == "all" || typeof string == "undefined") {
         this.removeClassName();
-        this.addClassName([
-            this.moduleName,
-            this.moduleName + "--" + this.moduleAction,
-        ]);
+        this.addClassName(classList);
     }
     console.log(this);
 }
@@ -68,35 +80,31 @@ Jss.prototype.removeClassName = function(data) {
     } else if(typeof data == "string") {
 
 
-        for (var index in this.statusList) {
-            status = this.statusList[index];
-            if (string == status) {
-                this.element.className.replace(this.moduleName + "--" + this.moduleAction + "__" + status,"");
-                this.element.className.replace(this.moduleName + "__" + status,"");
-                this.element.className.replace("__" + status,"");
+        for (var index in this.stateList) {
+            state = this.stateList[index];
+            if (string == state) {
+                this.element.className.replace(this.moduleName + "--" + this.moduleAction + "__" + state,"");
+                this.element.className.replace(this.moduleName + "__" + state,"");
+                this.element.className.replace("__" + state,"");
             }
         }
     }
 
 }
 Jss.prototype.addClassName = function(data) {
-    this.element.className = "[ ";
+    this.element.className += " ";
     if (typeof data == "string") {
         this.element.className += data;
     } else {
-        this.element.className = data.join(" ")
+        this.element.className += data.join(" ")
     }
-    this.element.className += " ]";
 }
 
 
 Jss.prototype.init = function(element, func) {
     var trigger;
-
     this.element = element;
-    this.className = element.className
-    this.moduleName = "expand";
-
+/*
     // Default classNames
     this.elementClass = [" " + this.moduleName + "__isOpen", " " + this.moduleName + "__isClosed"],
     this.triggerClass = " " + this.moduleName +"--trigger__isActive",
@@ -116,9 +124,30 @@ Jss.prototype.init = function(element, func) {
     this.element.className += this.elementClass[0];
     //this.trigger.element.className += this.triggerClass;
     //this.target.element.className  += this.targetClass;
-
+*/
     if (typeof func =="function") {
         func();
+    }
+}
+
+Jss.prototype.validateAction = function(request) {
+    var result;
+    for (var action in this.actionList) {
+        if (this.actionList[action].indexOf(request.toLowerCase()) > -1) {
+            result = action;
+            break;
+        }
+    }
+    return result;
+}
+
+Jss.prototype.addAction = function(request, funcAction) {
+    var action = this.validateAction(request)
+    switch (action) {
+        case "click":
+            element.addEventListener("click", funcAction);
+        break;
+
     }
 }
 

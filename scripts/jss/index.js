@@ -35,30 +35,32 @@ Jss.prototype.setState = function(string) {
     element         = this.element;
     state           = this.toCamelCase(string);
     className       = this.moduleName + "__is" + state;
-    //console.log(state);
-    // This if statement prevents that the same state is being set twice or more
-    if (element.className.indexOf(className) <= 0) {
-        this.addClassName(className)
-        this.state = state;
-        this.removeState("all");
+
+    // Check if this.state is an array, and make it one if not.
+    if (Array.isArray(this.state) == false ) {
+        this.state = [];
     }
-    this.addClassName(this.moduleName + "__is" + state);
+
+    // This if statement prevents that the same state is being set twice or more
+    if ( !this.hasState(string) ) {
+        this.addClassName(className)
+        this.state.push(state);
+    }
 }
 
 
 
-Jss.prototype.removeState = function(str) {
-    var classList;
-    var state = this.toCamelCase(str);
 
-    classList = [this.moduleName];
-    if (typeof this.moduleAction != "undefined" && this.moduleAction.length >= 0) {
-        this.classList.push(this.moduleName + "--" + this.moduleAction)
-    }
+Jss.prototype.removeState = function(str) {
+
+    var state      = this.toCamelCase(str);
+    var stateIndex = this.state.indexOf(state);
 
     if (str == "all" || typeof str == "undefined") {
         this.removeClassName("states");
     } else {
+        this.state.splice(stateIndex, 1);
+
         if (typeof this.moduleAction != "undefined" && this.moduleAction.length > -1) {
             this.removeClassName(this.moduleName + "" + this.moduleAction + "__is" + state);
         } else {
@@ -90,7 +92,7 @@ Jss.prototype.removeClassName = function(data) {
         this.element.className = classList.join(" ");
 
     } else if(typeof data == "string") {
-
+        console.log(data);
         this.element.className = this.element.className.replace(data,"");
     }
 }
@@ -106,7 +108,7 @@ Jss.prototype.addClassName = function(data) {
 }
 
 Jss.prototype.hasState = function(string) {
-    if (this.state.toLowerCase == string.toLowerCase) {
+    if (typeof this.state == "object" && this.state.indexOf(string) >= 0) {
         return true;
     } else {
         return false;
@@ -165,13 +167,14 @@ Jss.prototype.addAction = function(request, fn) {
     var action = self.validateAction(request)
 
     switch (action) {
+
         case "click":
             element.addEventListener("click", fn);
 
-            element.addEventListener("click", function(){self.setState("Clicked")} );
+            element.addEventListener("click", function(){self.setState("Clicked") } );
             window.addEventListener( "click", function(event) { if (event.target != self.element && self.hasState("Clicked")) {self.removeState("Clicked")} }  );
-
         break;
+
         case "hover":
             element.addEventListener("mouseover", fn , false);
 

@@ -2,6 +2,7 @@
 var Test = function(element) {
     var self = this;
     self.moduleName = "test";
+
     self.lightSwitch = false;
 
     self.init(element)
@@ -13,6 +14,9 @@ var Test = function(element) {
             self.setState("Open");
             self.lightSwitch = true;
         }
+    })
+    self.addAction('hover',function(){
+        console.log("Hoi");
     })
 }
 

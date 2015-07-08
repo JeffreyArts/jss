@@ -2,21 +2,12 @@
 
 
 var Jss = function(element) {
-    /*this.element    = element;
-    this.stateList = {
-        hidden: "isNinja",
-        active: "isActive",
-        open: "isOpen",
-        closed: "isClosed",
-        hover: "isHover",
-        click: "isClicked",
-    };
-    this.state = undefined;*/
 }
 
 Jss.prototype.element = undefined;
 Jss.prototype.state = undefined;
-Jss.prototype.actionList = {
+Jss.prototype.events = undefined;
+Jss.prototype.actions = {
     hover:      ['hover',    'mouseOver',   'onMouseOver'],
     click:      ['click',    'onClick'      ],
     focus:      ['focus',    'onFocus'      ],
@@ -24,15 +15,6 @@ Jss.prototype.actionList = {
     mouseIn:    ['mouseIn',  'onMouseIn'    ],
     mouseOut:   ['mouseOut', 'onMouseOut'   ],
 };
-Jss.prototype.stateList = {
-    hidden: "isNinja",
-    active: "isActive",
-    open: "isOpen",
-    closed: "isClosed",
-    hover: "isHover",
-    click: "isClicked",
-};
-
 
 Jss.prototype.toCamelCase = function(string) {
     var arr, res;
@@ -52,7 +34,7 @@ Jss.prototype.setState = function(string) {
 
     element         = this.element;
     state           = this.toCamelCase(string);
-    className       = this.moduleName + "__is" + this.stateList[state];
+    className       = this.moduleName + "__is" + state;
     //console.log(state);
     // This if statement prevents that the same state is being set twice or more
     if (element.className.indexOf(className) <= 0) {
@@ -65,36 +47,39 @@ Jss.prototype.setState = function(string) {
 
 
 
-Jss.prototype.removeState = function(string) {
+Jss.prototype.removeState = function(str) {
     var classList;
+    var state = this.toCamelCase(str);
 
     classList = [this.moduleName];
     if (typeof this.moduleAction != "undefined" && this.moduleAction.length >= 0) {
         this.classList.push(this.moduleName + "--" + this.moduleAction)
     }
 
-    if (string == "all" || typeof string == "undefined") {
+    if (str == "all" || typeof str == "undefined") {
         this.removeClassName("states");
     } else {
-        if (this.moduleAction.length > -1) {
-            this.removeClassName(this.moduleName + "__is" + string);
+        if (typeof this.moduleAction != "undefined" && this.moduleAction.length > -1) {
+            this.removeClassName(this.moduleName + "" + this.moduleAction + "__is" + state);
         } else {
-            this.removeClassName(this.moduleName + "__is" + string);
+            this.removeClassName(this.moduleName + "__is" + state);
         }
     }
 }
 
 Jss.prototype.removeClassName = function(data) {
-    var classList;
-    classList = [];
 
+    var classList  = [];
 
-    if (typeof this.moduleAction != "undefined" && this.moduleAction.length >= 0) {
-    }
+    // if (typeof this.moduleAction != "undefined" && this.moduleAction.length >= 0) {
+    // }
 
     if (data == "all" || typeof data == "undefined") {
+
         this.element.className = "";
+
     } else if (data == "states" || data == "allStates") {
+
         classList = this.element.className.split(" ");
         for (var i in classList) {
             className = classList[i];
@@ -103,27 +88,28 @@ Jss.prototype.removeClassName = function(data) {
             }
         }
         this.element.className = classList.join(" ");
-        console.log(classList.join(" "));
+
     } else if(typeof data == "string") {
 
-
-        for (var index in this.stateList) {
-            state = this.stateList[index];
-            if (string == state) {
-                this.element.className.replace(this.moduleName + "--" + this.moduleAction + "__" + state,"");
-                this.element.className.replace(this.moduleName + "__" + state,"");
-                this.element.className.replace("__" + state,"");
-            }
-        }
+        this.element.className = this.element.className.replace(data,"");
     }
-
 }
+
+
 Jss.prototype.addClassName = function(data) {
     this.element.className += " ";
     if (typeof data == "string") {
         this.element.className += data;
     } else {
         this.element.className += data.join(" ")
+    }
+}
+
+Jss.prototype.hasState = function(string) {
+    if (this.state.toLowerCase == string.toLowerCase) {
+        return true;
+    } else {
+        return false;
     }
 }
 
@@ -159,23 +145,42 @@ Jss.prototype.init = function(element, func) {
 
 Jss.prototype.validateAction = function(request) {
     var result;
-    for (var action in this.actionList) {
-        if (this.actionList[action].indexOf(request.toLowerCase()) > -1) {
+    for (var action in this.actions) {
+        if (this.actions[action].indexOf(request.toLowerCase()) > -1) {
             result = action;
             break;
         }
     }
-    return result;
+    if (result) {
+        return result;
+    } else {
+        console.error("validateAction: unknown request", request);
+        return false;
+    }
 }
 
-Jss.prototype.addAction = function(request, funcAction) {
-    var action = this.validateAction(request)
+Jss.prototype.addAction = function(request, fn) {
+
+    var self = this;
+    var action = self.validateAction(request)
+
     switch (action) {
         case "click":
-            element.addEventListener("click", funcAction);
-        break;
+            element.addEventListener("click", fn);
 
+            element.addEventListener("click", function(){self.setState("Clicked")} );
+            window.addEventListener( "click", function(event) { if (event.target != self.element && self.hasState("Clicked")) {self.removeState("Clicked")} }  );
+
+        break;
+        case "hover":
+            element.addEventListener("mouseover", fn , false);
+
+            element.addEventListener("mouseover", function(){self.setState("Hover")} );
+            element.addEventListener("mouseout",  function(){self.removeState("Hover")} );
+        break;
     }
+
+    return false;
 }
 
 Jss.prototype.findActions = function() {

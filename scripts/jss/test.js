@@ -7,10 +7,10 @@ var Test = function(element) {
     self.init(element)
     self.addAction('click',function(){
         if (self.lightSwitch) {
-            self.setState("closed");
+            self.setState("Closed");
             self.lightSwitch = false;
         } else {
-            self.setState("open");
+            self.setState("Open");
             self.lightSwitch = true;
         }
     })

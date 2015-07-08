@@ -34,27 +34,33 @@ Jss.prototype.stateList = {
 };
 
 
+Jss.prototype.toCamelCase = function(string) {
+    var arr, res;
+    res = "";
+    arr = string.split(" ");
+    var i = 0;
+    for (var i in arr) {
+        if (typeof i != "undefined") {
+            res += arr[i][0].toUpperCase()+ arr[i].slice(1); // Capitalize first letter
+        }
+    }
+    return res;
+}
 
 Jss.prototype.setState = function(string) {
     var element, verifiedState, state, className;
 
     element         = this.element;
-    state           = string.toLowerCase();
-    verifiedState   = this.stateList[string.toLowerCase()];
-    className       = this.moduleName + "__" + state;
-
-    if (typeof verifiedState != "string") {
-        console.error("`" + verifiedState + "` is not a possible state. Try one of these instead: ", this.stateList)
-        return false;
-    }
-
+    state           = this.toCamelCase(string);
+    className       = this.moduleName + "__is" + this.stateList[state];
+    //console.log(state);
     // This if statement prevents that the same state is being set twice or more
     if (element.className.indexOf(className) <= 0) {
         this.addClassName(className)
         this.state = state;
         this.removeState("all");
     }
-    console.log(this.state);
+    this.addClassName(this.moduleName + "__is" + state);
 }
 
 
@@ -68,15 +74,36 @@ Jss.prototype.removeState = function(string) {
     }
 
     if (string == "all" || typeof string == "undefined") {
-        this.removeClassName();
-        this.addClassName(classList);
+        this.removeClassName("states");
+    } else {
+        if (this.moduleAction.length > -1) {
+            this.removeClassName(this.moduleName + "__is" + string);
+        } else {
+            this.removeClassName(this.moduleName + "__is" + string);
+        }
     }
-    console.log(this);
 }
 
 Jss.prototype.removeClassName = function(data) {
+    var classList;
+    classList = [];
+
+
+    if (typeof this.moduleAction != "undefined" && this.moduleAction.length >= 0) {
+    }
+
     if (data == "all" || typeof data == "undefined") {
         this.element.className = "";
+    } else if (data == "states" || data == "allStates") {
+        classList = this.element.className.split(" ");
+        for (var i in classList) {
+            className = classList[i];
+            if (className.indexOf("__is") > -1) {
+                delete classList[i];
+            }
+        }
+        this.element.className = classList.join(" ");
+        console.log(classList.join(" "));
     } else if(typeof data == "string") {
 
 

@@ -14,5 +14,13 @@
     "Arts"
   ],
   "author": "Jeffrey Arts",
-  "license": "ISC"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jeffreyarts/jss.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jeffreyarts/jss/issues"
+  },
+  "homepage": "https://github.com/jeffreyarts/jss"
 }

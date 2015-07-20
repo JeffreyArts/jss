@@ -3,7 +3,16 @@ var sass = require('gulp-sass');
 var concat = require('gulp-concat');
 
 var sassLocation = './scss/*.scss';
-var jsLocation = './scripts/jss/*.js';
+var jssPrefix     = './scripts/jss/';
+var jsLocation   = [
+    jssPrefix + 'core.index.js',
+    jssPrefix + 'core.classNames.js',
+    jssPrefix + 'core.states.js',
+    jssPrefix + 'core.triggers.js',
+    jssPrefix + 'core.modules.js',
+    jssPrefix + 'module.test.js',
+    jssPrefix + 'module.expand.js',
+];
 gulp.task('styles', function() {
     gulp.src(sassLocation)
         .pipe( sass({errLogToConsole: true}) )
@@ -14,6 +23,7 @@ gulp.task('styles', function() {
 gulp.task('sass',function() {
     gulp.watch('./scss/*.scss',['styles']);
     gulp.watch('./scss/*/*.scss',['styles']);
+    gulp.watch(jsLocation,['build:js']);
 });
 
 gulp.task('build:js', function(){

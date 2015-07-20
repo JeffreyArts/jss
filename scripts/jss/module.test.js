@@ -2,12 +2,12 @@
 var Test = function(element) {
     var self = this;
     self.moduleName = "test";
-    self.init(element)
+    //self.init(function(){ /*...*/ })
 
 
     self.lightSwitch = false;
 
-    self.addAction('click',function(){
+    /*self.addAction('click',function(){
 
         if (self.lightSwitch) {
             self.setState("Closed");
@@ -21,7 +21,7 @@ var Test = function(element) {
     })
     self.addAction('hover',function(){
 
-    })
+    })*/
 }
 
-Test.prototype = Object.create(Jss.prototype);
+Test.prototype = Object.create(JssModule.prototype);

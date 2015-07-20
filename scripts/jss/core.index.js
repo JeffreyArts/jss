@@ -1,12 +1,16 @@
 'use strict'
 
+/*
+    Modules & Triggers extend the default JSS class
+ */
 
-var Jss = function(element) {
-}
+
+var Jss = function(element) {};
 
 Jss.prototype.element = undefined;
 Jss.prototype.state = undefined;
 Jss.prototype.events = undefined;
+
 Jss.prototype.actions = {
     hover:      ['hover',    'mouseOver',   'onMouseOver'],
     click:      ['click',    'onClick'      ],
@@ -15,6 +19,12 @@ Jss.prototype.actions = {
     mouseIn:    ['mouseIn',  'onMouseIn'    ],
     mouseOut:   ['mouseOut', 'onMouseOut'   ],
 };
+
+Jss.prototype.modules = []; // Result array with objects of all the found modules
+Jss.prototype.activeModules = [
+    "expand",
+    "test",
+];
 
 Jss.prototype.toCamelCase = function(string) {
     var arr, res;
@@ -30,29 +40,29 @@ Jss.prototype.toCamelCase = function(string) {
 }
 
 
-Jss.prototype.init = function(element, func) {
-    var trigger;
-    this.element = element;
+Jss.prototype.init = function(func) {
+    // var trigger;
+    // this.triggers = [];
+    //
+    // if (this.triggers.length > -1) {
+    //     for (var i = 0; i < this.triggers.length; i++) {
+    //         trigger = this.triggers[i];
+    //         if (typeof this[trigger.name] == "object") {
+    //             this[trigger.name].init(trigger.element);
+    //         }
+    //     }
+    // }
 
-    this.triggers = this.findActions();
-
-    if (this.triggers.length > -1) {
-        for (var i = 0; i < this.triggers.length; i++) {
-            trigger = this.triggers[i];
-            if (typeof this[trigger.name] == "object") {
-                this[trigger.name].init(trigger.element);
-            }
-        }
-    }
-/*
-        console.log(typeof(func));
-    this.element.className += this.elementClass[0];
-    //this.trigger.element.className += this.triggerClass;
-    //this.target.element.className  += this.targetClass;
-*/
     if (typeof func =="function") {
         func();
     }
+}
+
+Jss.prototype.setElement = function(element) {
+    if (typeof element == "undefined") {
+        return console.error("First parameter of setElement needs to be a domElement");
+    }
+    this.element = element;
 }
 
 Jss.prototype.validateAction = function(request) {
@@ -75,7 +85,8 @@ Jss.prototype.addAction = function(request, fn) {
 
     var self = this;
     var action = self.validateAction(request)
-
+    var element = self.element;
+    console.log(self);
     switch (action) {
 
         case "click":
@@ -96,7 +107,11 @@ Jss.prototype.addAction = function(request, fn) {
     return false;
 }
 
-Jss.prototype.findActions = function() {
+Jss.prototype.findTriggers = function(element) {
+    if (typeof element == "undefined") {
+        element = this.element;
+    }
+    //console.log(element);
     var res = [];
     var elementTriggers = element.getElementsByTagName("*");
     if (elementTriggers.length > -1) {
@@ -109,16 +124,73 @@ Jss.prototype.findActions = function() {
                     for (var ii in tmp) {
                         var className = tmp[ii];
                         if (className.indexOf(this.moduleName + "--") > -1) {
-                            res.push({
-                                name: className.replace(this.moduleName + "--",""),
-                                element: triggerElement
-                            })
+                            var triggerName = className.replace(this.moduleName + "--", "");
+                            this[triggerName] = new JssModule();
                         }
                     }
                 }
             }
         }
     }
-
     return res;
 }
+
+Jss.prototype.findModules = function() {
+    var allElements = document.getElementsByTagName("*");
+    var test = [];
+    var self = this;
+    for (var i=0; i < allElements.length; i++) {
+        // Do something with the element here
+        var element = allElements[i];
+        var tmp = false;
+
+        this.activeModules.forEach(function(module){
+            if (element.className.indexOf(module)        > -1 &&
+                element.className.indexOf(module + "_") == -1 &&
+                element.className.indexOf(module + "-") == -1)
+            {
+                switch (module) {
+                    case 'expand':
+                        tmp = new Expand(element);
+                    break;
+
+                    case 'test':
+                        console.log(element, "module found");
+                        tmp = new Test(element);
+                    break;
+                }
+                console.log(typeof tmp.setElement,typeof self.setElement);
+                console.log(typeof tmp.addAction,typeof self.addAction);
+
+                //tmp.setElement(element);
+                //tmp.findTriggers();
+                //tmp.init();
+
+                self.modules.push(tmp);
+            }
+
+        });
+        /*if (classNames.length > -1) {
+            for (var ii in classNames) {
+                var className = classNames[ii];
+                if (jssModules.indexOf(className) > -1) {
+                    // Create object
+                    switch (className) {
+                        case 'expand':
+                            tmp = new Expand(element);
+                            tmp.init(element);
+                            test.push(tmp);
+                        break;
+
+                        case 'test':
+                            tmp = new Test(element);
+                            tmp.init(element);
+                            test.push(tmp);
+                        break;
+                    }
+                }
+            }
+        }*/
+    }
+}
+

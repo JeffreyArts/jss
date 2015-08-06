@@ -4,8 +4,23 @@
 
 
 var Expand = function(element) {
+
+    //¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+    //  Module defaults
+    // _________________________________________
+
     var self = this;
     self.moduleName = "expand";
+    self.setElement(element);
+    self.init(function(){
+        console.log("Expand module added");
+    })
+
+
+
+    //¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+    //  Module customs
+    // _________________________________________
 
     /*self.init(function(){
         console.log(self.trigger, self);

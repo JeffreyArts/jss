@@ -7,9 +7,8 @@
 
 var Jss = function(element) {};
 
-Jss.prototype.element = undefined;
-Jss.prototype.state = undefined;
-Jss.prototype.events = undefined;
+Jss.prototype.element = undefined;                                              // {obj} domElement
+Jss.prototype.state = undefined;                                                // {str} State of module, is reflected by the css class __isState
 
 Jss.prototype.actions = {
     hover:      ['hover',    'mouseOver',   'onMouseOver'],
@@ -65,6 +64,11 @@ Jss.prototype.setElement = function(element) {
     this.element = element;
 }
 
+/**
+ * Checks if parameter is a valid action, and logs an error when not.
+ *
+ * Returns Boolean
+ */
 Jss.prototype.validateAction = function(request) {
     var result;
     for (var action in this.actions) {
@@ -80,13 +84,15 @@ Jss.prototype.validateAction = function(request) {
         return false;
     }
 }
-
+/**
+ * Adds an action to the object, list of possible actions can be found in Jss.actions
+ */
 Jss.prototype.addAction = function(request, fn) {
 
     var self = this;
     var action = self.validateAction(request)
     var element = self.element;
-    console.log(self);
+
     switch (action) {
 
         case "click":
@@ -106,6 +112,12 @@ Jss.prototype.addAction = function(request, fn) {
 
     return false;
 }
+
+
+//¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+//  External Jss helper functions
+//______________________________________________
+
 
 Jss.prototype.findTriggers = function(element) {
     if (typeof element == "undefined") {
@@ -136,14 +148,16 @@ Jss.prototype.findTriggers = function(element) {
 }
 
 Jss.prototype.findModules = function() {
-    var allElements = document.getElementsByTagName("*");
+    var allElements = document.getElementsByTagName("*");                       // Array with all domElements
     var test = [];
     var self = this;
     for (var i=0; i < allElements.length; i++) {
-        // Do something with the element here
-        var element = allElements[i];
+
+        // Set default vars //
+        var element = allElements[i];                                           // specific domElement
         var tmp = false;
 
+        // Loop through the (active) modules array and add/instantiate them //
         this.activeModules.forEach(function(module){
             if (element.className.indexOf(module)        > -1 &&
                 element.className.indexOf(module + "_") == -1 &&
@@ -155,42 +169,17 @@ Jss.prototype.findModules = function() {
                     break;
 
                     case 'test':
-                        console.log(element, "module found");
                         tmp = new Test(element);
                     break;
                 }
-                console.log(typeof tmp.setElement,typeof self.setElement);
-                console.log(typeof tmp.addAction,typeof self.addAction);
+                tmp.setElement(element);
 
-                //tmp.setElement(element);
-                //tmp.findTriggers();
-                //tmp.init();
+                // Module is created, now look for any module triggers
+                // ... execute findTriggers function
 
                 self.modules.push(tmp);
-            }
 
-        });
-        /*if (classNames.length > -1) {
-            for (var ii in classNames) {
-                var className = classNames[ii];
-                if (jssModules.indexOf(className) > -1) {
-                    // Create object
-                    switch (className) {
-                        case 'expand':
-                            tmp = new Expand(element);
-                            tmp.init(element);
-                            test.push(tmp);
-                        break;
-
-                        case 'test':
-                            tmp = new Test(element);
-                            tmp.init(element);
-                            test.push(tmp);
-                        break;
-                    }
-                }
             }
-        }*/
+        }); // End forEach
     }
 }
-

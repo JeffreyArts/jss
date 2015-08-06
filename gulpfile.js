@@ -12,6 +12,7 @@ var jsLocation   = [
     jssPrefix + 'core.modules.js',
     jssPrefix + 'module.test.js',
     jssPrefix + 'module.expand.js',
+    jssPrefix + 'core.controller.js',
 ];
 gulp.task('styles', function() {
     gulp.src(sassLocation)

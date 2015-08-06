@@ -1,13 +1,26 @@
 
 var Test = function(element) {
+
+    //¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+    //  Module defaults
+    // _________________________________________
+
     var self = this;
     self.moduleName = "test";
-    //self.init(function(){ /*...*/ })
+    self.setElement(element);
+    self.init(function(){
+        console.log("Test module added");
+    })
 
+
+
+    //¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+    //  Module customs
+    // _________________________________________
 
     self.lightSwitch = false;
 
-    /*self.addAction('click',function(){
+    self.addAction('click',function(){
 
         if (self.lightSwitch) {
             self.setState("Closed");
@@ -21,7 +34,9 @@ var Test = function(element) {
     })
     self.addAction('hover',function(){
 
-    })*/
+    });
 }
+
+
 
 Test.prototype = Object.create(JssModule.prototype);

@@ -5,14 +5,15 @@ var concat = require('gulp-concat');
 var sassLocation = './scss/*.scss';
 var jssPrefix     = './scripts/jss/';
 var jsLocation   = [
-    jssPrefix + 'core.index.js',
+    jssPrefix + 'jss.service.js',
+    jssPrefix + 'jss.core.js',
+    jssPrefix + 'jss.module.js',
+    jssPrefix + 'jss.trigger.js',
     jssPrefix + 'core.classNames.js',
     jssPrefix + 'core.states.js',
-    jssPrefix + 'core.triggers.js',
-    jssPrefix + 'core.modules.js',
     jssPrefix + 'module.test.js',
     jssPrefix + 'module.expand.js',
-    jssPrefix + 'core.controller.js',
+    jssPrefix + 'jss.controller.js',
 ];
 gulp.task('styles', function() {
     gulp.src(sassLocation)

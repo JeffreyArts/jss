@@ -1,35 +1,33 @@
-.isNinja {
-	display: none;
-}
-
+/**********************************
+*
+* 	Expand 
+* 
+**********************************/
+// UX for clicking on trigger
 .expand--trigger {
 	cursor: pointer;
 }
 
-
-.expand--container {
-	float: left;
-	width: 100%;
-	margin-bottom: 15px;
+// Show target when expand element is open
+.expand__isOpen {
+	.expand--target {
+		opacity: 1;
+	}
 }
 
-.expand--container .expand__trigger {
-	border-bottom: 2px solid $color2;
-    font-size: 1.2em;
-    padding-bottom: 0.75em;
-
-	&:after {
-		color: $color1;
-		content: "+";
-		float: right;
-		font-size: 2em;
-		font-weight: bold;
-		margin-top: -0.3em;
+// Hide target when expand element is closed
+.expand__isClosed {
+	.expand--target {
+		opacity: 0;
 	}
+}
 
-	&.active {
-		&:after {
-			content:"-";
-		}
-	}
+/* Custom Styling */
+.expand--target {
+	transition: .4s margin linear,.2s opacity linear;
+	float: left;
+	display: inline-block;
+}
+.expand__isClosed .expand--target {
+    margin-top: -20%;
 }

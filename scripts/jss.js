@@ -1,16 +1,22 @@
 'use strict'
 
-/*
-    Modules & Triggers extend the default JSS class
- */
+var JssService = {};
+
+// Edit this array to enable or disable modules
+JssService.activeModules   = [
+    "expand",
+    "test",
+]
+JssService.dev             = true;
+
+/**************************
+*
+*   Below are core properties defined, becarefull when you think of changing these...
+* 
+**************************/
 
 
-var Jss = function(element) {};
-
-Jss.prototype.element = undefined;                                              // {obj} domElement
-Jss.prototype.state = undefined;                                                // {str} State of module, is reflected by the css class __isState
-
-Jss.prototype.actions = {
+JssService.actions = {
     hover:      ['hover',    'mouseOver',   'onMouseOver'],
     click:      ['click',    'onClick'      ],
     focus:      ['focus',    'onFocus'      ],
@@ -19,11 +25,139 @@ Jss.prototype.actions = {
     mouseOut:   ['mouseOut', 'onMouseOut'   ],
 };
 
-Jss.prototype.modules = []; // Result array with objects of all the found modules
-Jss.prototype.activeModules = [
-    "expand",
-    "test",
+JssService.forbiddenProperties = [
+    'type',
+    'triggers',
+    'addTrigger',
+    'findTriggers',
+    'toCamelCase'
 ];
+
+/**
+ * Is Module
+ * 
+ * @return {Boolean} true if element is a module, otherwise false
+ */
+JssService.isModule = function(element, module) {
+    var arr = element.className.split(" ");
+    var found = false;
+
+    for (var i = 0; i < arr.length; i++) {
+        if (arr[i].indexOf(module)        > -1 &&
+            arr[i].indexOf(module + "_") == -1 &&
+            arr[i].indexOf(module + "-") == -1)
+        { 
+            found = true;
+            break;
+        }
+    } 
+    return found;
+}
+
+
+/**
+ * Is Trigger
+ * 
+ * @return {Boolean} true if element is a module, otherwise false
+ */
+JssService.isTrigger = function(element, module) {
+    if (element.className.indexOf(module + "--") > -1) { 
+        return true;
+    } else {
+        return false;
+    }
+}
+
+JssService.getTriggerName = function(element, module) {
+    // As an example we assume that the value of element.className == 'a module--triggerName'
+
+    var startPos = element.className.indexOf(module + "--");                        // 2       
+    var sliced = element.className.slice(startPos, element.className.length )       // 'module--triggerName'
+    var endPos = sliced.indexOf(" ");                                               // -1       // not found
+    if (endPos != -1) {                                                             // 19
+        sliced = sliced.slice(0,endPos);                                            // if there is more after the string, this will remove it
+    }
+    return sliced.replace(module + "--","")
+}
+
+/**
+ * Trigger name is allowed 
+ *
+ * Checks if the triggername is allowed, returns a boolean and throws error if it is not allowed 
+ */
+JssService.triggerNameIsAllowed = function(element, module) {
+    if (JssService.forbiddenProperties.indexOf(this.getTriggerName(element, module)) > -1) {
+        // This triggerName is a core property, throw error
+        console.error('Triggername `' + getTriggerName(element,module) + '` is not allowed. Change the trigger so it does not corresponds any of these: ' + JssService.forbiddenProperties) 
+        return false;
+    } 
+    return true;
+}
+'use strict'
+
+
+var Jss = function(){};
+
+Jss.prototype.type      = "Jss"
+Jss.prototype.triggers  = {};
+Jss.prototype.element   = undefined;                                              // {obj} domElement
+Jss.prototype.state     = undefined;                                              // {str} State of module, is reflected by the css class __isState
+Jss.prototype.actions   = JssService.actions;
+
+Jss.prototype.forbiddenProperties = JssService.forbiddenProperties;
+
+
+Jss.prototype.findTriggers = function(element) {
+    var self = this;
+    if (typeof element == "undefined") {
+        element = this.element;
+    }
+
+    // Module is created, now look for any module triggers
+    if ( element.hasChildNodes() ) {
+        for (var i=0; i < element.childNodes.length; i++) {
+
+            var childElement = element.childNodes[i];
+            
+            if (childElement.nodeType == 1) {          // NodeType 1 == domElement
+                if (JssService.isTrigger(childElement, this.moduleName)) {
+                    
+                    // Add a child element
+                    if (JssService.triggerNameIsAllowed(childElement, this.moduleName)) {
+                        var triggerName = JssService.getTriggerName(childElement, this.moduleName)
+                    
+                        if (typeof self.triggers[triggerName] !== "object") {
+                            self.triggers[triggerName] = [];
+                        }
+
+                        var tmp = new JssTrigger(childElement, {
+                            module: this,
+                            moduleName: this.moduleName,
+                            triggerName: triggerName,
+                        });
+
+                        self.triggers[triggerName].push(tmp);
+                    }
+                }
+            }
+        }
+    }
+}
+
+Jss.prototype.addTrigger = function(trigger, fn) {
+    if ( typeof this.triggers[trigger] == "object") {
+
+        for (var i = 0; i < this.triggers[trigger].length; i++) {
+            //self.triggers[trigger][i]
+            fn(this.triggers[trigger][i]);
+        }
+        console.log(this.triggers[trigger])
+
+    } else if (JssService.dev) {
+        console.error("You are trying to add a trigger which has no attached domElement")
+    }
+}
+
 
 Jss.prototype.toCamelCase = function(string) {
     var arr, res;
@@ -38,28 +172,26 @@ Jss.prototype.toCamelCase = function(string) {
     return res;
 }
 
-
+/**
+ * Init
+ * 
+ * Notice the user that a init function needs to be added for controlling the triggers
+ */
 Jss.prototype.init = function(func) {
-    // var trigger;
-    // this.triggers = [];
-    //
-    // if (this.triggers.length > -1) {
-    //     for (var i = 0; i < this.triggers.length; i++) {
-    //         trigger = this.triggers[i];
-    //         if (typeof this[trigger.name] == "object") {
-    //             this[trigger.name].init(trigger.element);
-    //         }
-    //     }
-    // }
-
-    if (typeof func =="function") {
-        func();
+    if (JssService.dev) {
+        console.info(this.moduleName + ": Add a prototype.init function to add triggers and stuff")
     }
 }
 
+/**
+ * Set element
+ * Add a domElement to `this`
+ */
 Jss.prototype.setElement = function(element) {
     if (typeof element == "undefined") {
-        return console.error("First parameter of setElement needs to be a domElement");
+        if (JssService.dev) {
+            return console.error("First parameter of setElement needs to be a domElement");
+        }
     }
     this.element = element;
 }
@@ -84,111 +216,93 @@ Jss.prototype.validateAction = function(request) {
         return false;
     }
 }
+
 /**
  * Adds an action to the object, list of possible actions can be found in Jss.actions
  */
-Jss.prototype.addAction = function(request, fn) {
+Jss.prototype.addAction = function(request, fn, d) {
 
     var self = this;
     var action = self.validateAction(request)
     var element = self.element;
 
+    // {bool}, if true, this adds the default classes
+    if (d == false && typeof d !== "undefined") {
+        d = false;
+    } else {
+        d = true;
+    }
+
     switch (action) {
 
         case "click":
             element.addEventListener("click", fn);
-
+            if (d) { // Default classes
             element.addEventListener("click", function(){self.setState("Clicked") } );
             window.addEventListener( "click", function(event) { if (event.target != self.element && self.hasState("Clicked")) {self.removeState("Clicked")} }  );
+            }
         break;
 
         case "hover":
             element.addEventListener("mouseover", fn , false);
-
+            if (d) { // Default classes
             element.addEventListener("mouseover", function(){self.setState("Hover")} );
             element.addEventListener("mouseout",  function(){self.removeState("Hover")} );
+            }
         break;
     }
 
     return false;
 }
+// 'use strict'
+// 
+// 
+// For later use...
 
+// var JssModule = function(element, options) {
+//     this.type = "JssModule";
+//     this.setElement(element);
 
-//¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
-//  External Jss helper functions
-//______________________________________________
+//     if (typeof options === "object") {
+//         if (typeof options.module === "object") {
+//             this.module = options.module;
+//         }
+//     }
+// }
 
+// JssModule.prototype = Object.create(Jss.prototype);
 
-Jss.prototype.findTriggers = function(element) {
-    if (typeof element == "undefined") {
-        element = this.element;
-    }
-    //console.log(element);
-    var res = [];
-    var elementTriggers = element.getElementsByTagName("*");
-    if (elementTriggers.length > -1) {
-        for (var i in elementTriggers) {
-            var triggerElement = elementTriggers[i];
+'use strict'
 
-            if (typeof triggerElement == "object") {
-                var tmp = triggerElement.className.split(" ");
-                if (tmp.length > -1) {
-                    for (var ii in tmp) {
-                        var className = tmp[ii];
-                        if (className.indexOf(this.moduleName + "--") > -1) {
-                            var triggerName = className.replace(this.moduleName + "--", "");
-                            this[triggerName] = new JssModule();
-                        }
-                    }
-                }
-            }
+var JssTrigger = function(element, options) {
+    this.type = "JssTrigger";
+    this.setElement(element);
+
+    if (typeof options === "object") {
+        if (typeof options.module === "object") {
+            this.module = options.module;
+        }
+        if (typeof options.moduleName === "string") {
+            this.moduleName = options.moduleName;
+        }
+        if (typeof options.triggerName === "string") {
+            this.triggerName = options.triggerName;
         }
     }
-    return res;
 }
 
-Jss.prototype.findModules = function() {
-    var allElements = document.getElementsByTagName("*");                       // Array with all domElements
-    var test = [];
-    var self = this;
-    for (var i=0; i < allElements.length; i++) {
+JssTrigger.prototype = Object.create(Jss.prototype);
 
-        // Set default vars //
-        var element = allElements[i];                                           // specific domElement
-        var tmp = false;
-
-        // Loop through the (active) modules array and add/instantiate them //
-        this.activeModules.forEach(function(module){
-            if (element.className.indexOf(module)        > -1 &&
-                element.className.indexOf(module + "_") == -1 &&
-                element.className.indexOf(module + "-") == -1)
-            {
-                switch (module) {
-                    case 'expand':
-                        tmp = new Expand(element);
-                    break;
-
-                    case 'test':
-                        tmp = new Test(element);
-                    break;
-                }
-                tmp.setElement(element);
-
-                // Module is created, now look for any module triggers
-                // ... execute findTriggers function
-
-                self.modules.push(tmp);
-
-            }
-        }); // End forEach
+Jss.prototype.classNamePrefix = function(data) {
+    if (this.type == "JssTrigger") {
+        return this.moduleName + "--" + this.triggerName;
+    } else {
+        return this.moduleName;
     }
 }
 Jss.prototype.removeClassName = function(data) {
 
     var classList  = [];
-
-    // if (typeof this.moduleAction != "undefined" && this.moduleAction.length >= 0) {
-    // }
 
     if (data == "all" || typeof data == "undefined") {
 
@@ -226,8 +340,7 @@ Jss.prototype.setState = function(string) {
 
     element         = this.element;
     state           = this.toCamelCase(string);
-    className       = this.moduleName + "__is" + state;
-
+    className       = this.classNamePrefix() + "__is" + state;
     // Check if this.state is an array, and make it one if not.
     if (Array.isArray(this.state) == false ) {
         this.state = [];
@@ -260,52 +373,28 @@ Jss.prototype.removeState = function(str) {
         this.removeClassName("states");
     } else {
         this.state.splice(stateIndex, 1);
-
         if (typeof this.moduleAction != "undefined" && this.moduleAction.length > -1) {
-            this.removeClassName(this.moduleName + "" + this.moduleAction + "__is" + state);
+            this.removeClassName(this.classNamePrefix() + "" + this.moduleAction + "__is" + state);
         } else {
-            this.removeClassName(this.moduleName + "__is" + state);
+            this.removeClassName(this.classNamePrefix() + "__is" + state);
         }
     }
 }
 
-var JssTrigger = function(){};
-
-JssTrigger.prototype.type               = "JssTrigger";
-JssTrigger.prototype.setElement         = Jss.prototype.setElement;
-JssTrigger.prototype.actions            = Object.create(Jss.prototype.actions);
-JssTrigger.prototype.validateAction     = Jss.prototype.validateAction;
-JssTrigger.prototype.addAction          = Jss.prototype.addAction;
-JssTrigger.prototype.removeClassName    = Jss.prototype.removeClassName;
-JssTrigger.prototype.addClassName       = Jss.prototype.addClassName;
-JssTrigger.prototype.setState           = Jss.prototype.setState;
-JssTrigger.prototype.hasState           = Jss.prototype.hasState;
-JssTrigger.prototype.removeState        = Jss.prototype.removeState;
-
-
-var JssModule = function(){};
-
-JssModule.prototype         = Object.create(Jss.prototype);
-JssModule.prototype.type    = "JssModule"
 
 var Test = function(element) {
 
-    //¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+    //----------------------------------------------
     //  Module defaults
-    // _________________________________________
+    //----------------------------------------------
 
     var self = this;
     self.moduleName = "test";
     self.setElement(element);
-    self.init(function(){
-        console.log("Test module added");
-    })
 
-
-
-    //¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+    //----------------------------------------------
     //  Module customs
-    // _________________________________________
+    //----------------------------------------------
 
     self.lightSwitch = false;
 
@@ -328,83 +417,90 @@ var Test = function(element) {
 
 
 
-Test.prototype = Object.create(JssModule.prototype);
+Test.prototype = Object.create(Jss.prototype);
 'use strict'
 
 
 
 
-var Expand = function(element) {
+//----------------------------------------------
+//  Module defaults
+//----------------------------------------------
 
-    //¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
-    //  Module defaults
-    // _________________________________________
+var Expand = function(element) {
 
     var self = this;
     self.moduleName = "expand";
     self.setElement(element);
-    self.init(function(){
-        console.log("Expand module added");
-    })
-
-
-
-    //¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
-    //  Module customs
-    // _________________________________________
-
-    /*self.init(function(){
-        console.log(self.trigger, self);
-        self.target.variablenaam = "Example";
-        self.trigger.asdf = "Example";
-        self.triggers = {
-            a:"a"
-        }
-    })*/
-
-
-/*
-    self.trigger = {
-        init: function(element){
-            self.trigger.element = element;
-
-            /*self.trigger.setState("Open");
-            target.setState("Active");
-
-            self.trigger.addAction("click", function(){
-                self.trigger.changeStatus();
-            });*/
-/*
-        },
-
-        // Expand Trigger specific
-        changeStatus: function() {
-            var triggerClasses     = self.trigger.element.className
-            var targetClasses      = self.target.element.className
-            var selfClasses        = self.element.className
-
-            if (selfClasses.indexOf("isClosed") > -1) {
-                self.removeStatus();
-                self.element.className = self.setState("open");
-
-                self.trigger.element.className = triggerClasses.replace(self.triggerClass,  "");
-                self.target.element.className = targetClasses.replace(self.targetClass,  "") + self.targetClass;
-            } else {
-                self.element.className  = selfClasses.replace(   self.elementClass[0],  self.elementClass[1]);
-                self.trigger.element.className  = triggerClasses.replace(self.triggerClass, "") + self.triggerClass;
-                self.target.element.className   = targetClasses.replace(self.targetClass,  "");
-            }
-        }
-    }
-*/
 }
 
 
-Expand.prototype = Object.create(JssModule.prototype);
-Expand.prototype.constructor = Expand;
+Expand.prototype = Object.create(Jss.prototype);
 
 
+//------------------------------------------
+//  Module customs
+//------------------------------------------
 
-var jssController = new Jss();
+
+Expand.prototype.init = function(){
+    var expand = this;
+    expand.status = true;
+
+    this.addTrigger("trigger", function(trigger) {
+        trigger.addAction('click',function(){
+            if (expand.status) {
+                expand.setState("Closed");
+                expand.removeState("Open");
+                expand.status = false;
+            } else {
+                expand.setState("Open");
+                expand.removeState("Closed");
+                expand.status = true;
+            }
+        }, false)
+    });
+}
+
+var JssController = function(element) {};
+
+JssController.prototype.modules 		= []; // Result array with objects of all the found modules
+JssController.prototype.activeModules 	= JssService.activeModules;
+
+JssController.prototype.findModules = function() {
+    var allElements = document.getElementsByTagName("*");                       // Array with all domElements
+    var test = [];
+    var self = this;
+    for (var i=0; i < allElements.length; i++) {
+
+        // Set default vars //
+        var element = allElements[i];                                           // specific domElement
+        var tmp = false;
+
+        // Loop through the (active) modules array and add/instantiate them //
+        self.activeModules.forEach(function(module){
+
+            if (JssService.isModule(element, module)) {
+                switch (module) {
+                    case 'expand':
+                        tmp = new Expand(element);
+                    break;
+
+                    case 'test':
+                        tmp = new Test(element);
+                    break;
+                }
+                
+                tmp.findTriggers();			// Search for module triggers
+                tmp.moduleName = module;    // Set defauls for moduleName
+                tmp.init();					// Executes everything within the init function
+                self.modules.push(tmp);
+
+            }
+        }); // End forEach
+    }
+}
+
+var jssController = new JssController();
     jssController.findModules();
     console.log(jssController);

@@ -1,9 +1,13 @@
+Jss.prototype.classNamePrefix = function(data) {
+    if (this.type == "JssTrigger") {
+        return this.moduleName + "--" + this.triggerName;
+    } else {
+        return this.moduleName;
+    }
+}
 Jss.prototype.removeClassName = function(data) {
 
     var classList  = [];
-
-    // if (typeof this.moduleAction != "undefined" && this.moduleAction.length >= 0) {
-    // }
 
     if (data == "all" || typeof data == "undefined") {
 

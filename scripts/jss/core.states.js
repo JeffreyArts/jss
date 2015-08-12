@@ -4,8 +4,7 @@ Jss.prototype.setState = function(string) {
 
     element         = this.element;
     state           = this.toCamelCase(string);
-    className       = this.moduleName + "__is" + state;
-
+    className       = this.classNamePrefix() + "__is" + state;
     // Check if this.state is an array, and make it one if not.
     if (Array.isArray(this.state) == false ) {
         this.state = [];
@@ -38,11 +37,10 @@ Jss.prototype.removeState = function(str) {
         this.removeClassName("states");
     } else {
         this.state.splice(stateIndex, 1);
-
         if (typeof this.moduleAction != "undefined" && this.moduleAction.length > -1) {
-            this.removeClassName(this.moduleName + "" + this.moduleAction + "__is" + state);
+            this.removeClassName(this.classNamePrefix() + "" + this.moduleAction + "__is" + state);
         } else {
-            this.removeClassName(this.moduleName + "__is" + state);
+            this.removeClassName(this.classNamePrefix() + "__is" + state);
         }
     }
 }

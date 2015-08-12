@@ -6222,30 +6222,28 @@ button.close {
   vertical-align: middle;
   height: 100%; }
 
-.isNinja {
-  display: none; }
-
+/**********************************
+*
+* 	Expand 
+* 
+**********************************/
 .expand--trigger {
   cursor: pointer; }
 
-.expand--container {
-  float: left;
-  width: 100%;
-  margin-bottom: 15px; }
+.expand__isOpen .expand--target {
+  opacity: 1; }
 
-.expand--container .expand__trigger {
-  border-bottom: 2px solid #28265a;
-  font-size: 1.2em;
-  padding-bottom: 0.75em; }
-  .expand--container .expand__trigger:after {
-    color: #ff9f09;
-    content: "+";
-    float: right;
-    font-size: 2em;
-    font-weight: bold;
-    margin-top: -0.3em; }
-  .expand--container .expand__trigger.active:after {
-    content: "-"; }
+.expand__isClosed .expand--target {
+  opacity: 0; }
+
+/* Custom Styling */
+.expand--target {
+  transition: 0.4s margin linear, 0.2s opacity linear;
+  float: left;
+  display: inline-block; }
+
+.expand__isClosed .expand--target {
+  margin-top: -20%; }
 
 .bg {
   width: 100%;

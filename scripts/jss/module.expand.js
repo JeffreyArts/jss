@@ -3,73 +3,41 @@
 
 
 
-var Expand = function(element) {
+//----------------------------------------------
+//  Module defaults
+//----------------------------------------------
 
-    //¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
-    //  Module defaults
-    // _________________________________________
+var Expand = function(element) {
 
     var self = this;
     self.moduleName = "expand";
     self.setElement(element);
-    self.init(function(){
-        console.log("Expand module added");
-    })
-
-
-
-    //¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
-    //  Module customs
-    // _________________________________________
-
-    /*self.init(function(){
-        console.log(self.trigger, self);
-        self.target.variablenaam = "Example";
-        self.trigger.asdf = "Example";
-        self.triggers = {
-            a:"a"
-        }
-    })*/
-
-
-/*
-    self.trigger = {
-        init: function(element){
-            self.trigger.element = element;
-
-            /*self.trigger.setState("Open");
-            target.setState("Active");
-
-            self.trigger.addAction("click", function(){
-                self.trigger.changeStatus();
-            });*/
-/*
-        },
-
-        // Expand Trigger specific
-        changeStatus: function() {
-            var triggerClasses     = self.trigger.element.className
-            var targetClasses      = self.target.element.className
-            var selfClasses        = self.element.className
-
-            if (selfClasses.indexOf("isClosed") > -1) {
-                self.removeStatus();
-                self.element.className = self.setState("open");
-
-                self.trigger.element.className = triggerClasses.replace(self.triggerClass,  "");
-                self.target.element.className = targetClasses.replace(self.targetClass,  "") + self.targetClass;
-            } else {
-                self.element.className  = selfClasses.replace(   self.elementClass[0],  self.elementClass[1]);
-                self.trigger.element.className  = triggerClasses.replace(self.triggerClass, "") + self.triggerClass;
-                self.target.element.className   = targetClasses.replace(self.targetClass,  "");
-            }
-        }
-    }
-*/
 }
 
 
-Expand.prototype = Object.create(JssModule.prototype);
-Expand.prototype.constructor = Expand;
+Expand.prototype = Object.create(Jss.prototype);
 
 
+//------------------------------------------
+//  Module customs
+//------------------------------------------
+
+
+Expand.prototype.init = function(){
+    var expand = this;
+    expand.status = true;
+
+    this.addTrigger("trigger", function(trigger) {
+        trigger.addAction('click',function(){
+            if (expand.status) {
+                expand.setState("Closed");
+                expand.removeState("Open");
+                expand.status = false;
+            } else {
+                expand.setState("Open");
+                expand.removeState("Closed");
+                expand.status = true;
+            }
+        }, false)
+    });
+}

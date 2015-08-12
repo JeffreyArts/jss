@@ -1,22 +1,17 @@
 
 var Test = function(element) {
 
-    //¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+    //----------------------------------------------
     //  Module defaults
-    // _________________________________________
+    //----------------------------------------------
 
     var self = this;
     self.moduleName = "test";
     self.setElement(element);
-    self.init(function(){
-        console.log("Test module added");
-    })
 
-
-
-    //¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+    //----------------------------------------------
     //  Module customs
-    // _________________________________________
+    //----------------------------------------------
 
     self.lightSwitch = false;
 
@@ -39,4 +34,4 @@ var Test = function(element) {
 
 
 
-Test.prototype = Object.create(JssModule.prototype);
+Test.prototype = Object.create(Jss.prototype);

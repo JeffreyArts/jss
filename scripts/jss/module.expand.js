@@ -9,9 +9,7 @@
 
 var Expand = function(element) {
 
-    this.moduleName = "expand";
-    this.setElement(element);
-    this.status = true;
+    this.moduleName = "expand"; // This is the name which corresponds with the className && JssService.activeModuless
 }
 
 

@@ -16,19 +16,11 @@ JssController.findModules = function() {
         // Loop through the (active) modules array and add/instantiate them
         self.activeModules.forEach(function(module){
             if (JssService.isModule(element, module)) {
-                switch (module) {
-                    case 'expand':
-                        tmp = new Expand(element);
-                    break;
+                tmp = eval("new " + JssService.toCamelCase(module) + "(element)"); // Dynamicly load modules
 
-                    case 'test':
-                        tmp = new Test(element);
-                    break;
-                }
-
+                tmp.setElement(element);                                        // Add the domElement to the module
                 tmp.findTriggers();			                                    // Search for module triggers
 
-                tmp.moduleName = module;                                        // Set defauls for moduleName
                 tmp.init();					                                    // Executes everything within the init function
                 self.modules.push(tmp);
 

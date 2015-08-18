@@ -174,6 +174,13 @@ Jss.prototype.findTriggers = function(element) {
     }
 }
 
+/**
+ * -----------------------------------------------------------------------------
+ * Add Trigger
+ * -----------------------------------------------------------------------------
+ *
+ * @return {undefined}
+ */
 Jss.prototype.addTrigger = function(trigger, fn) {
     if ( typeof this.triggers[trigger] == "object") {
 
@@ -189,9 +196,12 @@ Jss.prototype.addTrigger = function(trigger, fn) {
 
 
 /**
- * Init
- *
+ * -----------------------------------------------------------------------------
+ *   Init
+ * -----------------------------------------------------------------------------
  * Notice the user that a init function needs to be added for controlling the triggers
+ *
+ * @return {undefined}
  */
 Jss.prototype.init = function(func) {
     if (JssService.dev) {
@@ -200,8 +210,12 @@ Jss.prototype.init = function(func) {
 }
 
 /**
+ * -----------------------------------------------------------------------------
  * Set element
+ * -----------------------------------------------------------------------------
  * Add a domElement to `this`
+ *
+ * @return {undefined}
  */
 Jss.prototype.setElement = function(element) {
     if (typeof element == "undefined") {
@@ -213,9 +227,12 @@ Jss.prototype.setElement = function(element) {
 }
 
 /**
+ * -----------------------------------------------------------------------------
+ *   Validate action
+ * -----------------------------------------------------------------------------
  * Checks if parameter is a valid action, and logs an error when not.
  *
- * Returns Boolean
+ * @return {boolean} true if a action is valid, otherwise false.
  */
 Jss.prototype.validateAction = function(request) {
     var result;
@@ -234,14 +251,19 @@ Jss.prototype.validateAction = function(request) {
 }
 
 /**
+ * -----------------------------------------------------------------------------
+ * 	 Add Action
+ * -----------------------------------------------------------------------------
  * Adds an action to the object, list of possible actions can be found in Jss.actions
+ *
+ * @return {boolean} true if a action is succesfully added, otherwise false.
  */
 Jss.prototype.addAction = function(request, fn, d) {
 
     var self = this;
     var action = self.validateAction(request)
     var element = self.element;
-
+    var succeeded = false;
     // {bool}, if true, this adds the default classes
     if (d == false && typeof d !== "undefined") {
         d = false;
@@ -253,11 +275,11 @@ Jss.prototype.addAction = function(request, fn, d) {
 
         case "click":
             element.addEventListener("click", fn);
-            console.log("Add Click Event", this);
             if (d) { // Default classes
             element.addEventListener("click", function(){self.setState("Clicked") } );
             window.addEventListener( "click", function(event) { if (event.target != self.element && self.hasState("Clicked")) {self.removeState("Clicked")} }  );
             }
+            succeeded = true;
         break;
 
         case "hover":
@@ -266,10 +288,11 @@ Jss.prototype.addAction = function(request, fn, d) {
             element.addEventListener("mouseover", function(){self.setState("Hover")} );
             element.addEventListener("mouseout",  function(){self.removeState("Hover")} );
             }
+            succeeded = true;
         break;
     }
 
-    return false;
+    return succeeded;
 }
 // 'use strict'
 // 
@@ -446,9 +469,7 @@ Test.prototype = Object.create(Jss.prototype);
 
 var Expand = function(element) {
 
-    this.moduleName = "expand";
-    this.setElement(element);
-    this.status = true;
+    this.moduleName = "expand"; // This is the name which corresponds with the className && JssService.activeModuless
 }
 
 
@@ -499,19 +520,11 @@ JssController.findModules = function() {
         // Loop through the (active) modules array and add/instantiate them
         self.activeModules.forEach(function(module){
             if (JssService.isModule(element, module)) {
-                switch (module) {
-                    case 'expand':
-                        tmp = new Expand(element);
-                    break;
+                tmp = eval("new " + JssService.toCamelCase(module) + "(element)"); // Dynamicly load modules
 
-                    case 'test':
-                        tmp = new Test(element);
-                    break;
-                }
-
+                tmp.setElement(element);                                        // Add the domElement to the module
                 tmp.findTriggers();			                                    // Search for module triggers
 
-                tmp.moduleName = module;                                        // Set defauls for moduleName
                 tmp.init();					                                    // Executes everything within the init function
                 self.modules.push(tmp);
 

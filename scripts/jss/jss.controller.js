@@ -1,22 +1,20 @@
 
-var JssController = function(element) {};
+var  JssController = {};
+JssController.modules 		= []; // Result array with objects of all the found modules
+JssController.activeModules 	= JssService.activeModules;
 
-JssController.prototype.modules 		= []; // Result array with objects of all the found modules
-JssController.prototype.activeModules 	= JssService.activeModules;
-
-JssController.prototype.findModules = function() {
+JssController.findModules = function() {
     var allElements = document.getElementsByTagName("*");                       // Array with all domElements
     var test = [];
     var self = this;
     for (var i=0; i < allElements.length; i++) {
 
         // Set default vars //
-        var element = allElements[i];                                           // specific domElement
+        var element = allElements[i];                                           // Specific domElement
         var tmp = false;
 
-        // Loop through the (active) modules array and add/instantiate them //
+        // Loop through the (active) modules array and add/instantiate them
         self.activeModules.forEach(function(module){
-
             if (JssService.isModule(element, module)) {
                 switch (module) {
                     case 'expand':
@@ -27,10 +25,11 @@ JssController.prototype.findModules = function() {
                         tmp = new Test(element);
                     break;
                 }
-                
-                tmp.findTriggers();			// Search for module triggers
-                tmp.moduleName = module;    // Set defauls for moduleName
-                tmp.init();					// Executes everything within the init function
+
+                tmp.findTriggers();			                                    // Search for module triggers
+
+                tmp.moduleName = module;                                        // Set defauls for moduleName
+                tmp.init();					                                    // Executes everything within the init function
                 self.modules.push(tmp);
 
             }
@@ -38,6 +37,5 @@ JssController.prototype.findModules = function() {
     }
 }
 
-var jssController = new JssController();
-    jssController.findModules();
-    console.log(jssController);
+    JssController.findModules();
+    console.log(JssController);

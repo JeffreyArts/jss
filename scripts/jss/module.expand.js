@@ -9,14 +9,13 @@
 
 var Expand = function(element) {
 
-    var self = this;
-    self.moduleName = "expand";
-    self.setElement(element);
+    this.moduleName = "expand";
+    this.setElement(element);
+    this.status = true;
 }
 
 
 Expand.prototype = Object.create(Jss.prototype);
-
 
 //------------------------------------------
 //  Module customs
@@ -28,6 +27,9 @@ Expand.prototype.init = function(){
     expand.status = true;
 
     this.addTrigger("trigger", function(trigger) {
+        trigger.addAction('hover',function(){
+
+        });
         trigger.addAction('click',function(){
             if (expand.status) {
                 expand.setState("Closed");
@@ -39,5 +41,6 @@ Expand.prototype.init = function(){
                 expand.status = true;
             }
         }, false)
+
     });
 }

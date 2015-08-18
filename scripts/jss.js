@@ -7,12 +7,14 @@ JssService.activeModules   = [
     "expand",
     "test",
 ]
+
+// Set this to false in a live environment
 JssService.dev             = true;
 
 /**************************
 *
 *   Below are core properties defined, becarefull when you think of changing these...
-* 
+*
 **************************/
 
 
@@ -29,14 +31,13 @@ JssService.forbiddenProperties = [
     'type',
     'triggers',
     'addTrigger',
-    'findTriggers',
-    'toCamelCase'
+    'findTriggers'
 ];
 
 /**
  * Is Module
- * 
- * @return {Boolean} true if element is a module, otherwise false
+ *
+ * @return {boolean} true if element is a module, otherwise false
  */
 JssService.isModule = function(element, module) {
     var arr = element.className.split(" ");
@@ -46,51 +47,81 @@ JssService.isModule = function(element, module) {
         if (arr[i].indexOf(module)        > -1 &&
             arr[i].indexOf(module + "_") == -1 &&
             arr[i].indexOf(module + "-") == -1)
-        { 
+        {
             found = true;
             break;
         }
-    } 
+    }
     return found;
 }
 
+/**
+ * To CamelCase
+ *
+ * @return {string} a camelcased string
+ */
+JssService.toCamelCase = function(string) {
+    var arr, res;
+    res = "";
+    arr = string.split(" ");
+    var i = 0;
+    for (var i in arr) {
+        if (typeof i != "undefined") {
+            res += arr[i][0].toUpperCase()+ arr[i].slice(1); // Capitalize first letter
+        }
+    }
+    return res;
+}
 
 /**
  * Is Trigger
- * 
- * @return {Boolean} true if element is a module, otherwise false
+ *
+ * @return {boolean} true if element is a module, otherwise false
  */
 JssService.isTrigger = function(element, module) {
-    if (element.className.indexOf(module + "--") > -1) { 
+    if (element.className.indexOf(module + "--") > -1) {
         return true;
     } else {
         return false;
     }
 }
 
-JssService.getTriggerName = function(element, module) {
-    // As an example we assume that the value of element.className == 'a module--triggerName'
+/**
+ * Get trigger name
+ *
+ * @return {string} Name of the trigger.
+ */
+JssService.getTriggerName = function(element, moduleName) {
+    if (typeof element != "object") {
+        console.error('Required first argument `element` needs to be a domElement.');
+        return false;
+    }
+    if (typeof moduleName != "string") {
+        console.error('Required second argument `moduleName` needs to be a string.');
+        return false;
+    }
 
-    var startPos = element.className.indexOf(module + "--");                        // 2       
+    // As an example we assume that the value of element.className equals 'b module--triggerName'
+    var startPos = element.className.indexOf(moduleName + "--");                    // 2
     var sliced = element.className.slice(startPos, element.className.length )       // 'module--triggerName'
     var endPos = sliced.indexOf(" ");                                               // -1       // not found
     if (endPos != -1) {                                                             // 19
         sliced = sliced.slice(0,endPos);                                            // if there is more after the string, this will remove it
     }
-    return sliced.replace(module + "--","")
+    return sliced.replace(moduleName + "--","")
 }
 
 /**
- * Trigger name is allowed 
+ * Trigger name is allowed
  *
- * Checks if the triggername is allowed, returns a boolean and throws error if it is not allowed 
+ * @return {boolean} True if the triggername is allowed, otherwise false.
  */
 JssService.triggerNameIsAllowed = function(element, module) {
     if (JssService.forbiddenProperties.indexOf(this.getTriggerName(element, module)) > -1) {
         // This triggerName is a core property, throw error
-        console.error('Triggername `' + getTriggerName(element,module) + '` is not allowed. Change the trigger so it does not corresponds any of these: ' + JssService.forbiddenProperties) 
+        console.error('Triggername `' + getTriggerName(element,module) + '` is not allowed. Change the trigger so it does not corresponds any of these: ' + JssService.forbiddenProperties)
         return false;
-    } 
+    }
     return true;
 }
 'use strict'
@@ -104,11 +135,9 @@ Jss.prototype.element   = undefined;                                            
 Jss.prototype.state     = undefined;                                              // {str} State of module, is reflected by the css class __isState
 Jss.prototype.actions   = JssService.actions;
 
-Jss.prototype.forbiddenProperties = JssService.forbiddenProperties;
-
-
 Jss.prototype.findTriggers = function(element) {
     var self = this;
+    self.triggers = [];                                                         // If this is not set, all modules will have the same reference point to self.triggers.
     if (typeof element == "undefined") {
         element = this.element;
     }
@@ -117,21 +146,22 @@ Jss.prototype.findTriggers = function(element) {
     if ( element.hasChildNodes() ) {
         for (var i=0; i < element.childNodes.length; i++) {
 
-            var childElement = element.childNodes[i];
-            
-            if (childElement.nodeType == 1) {          // NodeType 1 == domElement
+            var childElement = element.childNodes[i];                           // Improve readability
+
+            if (childElement.nodeType == 1) {                                   // NodeType 1 == domElement
+
                 if (JssService.isTrigger(childElement, this.moduleName)) {
-                    
+
                     // Add a child element
                     if (JssService.triggerNameIsAllowed(childElement, this.moduleName)) {
                         var triggerName = JssService.getTriggerName(childElement, this.moduleName)
-                    
+
                         if (typeof self.triggers[triggerName] !== "object") {
                             self.triggers[triggerName] = [];
                         }
 
                         var tmp = new JssTrigger(childElement, {
-                            module: this,
+                            module: self,
                             moduleName: this.moduleName,
                             triggerName: triggerName,
                         });
@@ -151,7 +181,6 @@ Jss.prototype.addTrigger = function(trigger, fn) {
             //self.triggers[trigger][i]
             fn(this.triggers[trigger][i]);
         }
-        console.log(this.triggers[trigger])
 
     } else if (JssService.dev) {
         console.error("You are trying to add a trigger which has no attached domElement")
@@ -159,22 +188,9 @@ Jss.prototype.addTrigger = function(trigger, fn) {
 }
 
 
-Jss.prototype.toCamelCase = function(string) {
-    var arr, res;
-    res = "";
-    arr = string.split(" ");
-    var i = 0;
-    for (var i in arr) {
-        if (typeof i != "undefined") {
-            res += arr[i][0].toUpperCase()+ arr[i].slice(1); // Capitalize first letter
-        }
-    }
-    return res;
-}
-
 /**
  * Init
- * 
+ *
  * Notice the user that a init function needs to be added for controlling the triggers
  */
 Jss.prototype.init = function(func) {
@@ -237,6 +253,7 @@ Jss.prototype.addAction = function(request, fn, d) {
 
         case "click":
             element.addEventListener("click", fn);
+            console.log("Add Click Event", this);
             if (d) { // Default classes
             element.addEventListener("click", function(){self.setState("Clicked") } );
             window.addEventListener( "click", function(event) { if (event.target != self.element && self.hasState("Clicked")) {self.removeState("Clicked")} }  );
@@ -339,7 +356,7 @@ Jss.prototype.setState = function(string) {
     var element, verifiedState, state, className;
 
     element         = this.element;
-    state           = this.toCamelCase(string);
+    state           = JssService.toCamelCase(string);
     className       = this.classNamePrefix() + "__is" + state;
     // Check if this.state is an array, and make it one if not.
     if (Array.isArray(this.state) == false ) {
@@ -366,7 +383,7 @@ Jss.prototype.hasState = function(string) {
 
 Jss.prototype.removeState = function(str) {
 
-    var state      = this.toCamelCase(str);
+    var state      = JssService.toCamelCase(str);
     var stateIndex = this.state.indexOf(state);
 
     if (str == "all" || typeof str == "undefined") {
@@ -429,14 +446,13 @@ Test.prototype = Object.create(Jss.prototype);
 
 var Expand = function(element) {
 
-    var self = this;
-    self.moduleName = "expand";
-    self.setElement(element);
+    this.moduleName = "expand";
+    this.setElement(element);
+    this.status = true;
 }
 
 
 Expand.prototype = Object.create(Jss.prototype);
-
 
 //------------------------------------------
 //  Module customs
@@ -448,6 +464,9 @@ Expand.prototype.init = function(){
     expand.status = true;
 
     this.addTrigger("trigger", function(trigger) {
+        trigger.addAction('hover',function(){
+
+        });
         trigger.addAction('click',function(){
             if (expand.status) {
                 expand.setState("Closed");
@@ -459,27 +478,26 @@ Expand.prototype.init = function(){
                 expand.status = true;
             }
         }, false)
+
     });
 }
 
-var JssController = function(element) {};
+var  JssController = {};
+JssController.modules 		= []; // Result array with objects of all the found modules
+JssController.activeModules 	= JssService.activeModules;
 
-JssController.prototype.modules 		= []; // Result array with objects of all the found modules
-JssController.prototype.activeModules 	= JssService.activeModules;
-
-JssController.prototype.findModules = function() {
+JssController.findModules = function() {
     var allElements = document.getElementsByTagName("*");                       // Array with all domElements
     var test = [];
     var self = this;
     for (var i=0; i < allElements.length; i++) {
 
         // Set default vars //
-        var element = allElements[i];                                           // specific domElement
+        var element = allElements[i];                                           // Specific domElement
         var tmp = false;
 
-        // Loop through the (active) modules array and add/instantiate them //
+        // Loop through the (active) modules array and add/instantiate them
         self.activeModules.forEach(function(module){
-
             if (JssService.isModule(element, module)) {
                 switch (module) {
                     case 'expand':
@@ -490,10 +508,11 @@ JssController.prototype.findModules = function() {
                         tmp = new Test(element);
                     break;
                 }
-                
-                tmp.findTriggers();			// Search for module triggers
-                tmp.moduleName = module;    // Set defauls for moduleName
-                tmp.init();					// Executes everything within the init function
+
+                tmp.findTriggers();			                                    // Search for module triggers
+
+                tmp.moduleName = module;                                        // Set defauls for moduleName
+                tmp.init();					                                    // Executes everything within the init function
                 self.modules.push(tmp);
 
             }
@@ -501,6 +520,5 @@ JssController.prototype.findModules = function() {
     }
 }
 
-var jssController = new JssController();
-    jssController.findModules();
-    console.log(jssController);
+    JssController.findModules();
+    console.log(JssController);

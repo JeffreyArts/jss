@@ -9,11 +9,9 @@ Jss.prototype.element   = undefined;                                            
 Jss.prototype.state     = undefined;                                              // {str} State of module, is reflected by the css class __isState
 Jss.prototype.actions   = JssService.actions;
 
-Jss.prototype.forbiddenProperties = JssService.forbiddenProperties;
-
-
 Jss.prototype.findTriggers = function(element) {
     var self = this;
+    self.triggers = [];                                                         // If this is not set, all modules will have the same reference point to self.triggers.
     if (typeof element == "undefined") {
         element = this.element;
     }
@@ -22,21 +20,22 @@ Jss.prototype.findTriggers = function(element) {
     if ( element.hasChildNodes() ) {
         for (var i=0; i < element.childNodes.length; i++) {
 
-            var childElement = element.childNodes[i];
-            
-            if (childElement.nodeType == 1) {          // NodeType 1 == domElement
+            var childElement = element.childNodes[i];                           // Improve readability
+
+            if (childElement.nodeType == 1) {                                   // NodeType 1 == domElement
+
                 if (JssService.isTrigger(childElement, this.moduleName)) {
-                    
+
                     // Add a child element
                     if (JssService.triggerNameIsAllowed(childElement, this.moduleName)) {
                         var triggerName = JssService.getTriggerName(childElement, this.moduleName)
-                    
+
                         if (typeof self.triggers[triggerName] !== "object") {
                             self.triggers[triggerName] = [];
                         }
 
                         var tmp = new JssTrigger(childElement, {
-                            module: this,
+                            module: self,
                             moduleName: this.moduleName,
                             triggerName: triggerName,
                         });
@@ -56,7 +55,6 @@ Jss.prototype.addTrigger = function(trigger, fn) {
             //self.triggers[trigger][i]
             fn(this.triggers[trigger][i]);
         }
-        console.log(this.triggers[trigger])
 
     } else if (JssService.dev) {
         console.error("You are trying to add a trigger which has no attached domElement")
@@ -64,22 +62,9 @@ Jss.prototype.addTrigger = function(trigger, fn) {
 }
 
 
-Jss.prototype.toCamelCase = function(string) {
-    var arr, res;
-    res = "";
-    arr = string.split(" ");
-    var i = 0;
-    for (var i in arr) {
-        if (typeof i != "undefined") {
-            res += arr[i][0].toUpperCase()+ arr[i].slice(1); // Capitalize first letter
-        }
-    }
-    return res;
-}
-
 /**
  * Init
- * 
+ *
  * Notice the user that a init function needs to be added for controlling the triggers
  */
 Jss.prototype.init = function(func) {
@@ -142,6 +127,7 @@ Jss.prototype.addAction = function(request, fn, d) {
 
         case "click":
             element.addEventListener("click", fn);
+            console.log("Add Click Event", this);
             if (d) { // Default classes
             element.addEventListener("click", function(){self.setState("Clicked") } );
             window.addEventListener( "click", function(event) { if (event.target != self.element && self.hasState("Clicked")) {self.removeState("Clicked")} }  );

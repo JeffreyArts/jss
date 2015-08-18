@@ -3,7 +3,7 @@ Jss.prototype.setState = function(string) {
     var element, verifiedState, state, className;
 
     element         = this.element;
-    state           = this.toCamelCase(string);
+    state           = JssService.toCamelCase(string);
     className       = this.classNamePrefix() + "__is" + state;
     // Check if this.state is an array, and make it one if not.
     if (Array.isArray(this.state) == false ) {
@@ -30,7 +30,7 @@ Jss.prototype.hasState = function(string) {
 
 Jss.prototype.removeState = function(str) {
 
-    var state      = this.toCamelCase(str);
+    var state      = JssService.toCamelCase(str);
     var stateIndex = this.state.indexOf(state);
 
     if (str == "all" || typeof str == "undefined") {

@@ -1,17 +1,26 @@
-// 'use strict'
-// 
-// 
-// For later use...
+var JssModule = function(){};
 
-// var JssModule = function(element, options) {
-//     this.type = "JssModule";
-//     this.setElement(element);
+JssModule.prototype.type               = "JssModule";
+JssModule.prototype.init               = Jss.prototype.init;
+JssModule.prototype.setElement         = Jss.prototype.setElement;
 
-//     if (typeof options === "object") {
-//         if (typeof options.module === "object") {
-//             this.module = options.module;
-//         }
-//     }
-// }
+// Triggers
+JssModule.prototype.findTriggers       = Jss.prototype.findTriggers;
+JssModule.prototype.addTrigger         = Jss.prototype.addTrigger;
 
-// JssModule.prototype = Object.create(Jss.prototype);
+// Actions
+JssModule.prototype.actions            = Object.create(Jss.prototype.actions);
+JssModule.prototype.validateAction     = Jss.prototype.validateAction;
+JssModule.prototype.addAction          = Jss.prototype.addAction;
+
+// Class names
+JssModule.prototype.removeClassName    = Jss.prototype.removeClassName;
+JssModule.prototype.addClassName       = Jss.prototype.addClassName;
+
+// States
+JssModule.prototype.setState           = Jss.prototype.setState;
+JssModule.prototype.hasState           = Jss.prototype.hasState;
+
+// Data attributes
+JssModule.prototype.loadData           = Jss.prototype.loadData;
+JssModule.prototype.updateData         = Jss.prototype.updateData;

@@ -35,7 +35,9 @@ Expand.prototype.init = function(){
                 expand.removeState("Closed");
                 expand.status = true;
             }
-        }, false)
+        }, {
+            addDefaults:false
+        })
 
     });
 }

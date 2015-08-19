@@ -36,18 +36,22 @@ JssService.forbiddenProperties = [
 ];
 
 /**
+ * -----------------------------------------------------------------------------
  * Is Module
+ * -----------------------------------------------------------------------------
  *
+ * @param  {object} element                                                     domElement
+ * @param  {string} moduleName                                                  Name of the module
  * @return {boolean} true if element is a module, otherwise false
  */
-JssService.isModule = function(element, module) {
+JssService.isModule = function(element, moduleName) {
     var arr = element.className.split(" ");
     var found = false;
 
     for (var i = 0; i < arr.length; i++) {
-        if (arr[i].indexOf(module)        > -1 &&
-            arr[i].indexOf(module + "_") == -1 &&
-            arr[i].indexOf(module + "-") == -1)
+        if (arr[i].indexOf(moduleName)        > -1 &&
+            arr[i].indexOf(moduleName + "_") == -1 &&
+            arr[i].indexOf(moduleName + "-") == -1)
         {
             found = true;
             break;
@@ -57,14 +61,22 @@ JssService.isModule = function(element, module) {
 }
 
 /**
+ * -----------------------------------------------------------------------------
  * To CamelCase
+ * -----------------------------------------------------------------------------
  *
+ * @param  {string} input                                                       String or array which needs to be camelcased
  * @return {string} a camelcased string
  */
-JssService.toCamelCase = function(string) {
+JssService.toCamelCase = function(input) {
     var arr, res;
     res = "";
-    arr = string.split(" ");
+    if (typeof input === "string") {
+        arr = input.split(" ");
+    } else {
+        arr = input;                                                            // Assume it is an array
+    }
+
     var i = 0;
     for (var i in arr) {
         if (typeof i != "undefined") {
@@ -74,13 +86,49 @@ JssService.toCamelCase = function(string) {
     return res;
 }
 
+
+
 /**
+ * -----------------------------------------------------------------------------
+ * Get option
+ * -----------------------------------------------------------------------------
+ * @param  {string} name                                                        Keyname in optionList
+ * @param  {array} optionList                                                   Array with all possible options
+ * @return {}                                                                   Copy of the value (optionsList[name])
+ */
+JssService.getOption = function(name, optionList) {
+    if (typeof optionList !== "object") {
+        return false;
+    }
+
+    var r;
+
+    switch (name) {
+        case "addDefaults":
+            if (name == false && typeof name !== "undefined") {
+                r = false;
+            } else {
+                r = true;
+            }
+        break;
+        default:
+        r = optionList[name]
+    }
+
+    return r;
+}
+
+/**
+ * -----------------------------------------------------------------------------
  * Is Trigger
+ * -----------------------------------------------------------------------------
  *
+ * @param  {object} element                                                     domElement
+ * @param  {string} moduleName                                                  Name of the module
  * @return {boolean} true if element is a module, otherwise false
  */
 JssService.isTrigger = function(element, module) {
-    if (element.className.indexOf(module + "--") > -1) {
+    if (element.className.indexOf(moduleName + "--") > -1) {
         return true;
     } else {
         return false;
@@ -88,8 +136,12 @@ JssService.isTrigger = function(element, module) {
 }
 
 /**
+ * -----------------------------------------------------------------------------
  * Get trigger name
+ * -----------------------------------------------------------------------------
  *
+ * @param  {object} element                                                     domElement
+ * @param  {string} moduleName                                                  Name of the module
  * @return {string} Name of the trigger.
  */
 JssService.getTriggerName = function(element, moduleName) {
@@ -113,14 +165,17 @@ JssService.getTriggerName = function(element, moduleName) {
 }
 
 /**
+ * -----------------------------------------------------------------------------
  * Trigger name is allowed
+ * -----------------------------------------------------------------------------
  *
+ * @param  {object} element                                                     domElement
+ * @param  {string} moduleName                                                  Name of the module
  * @return {boolean} True if the triggername is allowed, otherwise false.
  */
-JssService.triggerNameIsAllowed = function(element, module) {
-    if (JssService.forbiddenProperties.indexOf(this.getTriggerName(element, module)) > -1) {
-        // This triggerName is a core property, throw error
-        console.error('Triggername `' + getTriggerName(element,module) + '` is not allowed. Change the trigger so it does not corresponds any of these: ' + JssService.forbiddenProperties)
+JssService.triggerNameIsAllowed = function(element, moduleName) {
+    if (JssService.forbiddenProperties.indexOf(this.getTriggerName(element, moduleName)) > -1) {      // This triggerName is a core property, throw error
+        console.error('Triggername `' + getTriggerName(element,moduleName) + '` is not allowed. Change the trigger so it does not corresponds any of these: ' + JssService.forbiddenProperties)
         return false;
     }
     return true;

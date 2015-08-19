@@ -10,4 +10,3 @@ JssTrigger.prototype.addClassName       = Jss.prototype.addClassName;
 JssTrigger.prototype.setState           = Jss.prototype.setState;
 JssTrigger.prototype.hasState           = Jss.prototype.hasState;
 JssTrigger.prototype.removeState        = Jss.prototype.removeState;
-

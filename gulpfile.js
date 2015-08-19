@@ -10,9 +10,11 @@ var jsLocation   = [
     jssPrefix + 'jss.module.js',
     jssPrefix + 'jss.trigger.js',
     jssPrefix + 'core.classNames.js',
+    jssPrefix + 'core.dataAttributes.js',
     jssPrefix + 'core.states.js',
     jssPrefix + 'module.test.js',
     jssPrefix + 'module.expand.js',
+    jssPrefix + 'module.truncate.js',
     jssPrefix + 'jss.controller.js',
 ];
 gulp.task('styles', function() {

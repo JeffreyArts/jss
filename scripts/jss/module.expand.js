@@ -1,24 +1,21 @@
 'use strict'
 
-
-
-
 //----------------------------------------------
 //  Module defaults
 //----------------------------------------------
 
 var Expand = function(element) {
-
     this.moduleName = "expand"; // This is the name which corresponds with the className && JssService.activeModuless
 }
-
-
 Expand.prototype = Object.create(Jss.prototype);
+
+
+
+
 
 //------------------------------------------
 //  Module customs
 //------------------------------------------
-
 
 Expand.prototype.init = function(){
     var expand = this;

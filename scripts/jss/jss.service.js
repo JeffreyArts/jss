@@ -6,6 +6,7 @@ var JssService = {};
 JssService.activeModules   = [
     "expand",
     "test",
+    "truncate",
 ]
 
 // Set this to false in a live environment

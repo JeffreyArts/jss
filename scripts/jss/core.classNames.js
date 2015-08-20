@@ -1,3 +1,12 @@
+/**
+ * -----------------------------------------------------------------------------
+ * Class name prefix
+ * -----------------------------------------------------------------------------
+ * The prefix equals the modulename, or - when it's a trigger object - modulename--triggername
+ *
+ * @param  {string}  [description]
+ * @return {string}      [description]
+ */
 Jss.prototype.classNamePrefix = function(data) {
     if (this.type == "JssTrigger") {
         return this.moduleName + "--" + this.triggerName;
@@ -5,15 +14,28 @@ Jss.prototype.classNamePrefix = function(data) {
         return this.moduleName;
     }
 }
-Jss.prototype.removeClassName = function(data) {
+
+/**
+ * -----------------------------------------------------------------------------
+ * Remove class name
+ * -----------------------------------------------------------------------------
+ * Removes the `this.element` classname
+ * 	- "all" || undefined        > Removes ALL classnames
+ *  - "allStates" || "states"   > Remove all STATES
+ *  - all other strings remove that specific string from the className
+ *
+ * @param {string}
+ * @return {undefined}
+ */
+Jss.prototype.removeClassName = function(input) {
 
     var classList  = [];
 
-    if (data == "all" || typeof data == "undefined") {
+    if (input == "all" || typeof input == "undefined") {
 
         this.element.className = "";
 
-    } else if (data == "states" || data == "allStates") {
+    } else if (input == "states" || input == "allStates") {
 
         classList = this.element.className.split(" ");
         for (var i in classList) {
@@ -24,12 +46,23 @@ Jss.prototype.removeClassName = function(data) {
         }
         this.element.className = classList.join(" ");
 
-    } else if(typeof data == "string") {
+    } else if(typeof input == "string") {
         this.element.className = this.element.className.replace(data,"");
+    } else {
+        console.error("removeClassName: parameter should be a string");
     }
 }
 
-
+/**
+ * -----------------------------------------------------------------------------
+ * Add class name
+ * -----------------------------------------------------------------------------
+ * Adds a class name by string or array.
+ * Does NOT check for duplicates
+ *
+ * @param  {string}
+ * @return {undefined}
+ */
 Jss.prototype.addClassName = function(data) {
     this.element.className += " ";
     if (typeof data == "string") {

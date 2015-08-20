@@ -6,12 +6,14 @@
     - addAction(request, fn, addDefaults)                                       {string, function, boolean}
 
 *******************************************************************************/
+
 /**
  * -----------------------------------------------------------------------------
  *   Validate action
  * -----------------------------------------------------------------------------
  * Checks if parameter is a valid action, and logs an error when not.
  *
+ * @param {string}                                                              The name of the request
  * @return {boolean} true if a action is valid, otherwise false.
  */
 Jss.prototype.validateAction = function(request) {
@@ -35,10 +37,13 @@ Jss.prototype.validateAction = function(request) {
  * 	 Add Action
  * -----------------------------------------------------------------------------
  * Adds an action to the object, list of possible requests can be found in Jss.actions
- * First argument is a string with the name of the request
- * Second argument is the function which should be triggered
- * Third argument is collection of options
  *
+ * | Options
+ * 		- addDefaults {boolean}                                                 True: add default classes, false: don't
+ *
+ * @param {string}                                                              The name of the request
+ * @param {function}                                                            The function which should be triggered
+ * @param {object}                                                              Options
  * @return {boolean} true if a action is succesfully added, otherwise false.
  */
 Jss.prototype.addAction = function(request, fn, options) {
@@ -47,7 +52,7 @@ Jss.prototype.addAction = function(request, fn, options) {
     var action = self.validateAction(request)
     var element = self.element;
     var succeeded = false;
-    
+
     // Options
     var addDefaults = JssService.getOption("addDefaults", options);
 

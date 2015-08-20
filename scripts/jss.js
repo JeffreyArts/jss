@@ -36,18 +36,22 @@ JssService.forbiddenProperties = [
 ];
 
 /**
+ * -----------------------------------------------------------------------------
  * Is Module
+ * -----------------------------------------------------------------------------
  *
+ * @param  {object} element                                                     domElement
+ * @param  {string} moduleName                                                  Name of the module
  * @return {boolean} true if element is a module, otherwise false
  */
-JssService.isModule = function(element, module) {
+JssService.isModule = function(element, moduleName) {
     var arr = element.className.split(" ");
     var found = false;
 
     for (var i = 0; i < arr.length; i++) {
-        if (arr[i].indexOf(module)        > -1 &&
-            arr[i].indexOf(module + "_") == -1 &&
-            arr[i].indexOf(module + "-") == -1)
+        if (arr[i].indexOf(moduleName)        > -1 &&
+            arr[i].indexOf(moduleName + "_") == -1 &&
+            arr[i].indexOf(moduleName + "-") == -1)
         {
             found = true;
             break;
@@ -57,14 +61,22 @@ JssService.isModule = function(element, module) {
 }
 
 /**
+ * -----------------------------------------------------------------------------
  * To CamelCase
+ * -----------------------------------------------------------------------------
  *
+ * @param  {string} input                                                       String or array which needs to be camelcased
  * @return {string} a camelcased string
  */
-JssService.toCamelCase = function(string) {
+JssService.toCamelCase = function(input) {
     var arr, res;
     res = "";
-    arr = string.split(" ");
+    if (typeof input === "string") {
+        arr = input.split(" ");
+    } else {
+        arr = input;                                                            // Assume it is an array
+    }
+
     var i = 0;
     for (var i in arr) {
         if (typeof i != "undefined") {
@@ -74,13 +86,49 @@ JssService.toCamelCase = function(string) {
     return res;
 }
 
+
+
 /**
+ * -----------------------------------------------------------------------------
+ * Get option
+ * -----------------------------------------------------------------------------
+ * @param  {string} name                                                        Keyname in optionList
+ * @param  {array} optionList                                                   Array with all possible options
+ * @return {}                                                                   Copy of the value (optionsList[name])
+ */
+JssService.getOption = function(name, optionList) {
+    if (typeof optionList !== "object") {
+        return false;
+    }
+
+    var r;
+
+    switch (name) {
+        case "addDefaults":
+            if (name == false && typeof name !== "undefined") {
+                r = false;
+            } else {
+                r = true;
+            }
+        break;
+        default:
+        r = optionList[name]
+    }
+
+    return r;
+}
+
+/**
+ * -----------------------------------------------------------------------------
  * Is Trigger
+ * -----------------------------------------------------------------------------
  *
+ * @param  {object} element                                                     domElement
+ * @param  {string} moduleName                                                  Name of the module
  * @return {boolean} true if element is a module, otherwise false
  */
 JssService.isTrigger = function(element, module) {
-    if (element.className.indexOf(module + "--") > -1) {
+    if (element.className.indexOf(moduleName + "--") > -1) {
         return true;
     } else {
         return false;
@@ -88,8 +136,12 @@ JssService.isTrigger = function(element, module) {
 }
 
 /**
+ * -----------------------------------------------------------------------------
  * Get trigger name
+ * -----------------------------------------------------------------------------
  *
+ * @param  {object} element                                                     domElement
+ * @param  {string} moduleName                                                  Name of the module
  * @return {string} Name of the trigger.
  */
 JssService.getTriggerName = function(element, moduleName) {
@@ -113,14 +165,17 @@ JssService.getTriggerName = function(element, moduleName) {
 }
 
 /**
+ * -----------------------------------------------------------------------------
  * Trigger name is allowed
+ * -----------------------------------------------------------------------------
  *
+ * @param  {object} element                                                     domElement
+ * @param  {string} moduleName                                                  Name of the module
  * @return {boolean} True if the triggername is allowed, otherwise false.
  */
-JssService.triggerNameIsAllowed = function(element, module) {
-    if (JssService.forbiddenProperties.indexOf(this.getTriggerName(element, module)) > -1) {
-        // This triggerName is a core property, throw error
-        console.error('Triggername `' + getTriggerName(element,module) + '` is not allowed. Change the trigger so it does not corresponds any of these: ' + JssService.forbiddenProperties)
+JssService.triggerNameIsAllowed = function(element, moduleName) {
+    if (JssService.forbiddenProperties.indexOf(this.getTriggerName(element, moduleName)) > -1) {      // This triggerName is a core property, throw error
+        console.error('Triggername `' + getTriggerName(element,moduleName) + '` is not allowed. Change the trigger so it does not corresponds any of these: ' + JssService.forbiddenProperties)
         return false;
     }
     return true;
@@ -226,93 +281,33 @@ Jss.prototype.setElement = function(element) {
     }
     this.element = element;
 }
+var JssModule = function(){};
 
-/**
- * -----------------------------------------------------------------------------
- *   Validate action
- * -----------------------------------------------------------------------------
- * Checks if parameter is a valid action, and logs an error when not.
- *
- * @return {boolean} true if a action is valid, otherwise false.
- */
-Jss.prototype.validateAction = function(request) {
-    var result;
-    for (var action in this.actions) {
-        if (this.actions[action].indexOf(request.toLowerCase()) > -1) {
-            result = action;
-            break;
-        }
-    }
-    if (result) {
-        return result;
-    } else {
-        console.error("validateAction: unknown request", request);
-        return false;
-    }
-}
+JssModule.prototype.type               = "JssModule";
+JssModule.prototype.init               = Jss.prototype.init;
+JssModule.prototype.setElement         = Jss.prototype.setElement;
 
-/**
- * -----------------------------------------------------------------------------
- * 	 Add Action
- * -----------------------------------------------------------------------------
- * Adds an action to the object, list of possible actions can be found in Jss.actions
- *
- * @return {boolean} true if a action is succesfully added, otherwise false.
- */
-Jss.prototype.addAction = function(request, fn, d) {
+// Triggers
+JssModule.prototype.findTriggers       = Jss.prototype.findTriggers;
+JssModule.prototype.addTrigger         = Jss.prototype.addTrigger;
 
-    var self = this;
-    var action = self.validateAction(request)
-    var element = self.element;
-    var succeeded = false;
-    // {bool}, if true, this adds the default classes
-    if (d == false && typeof d !== "undefined") {
-        d = false;
-    } else {
-        d = true;
-    }
+// Actions
+JssModule.prototype.actions            = Object.create(Jss.prototype.actions);
+JssModule.prototype.validateAction     = Jss.prototype.validateAction;
+JssModule.prototype.addAction          = Jss.prototype.addAction;
 
-    switch (action) {
+// Class names
+JssModule.prototype.removeClassName    = Jss.prototype.removeClassName;
+JssModule.prototype.addClassName       = Jss.prototype.addClassName;
 
-        case "click":
-            element.addEventListener("click", fn);
-            if (d) { // Default classes
-            element.addEventListener("click", function(){self.setState("Clicked") } );
-            window.addEventListener( "click", function(event) { if (event.target != self.element && self.hasState("Clicked")) {self.removeState("Clicked")} }  );
-            }
-            succeeded = true;
-        break;
+// States
+JssModule.prototype.setState           = Jss.prototype.setState;
+JssModule.prototype.hasState           = Jss.prototype.hasState;
+JssModule.prototype.removeState        = Jss.prototype.removeState;
 
-        case "hover":
-            element.addEventListener("mouseover", fn , false);
-            if (d) { // Default classes
-            element.addEventListener("mouseover", function(){self.setState("Hover")} );
-            element.addEventListener("mouseout",  function(){self.removeState("Hover")} );
-            }
-            succeeded = true;
-        break;
-    }
-
-    return succeeded;
-}
-// 'use strict'
-// 
-// 
-// For later use...
-
-// var JssModule = function(element, options) {
-//     this.type = "JssModule";
-//     this.setElement(element);
-
-//     if (typeof options === "object") {
-//         if (typeof options.module === "object") {
-//             this.module = options.module;
-//         }
-//     }
-// }
-
-// JssModule.prototype = Object.create(Jss.prototype);
-
+// Data attributes
+JssModule.prototype.loadData           = Jss.prototype.loadData;
+JssModule.prototype.updateData         = Jss.prototype.updateData;
 'use strict'
 
 var JssTrigger = function(element, options) {
@@ -334,6 +329,15 @@ var JssTrigger = function(element, options) {
 
 JssTrigger.prototype = Object.create(Jss.prototype);
 
+/**
+ * -----------------------------------------------------------------------------
+ * Class name prefix
+ * -----------------------------------------------------------------------------
+ * The prefix equals the modulename, or - when it's a trigger object - modulename--triggername
+ *
+ * @param  {string}  [description]
+ * @return {string}      [description]
+ */
 Jss.prototype.classNamePrefix = function(data) {
     if (this.type == "JssTrigger") {
         return this.moduleName + "--" + this.triggerName;
@@ -341,15 +345,28 @@ Jss.prototype.classNamePrefix = function(data) {
         return this.moduleName;
     }
 }
-Jss.prototype.removeClassName = function(data) {
+
+/**
+ * -----------------------------------------------------------------------------
+ * Remove class name
+ * -----------------------------------------------------------------------------
+ * Removes the `this.element` classname
+ * 	- "all" || undefined        > Removes ALL classnames
+ *  - "allStates" || "states"   > Remove all STATES
+ *  - all other strings remove that specific string from the className
+ *
+ * @param {string}
+ * @return {undefined}
+ */
+Jss.prototype.removeClassName = function(input) {
 
     var classList  = [];
 
-    if (data == "all" || typeof data == "undefined") {
+    if (input == "all" || typeof input == "undefined") {
 
         this.element.className = "";
 
-    } else if (data == "states" || data == "allStates") {
+    } else if (input == "states" || input == "allStates") {
 
         classList = this.element.className.split(" ");
         for (var i in classList) {
@@ -360,12 +377,23 @@ Jss.prototype.removeClassName = function(data) {
         }
         this.element.className = classList.join(" ");
 
-    } else if(typeof data == "string") {
+    } else if(typeof input == "string") {
         this.element.className = this.element.className.replace(data,"");
+    } else {
+        console.error("removeClassName: parameter should be a string");
     }
 }
 
-
+/**
+ * -----------------------------------------------------------------------------
+ * Add class name
+ * -----------------------------------------------------------------------------
+ * Adds a class name by string or array.
+ * Does NOT check for duplicates
+ *
+ * @param  {string}
+ * @return {undefined}
+ */
 Jss.prototype.addClassName = function(data) {
     this.element.className += " ";
     if (typeof data == "string") {
@@ -383,7 +411,8 @@ Jss.prototype.addClassName = function(data) {
  * If not found, it checks for the attribute in the default object. When that is not being
  * found neither, the normal this[attribute] value is being returned.
  *
- * @return {string} the value of the given attribute
+ * @param {string}                                                              The NAME of the data attribute (data-NAME)
+ * @return {string}                                                             The value of the given attribute
  */
 Jss.prototype.loadData = function(attribute){
 
@@ -407,6 +436,9 @@ Jss.prototype.loadData = function(attribute){
  * -----------------------------------------------------------------------------
  * Set the value to the given attribute. And updates the data-[ATTRIBUTE] value
  *
+ * @param {string}                                                              The NAME of the data attribute (data-NAME="value")
+ * @param {string}                                                              The VALUE of the data attribute (data-name="VALUE")
+ * @param {function}                                                            The function which should be executed when updating this data attribute
  * @return {undefined} -
  */
 
@@ -423,7 +455,17 @@ Jss.prototype.updateData = function(attribute, value, fn){
     }
 }
 
-
+/**
+ * -----------------------------------------------------------------------------
+ * Set State
+ * -----------------------------------------------------------------------------
+ * This updates the state of the object. States are being added to the class name prefix with a double underscore.
+ * If you would have the module `envelope` and give it the state `open`. The class name `envelope__open` will be added.
+ * Whenever you remove the state `open`, the according class name will be removed as well.
+ *
+ * @param  {string}
+ * @return {boolean}                                                            True on success, otherwise false (might already have the state)
+ */
 Jss.prototype.setState = function(string) {
     var element, verifiedState, state, className;
 
@@ -435,14 +477,25 @@ Jss.prototype.setState = function(string) {
         this.state = [];
     }
 
-    // This if statement prevents that the same state is being set twice or more
+    // This if statement prevents that the same state is being set multiple times
     if ( !this.hasState(string) ) {
         this.addClassName(className)
         this.state.push(state);
+        return true;
+    } else {
+        return false;
     }
 }
 
-
+/**
+ * -----------------------------------------------------------------------------
+ * Has state
+ * -----------------------------------------------------------------------------
+ * Checks if the parameter is already a state and returns true if so. Otherwise false.
+ *
+ * @param  {string}
+ * @return {boolean}                                                            True if it has the given state, otherwise false
+ */
 Jss.prototype.hasState = function(string) {
     if (typeof this.state == "object" && this.state.indexOf(string) >= 0) {
         return true;
@@ -452,7 +505,15 @@ Jss.prototype.hasState = function(string) {
 }
 
 
-
+/**
+ * -----------------------------------------------------------------------------
+ * Remove state
+ * -----------------------------------------------------------------------------
+ * Removes the state from the states array, and from the element.className
+ *
+ * @param  {string}                                                             The name of the state which should be removed
+ * @return {undefined}
+ */
 Jss.prototype.removeState = function(str) {
 
     var state      = JssService.toCamelCase(str);
@@ -544,7 +605,9 @@ Expand.prototype.init = function(){
                 expand.removeState("Closed");
                 expand.status = true;
             }
-        }, false)
+        }, {
+            addDefaults:false
+        })
 
     });
 }

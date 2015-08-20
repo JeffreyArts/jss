@@ -20,6 +20,7 @@ JssModule.prototype.addClassName       = Jss.prototype.addClassName;
 // States
 JssModule.prototype.setState           = Jss.prototype.setState;
 JssModule.prototype.hasState           = Jss.prototype.hasState;
+JssModule.prototype.removeState        = Jss.prototype.removeState;
 
 // Data attributes
 JssModule.prototype.loadData           = Jss.prototype.loadData;

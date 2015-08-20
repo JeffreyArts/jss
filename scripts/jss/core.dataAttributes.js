@@ -6,7 +6,8 @@
  * If not found, it checks for the attribute in the default object. When that is not being
  * found neither, the normal this[attribute] value is being returned.
  *
- * @return {string} the value of the given attribute
+ * @param {string}                                                              The NAME of the data attribute (data-NAME)
+ * @return {string}                                                             The value of the given attribute
  */
 Jss.prototype.loadData = function(attribute){
 
@@ -30,6 +31,9 @@ Jss.prototype.loadData = function(attribute){
  * -----------------------------------------------------------------------------
  * Set the value to the given attribute. And updates the data-[ATTRIBUTE] value
  *
+ * @param {string}                                                              The NAME of the data attribute (data-NAME="value")
+ * @param {string}                                                              The VALUE of the data attribute (data-name="VALUE")
+ * @param {function}                                                            The function which should be executed when updating this data attribute
  * @return {undefined} -
  */
 

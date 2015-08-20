@@ -105,10 +105,10 @@ JssService.getOption = function(name, optionList) {
 
     switch (name) {
         case "addDefaults":
-            if (name == false && typeof name !== "undefined") {
-                r = false;
-            } else {
+            if (optionList[name] !== false || typeof optionList[name] === "undefined") {
                 r = true;
+            } else {
+                r = false;
             }
         break;
         default:
@@ -127,7 +127,7 @@ JssService.getOption = function(name, optionList) {
  * @param  {string} moduleName                                                  Name of the module
  * @return {boolean} true if element is a module, otherwise false
  */
-JssService.isTrigger = function(element, module) {
+JssService.isTrigger = function(element, moduleName) {
     if (element.className.indexOf(moduleName + "--") > -1) {
         return true;
     } else {

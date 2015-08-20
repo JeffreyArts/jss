@@ -19,11 +19,11 @@ Jss.prototype.setState = function(string) {
     if (Array.isArray(this.state) == false ) {
         this.state = [];
     }
-
     // This if statement prevents that the same state is being set multiple times
     if ( !this.hasState(string) ) {
         this.addClassName(className)
         this.state.push(state);
+        console.log(this.state);
         return true;
     } else {
         return false;

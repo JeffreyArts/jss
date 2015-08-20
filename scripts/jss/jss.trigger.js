@@ -1,7 +1,6 @@
 'use strict'
 
 var JssTrigger = function(element, options) {
-    this.type = "JssTrigger";
     this.setElement(element);
 
     if (typeof options === "object") {
@@ -17,4 +16,22 @@ var JssTrigger = function(element, options) {
     }
 }
 
-JssTrigger.prototype = Object.create(Jss.prototype);
+
+JssTrigger.prototype                    = Object.create(Jss.prototype);
+JssTrigger.prototype.type               = "JssTrigger";
+JssTrigger.prototype.setElement         = Jss.prototype.setElement;
+
+// Actions
+//JssTrigger.prototype.actions            = Object.create(Jss.prototype.actions);
+JssTrigger.prototype.validateAction     = Jss.prototype.validateAction;
+JssTrigger.prototype.addAction          = Jss.prototype.addAction;
+
+// Class names
+JssTrigger.prototype.removeClassName    = Jss.prototype.removeClassName;
+JssTrigger.prototype.addClassName       = Jss.prototype.addClassName;
+
+// States
+JssTrigger.prototype.setState           = Jss.prototype.setState;
+JssTrigger.prototype.hasState           = Jss.prototype.hasState;
+JssTrigger.prototype.removeState        = Jss.prototype.removeState;
+

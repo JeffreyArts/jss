@@ -18,8 +18,8 @@
  */
 Jss.prototype.validateAction = function(request) {
     var result;
-    for (var action in this.actions) {
-        if (this.actions[action].indexOf(request.toLowerCase()) > -1) {
+    for (var action in JssService.actions) {
+        if (JssService.actions[action].indexOf(request.toLowerCase()) > -1) {
             result = action;
             break;
         }
@@ -48,34 +48,48 @@ Jss.prototype.validateAction = function(request) {
  */
 Jss.prototype.addAction = function(request, fn, options) {
 
-    var self = this;
-    var action = self.validateAction(request)
-    var element = self.element;
-    var succeeded = false;
+    var self        = this;
+    var action      = self.validateAction(request)
+    var element     = self.element;
+    var actions     = [];
 
     // Options
     var addDefaults = JssService.getOption("addDefaults", options);
-
+    console.log(request, addDefaults);
     switch (action) {
 
         case "click":
-            element.addEventListener("click", fn);
+            actions.push(element.addEventListener("click", fn));
             if (addDefaults) {                                                  // Add defaults
-            element.addEventListener("click", function(){self.setState("Clicked") } );
-            window.addEventListener( "click", function(event) { if (event.target != self.element && self.hasState("Clicked")) {self.removeState("Clicked")} }  );
-            }
-            succeeded = true;
+                actions.push(element.addEventListener("click", function(){
+                    self.setState("Clicked")
+                }));
+                actions.push(window.addEventListener( "click", function(event) {
+                    if (event.target != self.element && self.hasState("Clicked")) {
+                        self.removeState("Clicked")
+                    }
+                }));
+            } // End addDefaults
         break;
 
         case "hover":
-            element.addEventListener("mouseover", fn , false);
+            actions.push(element.addEventListener("mouseover", fn , false));
             if (addDefaults) {                                                  // Add defaults
-            element.addEventListener("mouseover", function(){self.setState("Hover")} );
-            element.addEventListener("mouseout",  function(){self.removeState("Hover")} );
+                actions.push(element.addEventListener("mouseover", function(){
+                    self.setState("Hover")
+                }));
+                actions.push(element.addEventListener("mouseout",  function(){
+                    self.removeState("Hover")
+                }));
             }
-            succeeded = true;
         break;
     }
 
-    return succeeded;
+    this.actions
+
+    if (actions.length > 0) {
+        return true;
+    } else {
+        return false;
+    }
 }

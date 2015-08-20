@@ -7,7 +7,6 @@ Jss.prototype.type      = "Jss"
 Jss.prototype.triggers  = {};
 Jss.prototype.element   = undefined;                                              // {obj} domElement
 Jss.prototype.state     = undefined;                                              // {str} State of module, is reflected by the css class __isState
-Jss.prototype.actions   = JssService.actions;
 
 Jss.prototype.findTriggers = function(element) {
     var self = this;

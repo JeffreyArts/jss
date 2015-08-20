@@ -29,7 +29,7 @@ var Test = function(element) {
     })
     self.addAction('hover',function(){
 
-    });
+    }, {addDefaults: true});
 }
 
 

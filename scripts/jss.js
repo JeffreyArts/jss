@@ -105,10 +105,10 @@ JssService.getOption = function(name, optionList) {
 
     switch (name) {
         case "addDefaults":
-            if (name == false && typeof name !== "undefined") {
-                r = false;
-            } else {
+            if (optionList[name] !== false || typeof optionList[name] === "undefined") {
                 r = true;
+            } else {
+                r = false;
             }
         break;
         default:
@@ -127,7 +127,7 @@ JssService.getOption = function(name, optionList) {
  * @param  {string} moduleName                                                  Name of the module
  * @return {boolean} true if element is a module, otherwise false
  */
-JssService.isTrigger = function(element, module) {
+JssService.isTrigger = function(element, moduleName) {
     if (element.className.indexOf(moduleName + "--") > -1) {
         return true;
     } else {
@@ -189,7 +189,6 @@ Jss.prototype.type      = "Jss"
 Jss.prototype.triggers  = {};
 Jss.prototype.element   = undefined;                                              // {obj} domElement
 Jss.prototype.state     = undefined;                                              // {str} State of module, is reflected by the css class __isState
-Jss.prototype.actions   = JssService.actions;
 
 Jss.prototype.findTriggers = function(element) {
     var self = this;
@@ -281,54 +280,6 @@ Jss.prototype.setElement = function(element) {
     }
     this.element = element;
 }
-var JssModule = function(){};
-
-JssModule.prototype.type               = "JssModule";
-JssModule.prototype.init               = Jss.prototype.init;
-JssModule.prototype.setElement         = Jss.prototype.setElement;
-
-// Triggers
-JssModule.prototype.findTriggers       = Jss.prototype.findTriggers;
-JssModule.prototype.addTrigger         = Jss.prototype.addTrigger;
-
-// Actions
-JssModule.prototype.actions            = Object.create(Jss.prototype.actions);
-JssModule.prototype.validateAction     = Jss.prototype.validateAction;
-JssModule.prototype.addAction          = Jss.prototype.addAction;
-
-// Class names
-JssModule.prototype.removeClassName    = Jss.prototype.removeClassName;
-JssModule.prototype.addClassName       = Jss.prototype.addClassName;
-
-// States
-JssModule.prototype.setState           = Jss.prototype.setState;
-JssModule.prototype.hasState           = Jss.prototype.hasState;
-JssModule.prototype.removeState        = Jss.prototype.removeState;
-
-// Data attributes
-JssModule.prototype.loadData           = Jss.prototype.loadData;
-JssModule.prototype.updateData         = Jss.prototype.updateData;
-'use strict'
-
-var JssTrigger = function(element, options) {
-    this.type = "JssTrigger";
-    this.setElement(element);
-
-    if (typeof options === "object") {
-        if (typeof options.module === "object") {
-            this.module = options.module;
-        }
-        if (typeof options.moduleName === "string") {
-            this.moduleName = options.moduleName;
-        }
-        if (typeof options.triggerName === "string") {
-            this.triggerName = options.triggerName;
-        }
-    }
-}
-
-JssTrigger.prototype = Object.create(Jss.prototype);
-
 /**
  * -----------------------------------------------------------------------------
  * Class name prefix
@@ -378,7 +329,7 @@ Jss.prototype.removeClassName = function(input) {
         this.element.className = classList.join(" ");
 
     } else if(typeof input == "string") {
-        this.element.className = this.element.className.replace(data,"");
+        this.element.className = this.element.className.replace(input,"");
     } else {
         console.error("removeClassName: parameter should be a string");
     }
@@ -476,11 +427,11 @@ Jss.prototype.setState = function(string) {
     if (Array.isArray(this.state) == false ) {
         this.state = [];
     }
-
     // This if statement prevents that the same state is being set multiple times
     if ( !this.hasState(string) ) {
         this.addClassName(className)
         this.state.push(state);
+        console.log(this.state);
         return true;
     } else {
         return false;
@@ -531,6 +482,166 @@ Jss.prototype.removeState = function(str) {
     }
 }
 
+/*******************************************************************************
+
+    Actions
+
+    - validateAction(request)                                                   {string}
+    - addAction(request, fn, addDefaults)                                       {string, function, boolean}
+
+*******************************************************************************/
+
+/**
+ * -----------------------------------------------------------------------------
+ *   Validate action
+ * -----------------------------------------------------------------------------
+ * Checks if parameter is a valid action, and logs an error when not.
+ *
+ * @param {string}                                                              The name of the request
+ * @return {boolean} true if a action is valid, otherwise false.
+ */
+Jss.prototype.validateAction = function(request) {
+    var result;
+    for (var action in JssService.actions) {
+        if (JssService.actions[action].indexOf(request.toLowerCase()) > -1) {
+            result = action;
+            break;
+        }
+    }
+    if (result) {
+        return result;
+    } else {
+        console.error("validateAction: unknown request", request);
+        return false;
+    }
+}
+
+/**
+ * -----------------------------------------------------------------------------
+ * 	 Add Action
+ * -----------------------------------------------------------------------------
+ * Adds an action to the object, list of possible requests can be found in Jss.actions
+ *
+ * | Options
+ * 		- addDefaults {boolean}                                                 True: add default classes, false: don't
+ *
+ * @param {string}                                                              The name of the request
+ * @param {function}                                                            The function which should be triggered
+ * @param {object}                                                              Options
+ * @return {boolean} true if a action is succesfully added, otherwise false.
+ */
+Jss.prototype.addAction = function(request, fn, options) {
+
+    var self        = this;
+    var action      = self.validateAction(request)
+    var element     = self.element;
+    var actions     = [];
+
+    // Options
+    var addDefaults = JssService.getOption("addDefaults", options);
+    console.log(request, addDefaults);
+    switch (action) {
+
+        case "click":
+            actions.push(element.addEventListener("click", fn));
+            if (addDefaults) {                                                  // Add defaults
+                actions.push(element.addEventListener("click", function(){
+                    self.setState("Clicked")
+                }));
+                actions.push(window.addEventListener( "click", function(event) {
+                    if (event.target != self.element && self.hasState("Clicked")) {
+                        self.removeState("Clicked")
+                    }
+                }));
+            } // End addDefaults
+        break;
+
+        case "hover":
+            actions.push(element.addEventListener("mouseover", fn , false));
+            if (addDefaults) {                                                  // Add defaults
+                actions.push(element.addEventListener("mouseover", function(){
+                    self.setState("Hover")
+                }));
+                actions.push(element.addEventListener("mouseout",  function(){
+                    self.removeState("Hover")
+                }));
+            }
+        break;
+    }
+
+    this.actions
+
+    if (actions.length > 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+var JssModule = function(){};
+
+JssModule.prototype.type               = "JssModule";
+JssModule.prototype.init               = Jss.prototype.init;
+JssModule.prototype.setElement         = Jss.prototype.setElement;
+
+// Triggers
+JssModule.prototype.findTriggers       = Jss.prototype.findTriggers;
+JssModule.prototype.addTrigger         = Jss.prototype.addTrigger;
+
+// Actions
+//JssModule.prototype.actions            = Object.create(Jss.prototype.actions);
+JssModule.prototype.validateAction     = Jss.prototype.validateAction;
+JssModule.prototype.addAction          = Jss.prototype.addAction;
+
+// Class names
+JssModule.prototype.removeClassName    = Jss.prototype.removeClassName;
+JssModule.prototype.addClassName       = Jss.prototype.addClassName;
+
+// States
+JssModule.prototype.setState           = Jss.prototype.setState;
+JssModule.prototype.hasState           = Jss.prototype.hasState;
+JssModule.prototype.removeState        = Jss.prototype.removeState;
+
+// Data attributes
+JssModule.prototype.loadData           = Jss.prototype.loadData;
+JssModule.prototype.updateData         = Jss.prototype.updateData;
+'use strict'
+
+var JssTrigger = function(element, options) {
+    this.setElement(element);
+
+    if (typeof options === "object") {
+        if (typeof options.module === "object") {
+            this.module = options.module;
+        }
+        if (typeof options.moduleName === "string") {
+            this.moduleName = options.moduleName;
+        }
+        if (typeof options.triggerName === "string") {
+            this.triggerName = options.triggerName;
+        }
+    }
+}
+
+
+JssTrigger.prototype                    = Object.create(Jss.prototype);
+JssTrigger.prototype.type               = "JssTrigger";
+JssTrigger.prototype.setElement         = Jss.prototype.setElement;
+
+// Actions
+//JssTrigger.prototype.actions            = Object.create(Jss.prototype.actions);
+JssTrigger.prototype.validateAction     = Jss.prototype.validateAction;
+JssTrigger.prototype.addAction          = Jss.prototype.addAction;
+
+// Class names
+JssTrigger.prototype.removeClassName    = Jss.prototype.removeClassName;
+JssTrigger.prototype.addClassName       = Jss.prototype.addClassName;
+
+// States
+JssTrigger.prototype.setState           = Jss.prototype.setState;
+JssTrigger.prototype.hasState           = Jss.prototype.hasState;
+JssTrigger.prototype.removeState        = Jss.prototype.removeState;
+
+
 
 var Test = function(element) {
 
@@ -562,7 +673,7 @@ var Test = function(element) {
     })
     self.addAction('hover',function(){
 
-    });
+    }, {addDefaults: true});
 }
 
 

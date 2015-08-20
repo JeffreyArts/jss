@@ -9,7 +9,7 @@ JssModule.prototype.findTriggers       = Jss.prototype.findTriggers;
 JssModule.prototype.addTrigger         = Jss.prototype.addTrigger;
 
 // Actions
-JssModule.prototype.actions            = Object.create(Jss.prototype.actions);
+//JssModule.prototype.actions            = Object.create(Jss.prototype.actions);
 JssModule.prototype.validateAction     = Jss.prototype.validateAction;
 JssModule.prototype.addAction          = Jss.prototype.addAction;
 

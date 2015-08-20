@@ -47,7 +47,7 @@ Jss.prototype.removeClassName = function(input) {
         this.element.className = classList.join(" ");
 
     } else if(typeof input == "string") {
-        this.element.className = this.element.className.replace(data,"");
+        this.element.className = this.element.className.replace(input,"");
     } else {
         console.error("removeClassName: parameter should be a string");
     }

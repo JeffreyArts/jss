@@ -7,14 +7,18 @@ var jssPrefix     = './scripts/jss/';
 var jsLocation   = [
     jssPrefix + 'jss.service.js',
     jssPrefix + 'jss.core.js',
-    jssPrefix + 'jss.module.js',
-    jssPrefix + 'jss.trigger.js',
+    jssPrefix + 'core.actions.js',
     jssPrefix + 'core.classNames.js',
     jssPrefix + 'core.dataAttributes.js',
     jssPrefix + 'core.states.js',
+
+    jssPrefix + 'jss.module.js',
+    jssPrefix + 'jss.trigger.js',
+
     jssPrefix + 'module.test.js',
     jssPrefix + 'module.expand.js',
     jssPrefix + 'module.truncate.js',
+
     jssPrefix + 'jss.controller.js',
 ];
 gulp.task('styles', function() {

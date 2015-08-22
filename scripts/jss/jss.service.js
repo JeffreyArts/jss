@@ -20,12 +20,13 @@ JssService.dev             = true;
 
 
 JssService.actions = {
-    hover:      ['hover',    'mouseOver',   'onMouseOver'],
-    click:      ['click',    'onClick'      ],
-    focus:      ['focus',    'onFocus'      ],
-    change:     ['change',   'onChange'     ],
-    mouseIn:    ['mouseIn',  'onMouseIn'    ],
-    mouseOut:   ['mouseOut', 'onMouseOut'   ],
+    hover:      ['hover',    'mouseOver',   'onMouseOver'                       ],
+    click:      ['click',    'onClick'                                          ],
+    focus:      ['focus',    'onFocus'                                          ],
+    resize:     ['resize',   'onResize'                                         ],
+    change:     ['change',   'onChange'                                         ],
+    mouseIn:    ['mouseIn',  'onMouseIn'                                        ],
+    mouseOut:   ['mouseOut', 'onMouseOut'                                       ],
 };
 
 JssService.forbiddenProperties = [

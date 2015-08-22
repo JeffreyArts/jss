@@ -19,15 +19,14 @@ Truncate.prototype.init = function(){
 
     self.default = {
         lines: 1,
-        ellipsis: false
+        ellepsis: false
     };
 
 
     self.ellepsis   = self.loadData("ellepsis");                                 // "..." || undefined
-    self.lines      = self.loadData("lines");
+    self.lines      = parseInt(self.loadData("lines"),10);
 
     self.lineHeight         = self.setDefaultLineHeight();
-    self.numberOfLines      = self.calculateNumberOfLines();
     self.originalText       = self.getText();
 
     if ( isNaN(parseInt(self.lines, 10))) {
@@ -37,31 +36,44 @@ Truncate.prototype.init = function(){
     self.updateText();
 
     self.addAction("screen.resize", function(trigger) {
-        if (self.numberOfLines >= self.calculateNumberOfLines()) {
-
+        if (self.lines <= self.calculateNumberOfLines()) {
+            self.updateText();
         }
-
     });
 }
 
 
 /**
  * -----------------------------------------------------------------------------
- * Set DEFAULT line-height
+ * Update text
  * -----------------------------------------------------------------------------
  *
- * Upddate textContent word by word, and when more lines are added then required,
+ * Update textContent word by word, and when more lines are added then required,
  * remove the last word.
  *
- * @return {number} on succes, otherwise false
+ * 		! UPDATES
+ * 		  - this.element.textContent
+ *
+ * @return {string}
  */
 Truncate.prototype.updateText = function(){
+    var text = this.originalText;
+    if (this.ellepsis.length > 0) {
+        text += this.ellepsis
+    }
+    var splittedText = text.split(" ");
 
-    var splittedText = this.originalText.split(" ");
+    text = this.addWord(splittedText);
+    if (text.length > this.originalText.length) {
+        text= this.originalText;
+    } else {
+        text = text.substring(0, text.lastIndexOf(" "));
+        if (this.ellepsis.length > 0) {
+            text += this.ellepsis
+        }
+    }
 
-    this.element.textContent =  this.addWord(splittedText)
-                                .substring(0, this.element.textContent.lastIndexOf(" "));
-    return this.element.textContent;
+    return this.element.textContent = text;
 }
 
 
@@ -74,10 +86,14 @@ Truncate.prototype.addWord = function(array, string, index){
         string = "";
     }
     newString = string + " " + array[index];
+
     this.element.textContent = newString;
+    if (this.ellepsis.length > 0) {
+        this.element.textContent += this.ellepsis;
+    }
 
     //console.log(this.lines +" >= " + this.calculateNumberOfLines() +" && " + array.length + " > " + index, newString)
-    if (this.lines >= this.calculateNumberOfLines() && array.length > index) {
+    if (this.lines >= this.calculateNumberOfLines() && array.length-1 > index) {
         return this.addWord(array, newString, index+1);
     } else {
         return newString;
@@ -95,7 +111,7 @@ Truncate.prototype.setDefaultLineHeight = function(){
     if (lineHeight == 'normal' || lineHeight.length >= 0) {
         lineHeight = 1.4;
     }
-    if (JssService.dev) { console.log("Default line-height: ", lineHeight);}    // Only log this value in dev mode
+    //if (JssService.dev) { console.info("Default line-height: ", lineHeight);}    // Only log this value in dev mode
 
     return this.setLineHeight(lineHeight);
 }
@@ -124,7 +140,6 @@ Truncate.prototype.setLineHeight = function(int){
     var containerHeight = parseInt(self.element.clientHeight                                        , 10);
     var fontSize        = parseInt(getComputedStyle(self.element).getPropertyValue('font-size')     , 10);
     var numberOfLines   = Math.round(containerHeight / (self.lineHeight*fontSize));
-
     //if (JssService.dev) { console.log("calculateNumberOfLines: ", numberOfLines);}    // Only log this value in dev mode
 
     return numberOfLines;

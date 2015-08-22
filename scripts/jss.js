@@ -20,12 +20,13 @@ JssService.dev             = true;
 
 
 JssService.actions = {
-    hover:      ['hover',    'mouseOver',   'onMouseOver'],
-    click:      ['click',    'onClick'      ],
-    focus:      ['focus',    'onFocus'      ],
-    change:     ['change',   'onChange'     ],
-    mouseIn:    ['mouseIn',  'onMouseIn'    ],
-    mouseOut:   ['mouseOut', 'onMouseOut'   ],
+    hover:      ['hover',    'mouseOver',   'onMouseOver'                       ],
+    click:      ['click',    'onClick'                                          ],
+    focus:      ['focus',    'onFocus'                                          ],
+    resize:     ['resize',   'onResize'                                         ],
+    change:     ['change',   'onChange'                                         ],
+    mouseIn:    ['mouseIn',  'onMouseIn'                                        ],
+    mouseOut:   ['mouseOut', 'onMouseOut'                                       ],
 };
 
 JssService.forbiddenProperties = [
@@ -280,6 +281,150 @@ Jss.prototype.setElement = function(element) {
     }
     this.element = element;
 }
+/*******************************************************************************
+
+    Actions
+
+    - validateAction(request)                                                   {string}
+    - addAction(request, fn, addDefaults)                                       {string, function, boolean}
+
+*******************************************************************************/
+
+/**
+ * -----------------------------------------------------------------------------
+ *   Validate action
+ * -----------------------------------------------------------------------------
+ * Checks if parameter is a valid action, and logs an error when not.
+ *
+ * @param {string}                                                              The name of the request
+ * @return {boolean} true if a action is valid, otherwise false.
+ */
+Jss.prototype.validateAction = function(request) {
+    var result;
+    request = this.getActionElement(request).request
+    for (var action in JssService.actions) {
+        if (JssService.actions[action].indexOf(request.toLowerCase()) > -1) {
+            result = action;
+            break;
+        }
+    }
+    if (result) {
+        return result;
+    } else {
+        console.error("validateAction: unknown request", request);
+        return false;
+    }
+}
+
+/**
+ * -----------------------------------------------------------------------------
+ * 	 Add Action
+ * -----------------------------------------------------------------------------
+ * Adds an action to the object, list of possible requests can be found in Jss.actions
+ *
+ * | Options
+ * 		- addDefaults {boolean}                                                 True: add default classes, false: don't
+ *
+ * @param {string}                                                              The name of the request
+ * @param {function}                                                            The function which should be triggered
+ * @param {object}                                                              Options
+ * @return {boolean} true if a action is succesfully added, otherwise false.
+ */
+Jss.prototype.addAction = function(request, fn, options) {
+
+    var self        = this;
+    var action      = self.validateAction(request)
+    var actions     = [];
+    var t = self.getActionElement(request);
+    var element     = t.element;
+    var request     = t.request;
+    t = undefined;
+
+    // Options
+    var addDefaults = JssService.getOption("addDefaults", options);
+
+
+
+    switch (action) {
+
+        case "resize":
+
+            actions.push(element.addEventListener("resize", fn));
+
+        break;
+
+            case "click":
+                actions.push(element.addEventListener("click", fn));
+                if (addDefaults) {                                                  // Add defaults
+                    actions.push(element.addEventListener("click", function(){
+                        self.setState("Clicked")
+                    }));
+                    actions.push(window.addEventListener( "click", function(event) {
+                        if (event.target != self.element && self.hasState("Clicked")) {
+                            self.removeState("Clicked")
+                        }
+                    }));
+                } // End addDefaults
+            break;
+
+        case "hover":
+            actions.push(element.addEventListener("mouseover", fn , false));
+            if (addDefaults) {                                                  // Add defaults
+                actions.push(element.addEventListener("mouseover", function(){
+                    self.setState("Hover")
+                }));
+                actions.push(element.addEventListener("mouseout",  function(){
+                    self.removeState("Hover")
+                }));
+            }
+        break;
+    }
+
+    this.actions
+
+    if (actions.length > 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+/**
+ * -----------------------------------------------------------------------------
+ * Get action element
+ * -----------------------------------------------------------------------------
+ * @param  {string}                                                             The request
+ * @return {object}                                                             An object with 2 properties: request && element
+ */
+Jss.prototype.getActionElement = function(request) {
+    var self = this;
+    var prefix = false;
+    var newRequest  = request;
+    var element = self.element;
+    // Set prefix if it exists
+    if (request.indexOf(".") > 0) {
+        var t       = request.split("."),
+        newRequest  = t[1];
+        prefix      = t[0];
+        t = undefined;
+    }
+
+    // Update element according the prefix (or skip it, if not set)
+    if (prefix !== false) {
+        switch (prefix) {
+            case "screen":
+            case "window":
+                element = window;
+            break;
+        }
+    }
+
+    // Return object
+    return {
+        request: newRequest,
+        element: element
+    }
+}
 /**
  * -----------------------------------------------------------------------------
  * Class name prefix
@@ -482,101 +627,6 @@ Jss.prototype.removeState = function(str) {
     }
 }
 
-/*******************************************************************************
-
-    Actions
-
-    - validateAction(request)                                                   {string}
-    - addAction(request, fn, addDefaults)                                       {string, function, boolean}
-
-*******************************************************************************/
-
-/**
- * -----------------------------------------------------------------------------
- *   Validate action
- * -----------------------------------------------------------------------------
- * Checks if parameter is a valid action, and logs an error when not.
- *
- * @param {string}                                                              The name of the request
- * @return {boolean} true if a action is valid, otherwise false.
- */
-Jss.prototype.validateAction = function(request) {
-    var result;
-    for (var action in JssService.actions) {
-        if (JssService.actions[action].indexOf(request.toLowerCase()) > -1) {
-            result = action;
-            break;
-        }
-    }
-    if (result) {
-        return result;
-    } else {
-        console.error("validateAction: unknown request", request);
-        return false;
-    }
-}
-
-/**
- * -----------------------------------------------------------------------------
- * 	 Add Action
- * -----------------------------------------------------------------------------
- * Adds an action to the object, list of possible requests can be found in Jss.actions
- *
- * | Options
- * 		- addDefaults {boolean}                                                 True: add default classes, false: don't
- *
- * @param {string}                                                              The name of the request
- * @param {function}                                                            The function which should be triggered
- * @param {object}                                                              Options
- * @return {boolean} true if a action is succesfully added, otherwise false.
- */
-Jss.prototype.addAction = function(request, fn, options) {
-
-    var self        = this;
-    var action      = self.validateAction(request)
-    var element     = self.element;
-    var actions     = [];
-
-    // Options
-    var addDefaults = JssService.getOption("addDefaults", options);
-    console.log(request, addDefaults);
-    switch (action) {
-
-        case "click":
-            actions.push(element.addEventListener("click", fn));
-            if (addDefaults) {                                                  // Add defaults
-                actions.push(element.addEventListener("click", function(){
-                    self.setState("Clicked")
-                }));
-                actions.push(window.addEventListener( "click", function(event) {
-                    if (event.target != self.element && self.hasState("Clicked")) {
-                        self.removeState("Clicked")
-                    }
-                }));
-            } // End addDefaults
-        break;
-
-        case "hover":
-            actions.push(element.addEventListener("mouseover", fn , false));
-            if (addDefaults) {                                                  // Add defaults
-                actions.push(element.addEventListener("mouseover", function(){
-                    self.setState("Hover")
-                }));
-                actions.push(element.addEventListener("mouseout",  function(){
-                    self.removeState("Hover")
-                }));
-            }
-        break;
-    }
-
-    this.actions
-
-    if (actions.length > 0) {
-        return true;
-    } else {
-        return false;
-    }
-}
 var JssModule = function(){};
 
 JssModule.prototype.type               = "JssModule";
@@ -743,15 +793,14 @@ Truncate.prototype.init = function(){
 
     self.default = {
         lines: 1,
-        ellipsis: false
+        ellepsis: false
     };
 
 
     self.ellepsis   = self.loadData("ellepsis");                                 // "..." || undefined
-    self.lines      = self.loadData("lines");
+    self.lines      = parseInt(self.loadData("lines"),10);
 
     self.lineHeight         = self.setDefaultLineHeight();
-    self.numberOfLines      = self.calculateNumberOfLines();
     self.originalText       = self.getText();
 
     if ( isNaN(parseInt(self.lines, 10))) {
@@ -761,31 +810,44 @@ Truncate.prototype.init = function(){
     self.updateText();
 
     self.addAction("screen.resize", function(trigger) {
-        if (self.numberOfLines >= self.calculateNumberOfLines()) {
-
+        if (self.lines <= self.calculateNumberOfLines()) {
+            self.updateText();
         }
-
     });
 }
 
 
 /**
  * -----------------------------------------------------------------------------
- * Set DEFAULT line-height
+ * Update text
  * -----------------------------------------------------------------------------
  *
- * Upddate textContent word by word, and when more lines are added then required,
+ * Update textContent word by word, and when more lines are added then required,
  * remove the last word.
  *
- * @return {number} on succes, otherwise false
+ * 		! UPDATES
+ * 		  - this.element.textContent
+ *
+ * @return {string}
  */
 Truncate.prototype.updateText = function(){
+    var text = this.originalText;
+    if (this.ellepsis.length > 0) {
+        text += this.ellepsis
+    }
+    var splittedText = text.split(" ");
 
-    var splittedText = this.originalText.split(" ");
+    text = this.addWord(splittedText);
+    if (text.length > this.originalText.length) {
+        text= this.originalText;
+    } else {
+        text = text.substring(0, text.lastIndexOf(" "));
+        if (this.ellepsis.length > 0) {
+            text += this.ellepsis
+        }
+    }
 
-    this.element.textContent =  this.addWord(splittedText)
-                                .substring(0, this.element.textContent.lastIndexOf(" "));
-    return this.element.textContent;
+    return this.element.textContent = text;
 }
 
 
@@ -798,10 +860,14 @@ Truncate.prototype.addWord = function(array, string, index){
         string = "";
     }
     newString = string + " " + array[index];
+
     this.element.textContent = newString;
+    if (this.ellepsis.length > 0) {
+        this.element.textContent += this.ellepsis;
+    }
 
     //console.log(this.lines +" >= " + this.calculateNumberOfLines() +" && " + array.length + " > " + index, newString)
-    if (this.lines >= this.calculateNumberOfLines() && array.length > index) {
+    if (this.lines >= this.calculateNumberOfLines() && array.length-1 > index) {
         return this.addWord(array, newString, index+1);
     } else {
         return newString;
@@ -819,7 +885,7 @@ Truncate.prototype.setDefaultLineHeight = function(){
     if (lineHeight == 'normal' || lineHeight.length >= 0) {
         lineHeight = 1.4;
     }
-    if (JssService.dev) { console.log("Default line-height: ", lineHeight);}    // Only log this value in dev mode
+    //if (JssService.dev) { console.info("Default line-height: ", lineHeight);}    // Only log this value in dev mode
 
     return this.setLineHeight(lineHeight);
 }
@@ -848,7 +914,6 @@ Truncate.prototype.setLineHeight = function(int){
     var containerHeight = parseInt(self.element.clientHeight                                        , 10);
     var fontSize        = parseInt(getComputedStyle(self.element).getPropertyValue('font-size')     , 10);
     var numberOfLines   = Math.round(containerHeight / (self.lineHeight*fontSize));
-
     //if (JssService.dev) { console.log("calculateNumberOfLines: ", numberOfLines);}    // Only log this value in dev mode
 
     return numberOfLines;

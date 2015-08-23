@@ -95,6 +95,19 @@ Jss.prototype.addAction = function(request, fn, options) {
                 }));
             }
         break;
+
+        case "mouseIn":
+
+            actions.push(element.addEventListener("mouseenter", fn , false));
+            if (addDefaults) {                                                  // Add defaults
+                actions.push(element.addEventListener("mouseenter", function(){
+                    self.setState("MouseIn")
+                }));
+                actions.push(element.addEventListener("mouseout",  function(){
+                    self.removeState("MouseIn")
+                }));
+            }
+        break;
     }
 
     this.actions

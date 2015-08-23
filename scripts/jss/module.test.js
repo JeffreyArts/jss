@@ -15,7 +15,7 @@ var Test = function(element) {
 
     self.lightSwitch = false;
 
-    self.addAction('click',function(){
+    self.addAction('mouseIn',function(){
 
         if (self.lightSwitch) {
             self.setState("Closed");
@@ -26,10 +26,14 @@ var Test = function(element) {
             self.removeState("Closed");
             self.lightSwitch = true;
         }
-    })
+    }, {
+        addDefaults: true
+    });
     self.addAction('hover',function(){
 
-    }, {addDefaults: true});
+    }, {
+        addDefaults: true
+    });
 }
 
 

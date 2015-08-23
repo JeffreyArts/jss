@@ -20,13 +20,15 @@ JssService.dev             = true;
 
 
 JssService.actions = {
-    hover:      ['hover',    'mouseOver',   'onMouseOver'                       ],
-    click:      ['click',    'onClick'                                          ],
-    focus:      ['focus',    'onFocus'                                          ],
-    resize:     ['resize',   'onResize'                                         ],
+    hover:      ['hover',    'mouseover',   'onmouseover'                       ],
+    click:      ['click',    'onclick'                                          ],
+    focus:      ['focus',    'onfocus'                                          ],
+    resize:     ['resize',   'onresize'                                         ],
+    keyDown:    ['keydown',  'keypress'                                         ],
+    keyUp:      ['keyup',    'keyrelease'                                       ],
     change:     ['change',   'onChange'                                         ],
-    mouseIn:    ['mouseIn',  'onMouseIn'                                        ],
-    mouseOut:   ['mouseOut', 'onMouseOut'                                       ],
+    mouseIn:    ['mousein',  'onmousein', 'mouseEnter', 'onmouseEnter'          ],
+    mouseOut:   ['mouseOut', 'onmouseOut'                                       ],
 };
 
 JssService.forbiddenProperties = [
@@ -378,6 +380,19 @@ Jss.prototype.addAction = function(request, fn, options) {
                 }));
             }
         break;
+
+        case "mouseIn":
+
+            actions.push(element.addEventListener("mouseenter", fn , false));
+            if (addDefaults) {                                                  // Add defaults
+                actions.push(element.addEventListener("mouseenter", function(){
+                    self.setState("MouseIn")
+                }));
+                actions.push(element.addEventListener("mouseout",  function(){
+                    self.removeState("MouseIn")
+                }));
+            }
+        break;
     }
 
     this.actions
@@ -709,7 +724,7 @@ var Test = function(element) {
 
     self.lightSwitch = false;
 
-    self.addAction('click',function(){
+    self.addAction('mouseIn',function(){
 
         if (self.lightSwitch) {
             self.setState("Closed");
@@ -720,10 +735,14 @@ var Test = function(element) {
             self.removeState("Closed");
             self.lightSwitch = true;
         }
-    })
+    }, {
+        addDefaults: true
+    });
     self.addAction('hover',function(){
 
-    }, {addDefaults: true});
+    }, {
+        addDefaults: true
+    });
 }
 
 

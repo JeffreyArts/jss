@@ -70,19 +70,21 @@ Jss.prototype.addAction = function(request, fn, options) {
 
         break;
 
-            case "click":
-                actions.push(element.addEventListener("click", fn));
-                if (addDefaults) {                                                  // Add defaults
-                    actions.push(element.addEventListener("click", function(){
-                        self.setState("Clicked")
-                    }));
-                    actions.push(window.addEventListener( "click", function(event) {
-                        if (event.target != self.element && self.hasState("Clicked")) {
-                            self.removeState("Clicked")
-                        }
-                    }));
-                } // End addDefaults
-            break;
+
+        case "click":
+            actions.push(element.addEventListener("click", fn));
+            if (addDefaults) {                                                  // Add defaults
+                actions.push(element.addEventListener("click", function(){
+                    self.setState("Clicked")
+                }));
+                actions.push(window.addEventListener( "click", function(event) {
+                    if (event.target != self.element && self.hasState("Clicked")) {
+                        self.removeState("Clicked")
+                    }
+                }));
+            } // End addDefaults
+        break;
+
 
         case "hover":
             actions.push(element.addEventListener("mouseover", fn , false));
@@ -96,6 +98,7 @@ Jss.prototype.addAction = function(request, fn, options) {
             }
         break;
 
+
         case "mouseIn":
 
             actions.push(element.addEventListener("mouseenter", fn , false));
@@ -108,13 +111,13 @@ Jss.prototype.addAction = function(request, fn, options) {
             }
         break;
 
+
         case "mouseOut":
 
             actions.push(element.addEventListener("mouseleave", fn , false));
             if (addDefaults) {                                                  // Add defaults
                 actions.push(element.addEventListener("mouseleave", function(){
                     self.setState("MouseOut")
-                    console.log("ASDF");
                     setTimeout(function(){self.removeState("MouseOut")}, JssService.enterDelay)
 
                 } , false));
@@ -122,7 +125,6 @@ Jss.prototype.addAction = function(request, fn, options) {
         break;
     }
 
-    this.actions
 
     if (actions.length > 0) {
         return true;

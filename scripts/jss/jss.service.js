@@ -20,15 +20,15 @@ JssService.dev             = true;
 
 
 JssService.actions = {
-    hover:      ['hover',    'mouseover',   'onmouseover'                       ],
-    click:      ['click',    'onclick'                                          ],
+    hover:      ['hover',    'mouseover',   'onmouseover'                       ], // Fixed
+    click:      ['click',    'onclick'                                          ], // Fixed
+    mouseIn:    ['mousein',  'onmousein', 'mouseenter', 'onmouseenter'          ], // Fixed
+    mouseOut:   ['mouseout', 'onmouseout', 'mouseleave', 'onmouseleave'         ], // Fixed
+    resize:     ['resize',   'onresize'                                         ], // Fixed
     focus:      ['focus',    'onfocus'                                          ],
-    resize:     ['resize',   'onresize'                                         ],
     keyDown:    ['keydown',  'keypress'                                         ],
     keyUp:      ['keyup',    'keyrelease'                                       ],
     change:     ['change',   'onchange'                                         ],
-    mouseIn:    ['mousein',  'onmousein', 'mouseenter', 'onmouseenter'          ],
-    mouseOut:   ['mouseout', 'onmouseout', 'mouseleave', 'onmouseleave'         ],
 };
 
 JssService.enterDelay = 1000;                                                   // Amount of miliseconds which is used to remove the entered state. (see core.actions) JssService.enterDelay setTimeout

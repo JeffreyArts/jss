@@ -20,15 +20,15 @@ JssService.dev             = true;
 
 
 JssService.actions = {
-    hover:      ['hover',    'mouseover',   'onmouseover'                       ],
-    click:      ['click',    'onclick'                                          ],
+    hover:      ['hover',    'mouseover',   'onmouseover'                       ], // Fixed
+    click:      ['click',    'onclick'                                          ], // Fixed
+    mouseIn:    ['mousein',  'onmousein', 'mouseenter', 'onmouseenter'          ], // Fixed
+    mouseOut:   ['mouseout', 'onmouseout', 'mouseleave', 'onmouseleave'         ], // Fixed
+    resize:     ['resize',   'onresize'                                         ], // Fixed
     focus:      ['focus',    'onfocus'                                          ],
-    resize:     ['resize',   'onresize'                                         ],
     keyDown:    ['keydown',  'keypress'                                         ],
     keyUp:      ['keyup',    'keyrelease'                                       ],
     change:     ['change',   'onchange'                                         ],
-    mouseIn:    ['mousein',  'onmousein', 'mouseenter', 'onmouseenter'          ],
-    mouseOut:   ['mouseout', 'onmouseout', 'mouseleave', 'onmouseleave'         ],
 };
 
 JssService.enterDelay = 1000;                                                   // Amount of miliseconds which is used to remove the entered state. (see core.actions) JssService.enterDelay setTimeout
@@ -191,18 +191,21 @@ JssService.triggerNameIsAllowed = function(element, moduleName) {
 var Jss = function(){};
 
 Jss.prototype.type      = "Jss"
-Jss.prototype.triggers  = {};
+Jss.prototype.triggers  = false;
 Jss.prototype.element   = undefined;                                              // {obj} domElement
 Jss.prototype.state     = undefined;                                              // {str} State of module, is reflected by the css class __isState
 
 Jss.prototype.findTriggers = function(element) {
+    this.triggers = [];                                                         // If this is not set, all modules will have the same reference point to this.triggers.
+    // Module is created, now look for any module triggers
+    this.searchTriggersRecursiveInnerFunction(this.element)
+
+}
+Jss.prototype.searchTriggersRecursiveInnerFunction = function(element) {
     var self = this;
-    self.triggers = [];                                                         // If this is not set, all modules will have the same reference point to self.triggers.
-    if (typeof element == "undefined") {
+    if (typeof element == "undefined" ) {
         element = this.element;
     }
-
-    // Module is created, now look for any module triggers
     if ( element.hasChildNodes() ) {
         for (var i=0; i < element.childNodes.length; i++) {
 
@@ -229,9 +232,13 @@ Jss.prototype.findTriggers = function(element) {
                         self.triggers[triggerName].push(tmp);
                     }
                 }
+                if (childElement.hasChildNodes()) {
+                    self.searchTriggersRecursiveInnerFunction(childElement)
+                }
             }
         }
     }
+    return false;
 }
 
 /**
@@ -357,19 +364,21 @@ Jss.prototype.addAction = function(request, fn, options) {
 
         break;
 
-            case "click":
-                actions.push(element.addEventListener("click", fn));
-                if (addDefaults) {                                                  // Add defaults
-                    actions.push(element.addEventListener("click", function(){
-                        self.setState("Clicked")
-                    }));
-                    actions.push(window.addEventListener( "click", function(event) {
-                        if (event.target != self.element && self.hasState("Clicked")) {
-                            self.removeState("Clicked")
-                        }
-                    }));
-                } // End addDefaults
-            break;
+
+        case "click":
+            actions.push(element.addEventListener("click", fn));
+            if (addDefaults) {                                                  // Add defaults
+                actions.push(element.addEventListener("click", function(){
+                    self.setState("Clicked")
+                }));
+                actions.push(window.addEventListener( "click", function(event) {
+                    if (event.target != self.element && self.hasState("Clicked")) {
+                        self.removeState("Clicked")
+                    }
+                }));
+            } // End addDefaults
+        break;
+
 
         case "hover":
             actions.push(element.addEventListener("mouseover", fn , false));
@@ -383,6 +392,7 @@ Jss.prototype.addAction = function(request, fn, options) {
             }
         break;
 
+
         case "mouseIn":
 
             actions.push(element.addEventListener("mouseenter", fn , false));
@@ -395,13 +405,13 @@ Jss.prototype.addAction = function(request, fn, options) {
             }
         break;
 
+
         case "mouseOut":
 
             actions.push(element.addEventListener("mouseleave", fn , false));
             if (addDefaults) {                                                  // Add defaults
                 actions.push(element.addEventListener("mouseleave", function(){
                     self.setState("MouseOut")
-                    console.log("ASDF");
                     setTimeout(function(){self.removeState("MouseOut")}, JssService.enterDelay)
 
                 } , false));
@@ -409,7 +419,6 @@ Jss.prototype.addAction = function(request, fn, options) {
         break;
     }
 
-    this.actions
 
     if (actions.length > 0) {
         return true;

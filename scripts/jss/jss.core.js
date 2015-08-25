@@ -4,18 +4,21 @@
 var Jss = function(){};
 
 Jss.prototype.type      = "Jss"
-Jss.prototype.triggers  = {};
+Jss.prototype.triggers  = false;
 Jss.prototype.element   = undefined;                                              // {obj} domElement
 Jss.prototype.state     = undefined;                                              // {str} State of module, is reflected by the css class __isState
 
 Jss.prototype.findTriggers = function(element) {
+    this.triggers = [];                                                         // If this is not set, all modules will have the same reference point to this.triggers.
+    // Module is created, now look for any module triggers
+    this.searchTriggersRecursiveInnerFunction(this.element)
+
+}
+Jss.prototype.searchTriggersRecursiveInnerFunction = function(element) {
     var self = this;
-    self.triggers = [];                                                         // If this is not set, all modules will have the same reference point to self.triggers.
-    if (typeof element == "undefined") {
+    if (typeof element == "undefined" ) {
         element = this.element;
     }
-
-    // Module is created, now look for any module triggers
     if ( element.hasChildNodes() ) {
         for (var i=0; i < element.childNodes.length; i++) {
 
@@ -42,9 +45,13 @@ Jss.prototype.findTriggers = function(element) {
                         self.triggers[triggerName].push(tmp);
                     }
                 }
+                if (childElement.hasChildNodes()) {
+                    self.searchTriggersRecursiveInnerFunction(childElement)
+                }
             }
         }
     }
+    return false;
 }
 
 /**

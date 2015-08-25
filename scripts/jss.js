@@ -31,6 +31,8 @@ JssService.actions = {
     mouseOut:   ['mouseOut', 'onmouseOut'                                       ],
 };
 
+JssService.enterDelay = 1000;                                                   // Amount of miliseconds which is used to remove the entered state. (see core.actions) JssService.enterDelay setTimeout
+
 JssService.forbiddenProperties = [
     'type',
     'triggers',
@@ -387,10 +389,9 @@ Jss.prototype.addAction = function(request, fn, options) {
             if (addDefaults) {                                                  // Add defaults
                 actions.push(element.addEventListener("mouseenter", function(){
                     self.setState("MouseIn")
-                }));
-                actions.push(element.addEventListener("mouseout",  function(){
-                    self.removeState("MouseIn")
-                }));
+                    setTimeout(function(){self.removeState("MouseIn")}, JssService.enterDelay)
+
+                } , false));
             }
         break;
     }

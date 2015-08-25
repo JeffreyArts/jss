@@ -102,10 +102,9 @@ Jss.prototype.addAction = function(request, fn, options) {
             if (addDefaults) {                                                  // Add defaults
                 actions.push(element.addEventListener("mouseenter", function(){
                     self.setState("MouseIn")
-                }));
-                actions.push(element.addEventListener("mouseout",  function(){
-                    self.removeState("MouseIn")
-                }));
+                    setTimeout(function(){self.removeState("MouseIn")}, JssService.enterDelay)
+
+                } , false));
             }
         break;
     }

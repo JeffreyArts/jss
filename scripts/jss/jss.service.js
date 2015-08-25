@@ -31,6 +31,8 @@ JssService.actions = {
     mouseOut:   ['mouseOut', 'onmouseOut'                                       ],
 };
 
+JssService.enterDelay = 1000;                                                   // Amount of miliseconds which is used to remove the entered state. (see core.actions) JssService.enterDelay setTimeout
+
 JssService.forbiddenProperties = [
     'type',
     'triggers',

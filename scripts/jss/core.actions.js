@@ -107,6 +107,19 @@ Jss.prototype.addAction = function(request, fn, options) {
                 } , false));
             }
         break;
+
+        case "mouseOut":
+
+            actions.push(element.addEventListener("mouseleave", fn , false));
+            if (addDefaults) {                                                  // Add defaults
+                actions.push(element.addEventListener("mouseleave", function(){
+                    self.setState("MouseOut")
+                    console.log("ASDF");
+                    setTimeout(function(){self.removeState("MouseOut")}, JssService.enterDelay)
+
+                } , false));
+            }
+        break;
     }
 
     this.actions

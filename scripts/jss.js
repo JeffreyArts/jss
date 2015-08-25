@@ -26,9 +26,9 @@ JssService.actions = {
     resize:     ['resize',   'onresize'                                         ],
     keyDown:    ['keydown',  'keypress'                                         ],
     keyUp:      ['keyup',    'keyrelease'                                       ],
-    change:     ['change',   'onChange'                                         ],
-    mouseIn:    ['mousein',  'onmousein', 'mouseEnter', 'onmouseEnter'          ],
-    mouseOut:   ['mouseOut', 'onmouseOut'                                       ],
+    change:     ['change',   'onchange'                                         ],
+    mouseIn:    ['mousein',  'onmousein', 'mouseenter', 'onmouseenter'          ],
+    mouseOut:   ['mouseout', 'onmouseout', 'mouseleave', 'onmouseleave'         ],
 };
 
 JssService.enterDelay = 1000;                                                   // Amount of miliseconds which is used to remove the entered state. (see core.actions) JssService.enterDelay setTimeout
@@ -394,6 +394,19 @@ Jss.prototype.addAction = function(request, fn, options) {
                 } , false));
             }
         break;
+
+        case "mouseOut":
+
+            actions.push(element.addEventListener("mouseleave", fn , false));
+            if (addDefaults) {                                                  // Add defaults
+                actions.push(element.addEventListener("mouseleave", function(){
+                    self.setState("MouseOut")
+                    console.log("ASDF");
+                    setTimeout(function(){self.removeState("MouseOut")}, JssService.enterDelay)
+
+                } , false));
+            }
+        break;
     }
 
     this.actions
@@ -592,7 +605,6 @@ Jss.prototype.setState = function(string) {
     if ( !this.hasState(string) ) {
         this.addClassName(className)
         this.state.push(state);
-        console.log(this.state);
         return true;
     } else {
         return false;
@@ -725,7 +737,7 @@ var Test = function(element) {
 
     self.lightSwitch = false;
 
-    self.addAction('mouseIn',function(){
+    self.addAction('mouseOut',function(){
 
         if (self.lightSwitch) {
             self.setState("Closed");

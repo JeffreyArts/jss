@@ -15,7 +15,7 @@ var Test = function(element) {
 
     self.lightSwitch = false;
 
-    self.addAction('mouseIn',function(){
+    self.addAction('mouseOut',function(){
 
         if (self.lightSwitch) {
             self.setState("Closed");

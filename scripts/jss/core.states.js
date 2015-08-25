@@ -23,7 +23,6 @@ Jss.prototype.setState = function(string) {
     if ( !this.hasState(string) ) {
         this.addClassName(className)
         this.state.push(state);
-        console.log(this.state);
         return true;
     } else {
         return false;

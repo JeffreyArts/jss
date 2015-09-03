@@ -76,7 +76,7 @@ JssService.isModule = function(element, moduleName) {
  * @return {boolean} true if element is a module, otherwise false
  */
 JssService.addModule = function(moduleName) {
-    this.activeModules.push(moduleName)
+    this.activeModules.push(this.toKebabCase(moduleName))
 }
 
 /**

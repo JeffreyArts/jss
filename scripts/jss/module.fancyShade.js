@@ -5,10 +5,10 @@
 //----------------------------------------------
 
 var FancyShade = function(element) {
-    this.moduleName = "fancyShade"; // This is the name which corresponds with the className && JssService.activeModuless
+    this.moduleName = "fancy-shade"; // This is the name which corresponds with the className && JssService.activeModuless
 }
 FancyShade.prototype = Object.create(Jss.prototype);
-JssService.addModule("fancy-shade")
+JssService.addModule("fancyShade")
 
 
 

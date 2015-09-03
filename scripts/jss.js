@@ -76,7 +76,7 @@ JssService.isModule = function(element, moduleName) {
  * @return {boolean} true if element is a module, otherwise false
  */
 JssService.addModule = function(moduleName) {
-    this.activeModules.push(moduleName)
+    this.activeModules.push(this.toKebabCase(moduleName))
 }
 
 /**
@@ -1042,10 +1042,10 @@ Truncate.prototype.getText = function(){
 //----------------------------------------------
 
 var FancyShade = function(element) {
-    this.moduleName = "fancyShade"; // This is the name which corresponds with the className && JssService.activeModuless
+    this.moduleName = "fancy-shade"; // This is the name which corresponds with the className && JssService.activeModuless
 }
 FancyShade.prototype = Object.create(Jss.prototype);
-JssService.addModule("fancy-shade")
+JssService.addModule("fancyShade")
 
 
 

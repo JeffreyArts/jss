@@ -6284,3 +6284,21 @@ button.close {
 .btn-default.btn-naked {
   color: #fff;
   background-color: rgba(255, 255, 255, 0.2); }
+
+.demo--sub-title {
+  border-bottom: 2px dashed #eee;
+  display: inline-block;
+  margin: 5px 0 15px;
+  padding-bottom: 5px;
+  width: 100%; }
+
+.demo--code {
+  background-color: transparent;
+  border: 1px solid #aaa;
+  border-radius: 1px;
+  color: #333;
+  display: block;
+  float: left;
+  font-family: Hack,courier,courier new;
+  margin: 0;
+  padding: 20px; }

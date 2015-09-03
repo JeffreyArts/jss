@@ -2,12 +2,8 @@
 
 var JssService = {};
 
-// Edit this array to enable or disable modules
-JssService.activeModules   = [
-    "expand",
-    "test",
-    "truncate",
-]
+// Edit this array to enable or disable default modules
+JssService.activeModules   = []
 
 // Set this to false in a live environment
 JssService.dev             = true;
@@ -838,6 +834,7 @@ var Test = function(element) {
 
 
 Test.prototype = Object.create(Jss.prototype);
+JssService.addModule("test");
 'use strict'
 
 //----------------------------------------------
@@ -848,6 +845,7 @@ var Expand = function(element) {
     this.moduleName = "expand"; // This is the name which corresponds with the className && JssService.activeModuless
 }
 Expand.prototype = Object.create(Jss.prototype);
+JssService.addModule("expand");
 
 
 
@@ -889,6 +887,7 @@ var Truncate = function(element) {
     this.moduleName = "truncate"; // This is the name which corresponds with the className && JssService.activeModuless
 }
 Truncate.prototype = Object.create(Jss.prototype);
+JssService.addModule("truncate");
 
 //------------------------------------------
 //  Module customs
@@ -1045,7 +1044,7 @@ var FancyShade = function(element) {
     this.moduleName = "fancy-shade"; // This is the name which corresponds with the className && JssService.activeModuless
 }
 FancyShade.prototype = Object.create(Jss.prototype);
-JssService.addModule("fancyShade")
+JssService.addModule("fancyShade");
 
 
 
@@ -1071,6 +1070,29 @@ FancyShade.prototype.init = function(){
     }, {
         addDefaults:false
     });
+}
+'use strict'
+
+//----------------------------------------------
+//  Module defaults
+//----------------------------------------------
+
+var StickyHeight = function(element) {
+    this.moduleName = "sticky-height"; // This is the name which corresponds with the className && JssService.activeModuless
+}
+StickyHeight.prototype = Object.create(Jss.prototype);
+JssService.addModule("stickyHeight");
+
+
+
+
+//------------------------------------------
+//  Module customs
+//------------------------------------------
+
+StickyHeight.prototype.init = function(){
+    this.element.style.height = this.element.offsetHeight + "px";
+    // Add setStyle function to validate style values and add prefixes like -webkit-transition when adding a transition. `this.setStyle('height', 123)`
 }
 
 var  JssController = {};

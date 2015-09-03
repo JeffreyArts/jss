@@ -8,6 +8,7 @@ var Truncate = function(element) {
     this.moduleName = "truncate"; // This is the name which corresponds with the className && JssService.activeModuless
 }
 Truncate.prototype = Object.create(Jss.prototype);
+JssService.addModule("truncate");
 
 //------------------------------------------
 //  Module customs

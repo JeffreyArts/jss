@@ -2,12 +2,8 @@
 
 var JssService = {};
 
-// Edit this array to enable or disable modules
-JssService.activeModules   = [
-    "expand",
-    "test",
-    "truncate",
-]
+// Edit this array to enable or disable default modules
+JssService.activeModules   = []
 
 // Set this to false in a live environment
 JssService.dev             = true;

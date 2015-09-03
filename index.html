@@ -32,7 +32,6 @@
 
         <section class="container">
 
-
             <form class="fancy-shade" data-color="#f09">
                 <span>Select color: #f09</span>
                 <span class="fancy-shade--circle">
@@ -41,10 +40,84 @@
                 </span>
             </form>
 
-            <div class="expand expand--container">
-                <h3 class="expand--trigger">Dit is een titel</h3>
-                <span class="expand--target">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia vitae, quas optio recusandae vel inventore, laudantium obcaecati modi, atque cupiditate autem odit laboriosam minima totam eius, dolore culpa porro quo.</span>
-            </div>
+            <article class="demo--item" data-modulename="expand" data-template="">
+                <h2 class="demo--title">Expand module</h2>
+                <p class="demo--intro">With this module you can expand any item. It requires a container div, and within this container you can add 2 triggers: `trigger` &amp; `target`. See implementation of this code below:</p>
+                <h3 class="demo--sub-title">Example</h3>
+                <code class="demo--code sticky-height">
+                    <div class="expand expand--container">
+                        <h3 class="expand--trigger">Dit is een titel</h3>
+                        <span class="expand--target">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia vitae, quas optio recusandae vel inventore, laudantium obcaecati modi, atque cupiditate autem odit laboriosam minima totam eius, dolore culpa porro quo.</span>
+                    </div>
+                </code>
+
+                <h3 class="demo--sub-title">How to use</h3>
+                <strong>Html</strong><br>
+                <pre class="code"><code class="code__isHtml">
+    &lt;div class="expand expand--container"&gt;
+        &lt;h3 class="expand--trigger"&gt;This is the title&lt;/h3&gt;
+        &lt;span class="expand--target"&gt;Lorem ipsum dolor sit amet, consectetur adipisicing elit. &lt;/span&gt;
+    &lt;/div&gt;
+                </code></pre><br>
+                <strong>Css</strong><br>
+                <pre class="code"><code class="code__isCss">
+    /* UX for clicking on trigger */
+    .expand--trigger {
+    	cursor: pointer;
+    }
+
+    /* Show target when expand element is open */
+    .expand__isOpen .expand--target {
+        opacity: 1;
+    }
+
+    /* Hide target when expand element is closed */
+    .expand__isClosed .expand--target {
+        opacity: 0;
+    }
+
+    /* Custom Styling */
+    .expand--target {
+    	transition: .4s margin linear,.2s opacity linear;
+    	float: left;
+    	display: inline-block;
+    }
+
+    .expand__isClosed .expand--target {
+        margin-top: -20%;
+    }
+                </code></pre>
+                <strong>Javascript</strong><br>
+                <pre class="code"><code class="code__isJavascript">
+
+    Expand.prototype.init = function(){
+        var expand = this;
+        expand.status = true;
+
+        this.configureTrigger("trigger", function(trigger) {
+
+            trigger.addAction('click',function(){
+                if (expand.status) {
+                    expand.setState("Closed");
+                    expand.removeState("Open");
+                    expand.status = false;
+                } else {
+                    expand.setState("Open");
+                    expand.removeState("Closed");
+                    expand.status = true;
+                }
+            }, {
+                addDefaults:false
+            })
+
+        });
+    }
+                </code></pre><br>
+
+
+            </article>
+
+
             <div class="expand" id="secondExpand">
                 <div class="expand---container">
                     <h3 class="expand--trigger">Dit is een titel</h3>

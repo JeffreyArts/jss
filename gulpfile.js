@@ -19,6 +19,7 @@ var jsLocation   = [
     jssPrefix + 'module.expand.js',
     jssPrefix + 'module.truncate.js',
     jssPrefix + 'module.fancyShade.js',
+    jssPrefix + 'module.stickyHeight.js',
 
     jssPrefix + 'jss.controller.js',
 ];

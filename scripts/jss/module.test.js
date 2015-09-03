@@ -39,3 +39,4 @@ var Test = function(element) {
 
 
 Test.prototype = Object.create(Jss.prototype);
+JssService.addModule("test");

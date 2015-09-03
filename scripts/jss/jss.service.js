@@ -36,7 +36,7 @@ JssService.enterDelay = 1000;                                                   
 JssService.forbiddenProperties = [
     'type',
     'triggers',
-    'addTrigger',
+    'configureTrigger',
     'findTriggers'
 ];
 
@@ -65,6 +65,20 @@ JssService.isModule = function(element, moduleName) {
     return found;
 }
 
+
+/**
+ * -----------------------------------------------------------------------------
+ * Add Module
+ * -----------------------------------------------------------------------------
+ *
+ * @param  {object} element                                                     domElement
+ * @param  {string} moduleName                                                  Name of the module
+ * @return {boolean} true if element is a module, otherwise false
+ */
+JssService.addModule = function(moduleName) {
+    this.activeModules.push(moduleName)
+}
+
 /**
  * -----------------------------------------------------------------------------
  * To CamelCase
@@ -77,10 +91,13 @@ JssService.toCamelCase = function(input) {
     var arr, res;
     res = "";
     if (typeof input === "string") {
+        input = input.replace(/\-/g," ");                                       // Replace all dashes with spaces
         arr = input.split(" ");
     } else {
         arr = input;                                                            // Assume it is an array
     }
+
+
 
     var i = 0;
     for (var i in arr) {
@@ -89,6 +106,41 @@ JssService.toCamelCase = function(input) {
         }
     }
     return res;
+}
+
+/**
+ * -----------------------------------------------------------------------------
+ * To kebab-case
+ * -----------------------------------------------------------------------------
+ *
+ * @param  {string} input                                                       String or array which needs to be camelcased
+ * @return {string} a camelcased string
+ */
+JssService.toKebabCase = function(input) {
+    var res, str;
+    res = "";
+
+    if (typeof input === "string") {
+        str = input;
+    } else {                                                                    // Assume it is an array
+        str = input.join(" ");
+    }
+
+    // First change it to camelcase
+    str = this.toCamelCase(str);
+
+    var max = str.length;
+    for (var i=0; i < max; i++) {
+        // Check if character is uppercase
+        if (str[i] != str[i].toLowerCase()) {
+            if (i!==0) {
+                str = str.substr(0, i) + "-" + str.substr(i);
+                i++;
+            }
+        }
+    }
+
+    return res = str.toLowerCase();
 }
 
 

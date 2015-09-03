@@ -18,6 +18,7 @@ var jsLocation   = [
     jssPrefix + 'module.test.js',
     jssPrefix + 'module.expand.js',
     jssPrefix + 'module.truncate.js',
+    jssPrefix + 'module.fancyShade.js',
 
     jssPrefix + 'jss.controller.js',
 ];

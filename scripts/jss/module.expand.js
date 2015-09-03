@@ -21,10 +21,8 @@ Expand.prototype.init = function(){
     var expand = this;
     expand.status = true;
 
-    this.addTrigger("trigger", function(trigger) {
-        trigger.addAction('hover',function(){
+    this.configureTrigger("trigger", function(trigger) {
 
-        });
         trigger.addAction('click',function(){
             if (expand.status) {
                 expand.setState("Closed");

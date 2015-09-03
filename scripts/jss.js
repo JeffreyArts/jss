@@ -36,7 +36,7 @@ JssService.enterDelay = 1000;                                                   
 JssService.forbiddenProperties = [
     'type',
     'triggers',
-    'addTrigger',
+    'configureTrigger',
     'findTriggers'
 ];
 
@@ -65,6 +65,20 @@ JssService.isModule = function(element, moduleName) {
     return found;
 }
 
+
+/**
+ * -----------------------------------------------------------------------------
+ * Add Module
+ * -----------------------------------------------------------------------------
+ *
+ * @param  {object} element                                                     domElement
+ * @param  {string} moduleName                                                  Name of the module
+ * @return {boolean} true if element is a module, otherwise false
+ */
+JssService.addModule = function(moduleName) {
+    this.activeModules.push(moduleName)
+}
+
 /**
  * -----------------------------------------------------------------------------
  * To CamelCase
@@ -77,10 +91,13 @@ JssService.toCamelCase = function(input) {
     var arr, res;
     res = "";
     if (typeof input === "string") {
+        input = input.replace(/\-/g," ");                                       // Replace all dashes with spaces
         arr = input.split(" ");
     } else {
         arr = input;                                                            // Assume it is an array
     }
+
+
 
     var i = 0;
     for (var i in arr) {
@@ -89,6 +106,41 @@ JssService.toCamelCase = function(input) {
         }
     }
     return res;
+}
+
+/**
+ * -----------------------------------------------------------------------------
+ * To kebab-case
+ * -----------------------------------------------------------------------------
+ *
+ * @param  {string} input                                                       String or array which needs to be camelcased
+ * @return {string} a camelcased string
+ */
+JssService.toKebabCase = function(input) {
+    var res, str;
+    res = "";
+
+    if (typeof input === "string") {
+        str = input;
+    } else {                                                                    // Assume it is an array
+        str = input.join(" ");
+    }
+
+    // First change it to camelcase
+    str = this.toCamelCase(str);
+
+    var max = str.length;
+    for (var i=0; i < max; i++) {
+        // Check if character is uppercase
+        if (str[i] != str[i].toLowerCase()) {
+            if (i!==0) {
+                str = str.substr(0, i) + "-" + str.substr(i);
+                i++;
+            }
+        }
+    }
+
+    return res = str.toLowerCase();
 }
 
 
@@ -195,12 +247,28 @@ Jss.prototype.triggers  = false;
 Jss.prototype.element   = undefined;                                              // {obj} domElement
 Jss.prototype.state     = undefined;                                              // {str} State of module, is reflected by the css class __isState
 
+/**
+ * -----------------------------------------------------------------------------
+ * Find Triggers
+ * -----------------------------------------------------------------------------
+ *
+ * @return {undefined}
+ */
 Jss.prototype.findTriggers = function(element) {
     this.triggers = [];                                                         // If this is not set, all modules will have the same reference point to this.triggers.
     // Module is created, now look for any module triggers
     this.searchTriggersRecursiveInnerFunction(this.element)
 
 }
+
+/**
+ * -----------------------------------------------------------------------------
+ * Search triggers recursive inner function
+ * -----------------------------------------------------------------------------
+ * Recursive function which is executed bij findTriggers;
+ *
+ * @return {undefined}
+ */
 Jss.prototype.searchTriggersRecursiveInnerFunction = function(element) {
     var self = this;
     if (typeof element == "undefined" ) {
@@ -243,12 +311,12 @@ Jss.prototype.searchTriggersRecursiveInnerFunction = function(element) {
 
 /**
  * -----------------------------------------------------------------------------
- * Add Trigger
+ * Configure Trigger
  * -----------------------------------------------------------------------------
  *
  * @return {undefined}
  */
-Jss.prototype.addTrigger = function(trigger, fn) {
+Jss.prototype.configureTrigger = function(trigger, fn) {
     if ( typeof this.triggers[trigger] == "object") {
 
         for (var i = 0; i < this.triggers[trigger].length; i++) {
@@ -257,7 +325,7 @@ Jss.prototype.addTrigger = function(trigger, fn) {
         }
 
     } else if (JssService.dev) {
-        console.error("You are trying to add a trigger which has no attached domElement")
+        console.error("You are trying to configure a trigger which has no attached domElement")
     }
 }
 
@@ -672,7 +740,7 @@ JssModule.prototype.setElement         = Jss.prototype.setElement;
 
 // Triggers
 JssModule.prototype.findTriggers       = Jss.prototype.findTriggers;
-JssModule.prototype.addTrigger         = Jss.prototype.addTrigger;
+JssModule.prototype.configureTrigger      = Jss.prototype.configureTrigger;
 
 // Actions
 //JssModule.prototype.actions            = Object.create(Jss.prototype.actions);
@@ -793,10 +861,8 @@ Expand.prototype.init = function(){
     var expand = this;
     expand.status = true;
 
-    this.addTrigger("trigger", function(trigger) {
-        trigger.addAction('hover',function(){
+    this.configureTrigger("trigger", function(trigger) {
 
-        });
         trigger.addAction('click',function(){
             if (expand.status) {
                 expand.setState("Closed");
@@ -968,6 +1034,43 @@ Truncate.prototype.setLineHeight = function(int){
  */
 Truncate.prototype.getText = function(){
     return this.element.textContent;
+}
+'use strict'
+
+//----------------------------------------------
+//  Module defaults
+//----------------------------------------------
+
+var FancyShade = function(element) {
+    this.moduleName = "fancyShade"; // This is the name which corresponds with the className && JssService.activeModuless
+}
+FancyShade.prototype = Object.create(Jss.prototype);
+JssService.addModule("fancy-shade")
+
+
+
+
+//------------------------------------------
+//  Module customs
+//------------------------------------------
+
+FancyShade.prototype.init = function(){
+
+    var self = this;
+
+    this.addAction('click',function(){
+        if (self.status) {
+            self.setState("Closed");
+            self.removeState("Open");
+            self.status = false;
+        } else {
+            self.setState("Open");
+            self.removeState("Closed");
+            self.status = true;
+        }
+    }, {
+        addDefaults:false
+    });
 }
 
 var  JssController = {};

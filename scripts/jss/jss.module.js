@@ -6,7 +6,7 @@ JssModule.prototype.setElement         = Jss.prototype.setElement;
 
 // Triggers
 JssModule.prototype.findTriggers       = Jss.prototype.findTriggers;
-JssModule.prototype.addTrigger         = Jss.prototype.addTrigger;
+JssModule.prototype.configureTrigger      = Jss.prototype.configureTrigger;
 
 // Actions
 //JssModule.prototype.actions            = Object.create(Jss.prototype.actions);

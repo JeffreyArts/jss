@@ -8,12 +8,28 @@ Jss.prototype.triggers  = false;
 Jss.prototype.element   = undefined;                                              // {obj} domElement
 Jss.prototype.state     = undefined;                                              // {str} State of module, is reflected by the css class __isState
 
+/**
+ * -----------------------------------------------------------------------------
+ * Find Triggers
+ * -----------------------------------------------------------------------------
+ *
+ * @return {undefined}
+ */
 Jss.prototype.findTriggers = function(element) {
     this.triggers = [];                                                         // If this is not set, all modules will have the same reference point to this.triggers.
     // Module is created, now look for any module triggers
     this.searchTriggersRecursiveInnerFunction(this.element)
 
 }
+
+/**
+ * -----------------------------------------------------------------------------
+ * Search triggers recursive inner function
+ * -----------------------------------------------------------------------------
+ * Recursive function which is executed bij findTriggers;
+ *
+ * @return {undefined}
+ */
 Jss.prototype.searchTriggersRecursiveInnerFunction = function(element) {
     var self = this;
     if (typeof element == "undefined" ) {
@@ -56,12 +72,12 @@ Jss.prototype.searchTriggersRecursiveInnerFunction = function(element) {
 
 /**
  * -----------------------------------------------------------------------------
- * Add Trigger
+ * Configure Trigger
  * -----------------------------------------------------------------------------
  *
  * @return {undefined}
  */
-Jss.prototype.addTrigger = function(trigger, fn) {
+Jss.prototype.configureTrigger = function(trigger, fn) {
     if ( typeof this.triggers[trigger] == "object") {
 
         for (var i = 0; i < this.triggers[trigger].length; i++) {
@@ -70,7 +86,7 @@ Jss.prototype.addTrigger = function(trigger, fn) {
         }
 
     } else if (JssService.dev) {
-        console.error("You are trying to add a trigger which has no attached domElement")
+        console.error("You are trying to configure a trigger which has no attached domElement")
     }
 }
 

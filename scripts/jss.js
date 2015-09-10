@@ -653,6 +653,47 @@ Jss.prototype.updateData = function(attribute, value, fn){
     }
 }
 
+/*******************************************************************************
+
+    Styles
+
+    - setHeight(value)                                                          {string || number}
+    - getHeight()                                                               {string, function, boolean}
+    - setWidth(value)                                                           {string, function, boolean}
+    - getWidth()
+
+*******************************************************************************/
+
+Jss.prototype.setHeight = function(height) {
+    if (typeof height === "number") {
+        height += "px";
+    }
+
+    if (typeof height !== "string") {
+        throw("parameter height needs to be a string or integer");
+    }
+
+    this.element.style.height = height;
+}
+
+Jss.prototype.getHeight = function() {
+    return this.element.offsetHeight;
+}
+
+Jss.prototype.setWidth = function(width) {
+    if (typeof width == "number") {
+        width += "px";
+    }
+
+    if (typeof width !== "string") {
+        throw("parameter width needs to be a string or integer");
+    }
+his.element.style.width = width;
+}
+
+Jss.prototype.getWidth = function() {
+    return this.element.offsetWidth;
+}
 /**
  * -----------------------------------------------------------------------------
  * Set State
@@ -728,6 +769,15 @@ Jss.prototype.removeState = function(str) {
     }
 }
 
+
+// A simple way to watch variables
+
+// addVar(keyName, value, watch_function)
+// setVar(keyName, value)
+// getVar(keyName)
+// Add -> new
+// Set -> update
+// Get -> return
 var JssModule = function(){};
 
 JssModule.prototype.type               = "JssModule";
@@ -1091,9 +1141,9 @@ JssService.addModule("stickyHeight");
 //------------------------------------------
 
 StickyHeight.prototype.init = function(){
-    this.element.style.height = this.element.offsetHeight + "px";
-    // Add setStyle function to validate style values and add prefixes like -webkit-transition when adding a transition. `this.setStyle('height', 123)`
+    this.setHeight(this.getHeight());
 }
+
 
 var  JssController = {};
 JssController.modules 		= []; // Result array with objects of all the found modules

@@ -18,6 +18,5 @@ JssService.addModule("stickyHeight");
 //------------------------------------------
 
 StickyHeight.prototype.init = function(){
-    this.element.style.height = this.element.offsetHeight + "px";
-    // Add setStyle function to validate style values and add prefixes like -webkit-transition when adding a transition. `this.setStyle('height', 123)`
+    this.setHeight(this.getHeight());
 }

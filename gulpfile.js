@@ -10,7 +10,9 @@ var jsLocation   = [
     jssPrefix + 'core.actions.js',
     jssPrefix + 'core.classNames.js',
     jssPrefix + 'core.dataAttributes.js',
+    jssPrefix + 'core.styles.js',
     jssPrefix + 'core.states.js',
+    jssPrefix + 'core.varWatching.js',
 
     jssPrefix + 'jss.module.js',
     jssPrefix + 'jss.trigger.js',

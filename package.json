@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/jeffreyarts/jss",
   "dependencies": {
+    "gulp-plumber": "^1.0.1",
     "gulp-sass": "^2.0.4"
   }
 }

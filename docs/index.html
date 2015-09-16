@@ -1,0 +1,1302 @@
+<html>
+<head>
+  <title> </title>
+  <link href='assets/bass.css' type='text/css' rel='stylesheet' />
+  <link href='assets/style.css' type='text/css' rel='stylesheet' />
+  <link href='assets/github.css' type='text/css' rel='stylesheet' />
+</head>
+<body class='documentation'>
+  <div class='px2'>
+    <div class='clearfix flex flex-stretch mxn2'>
+      <div class='documentation-sidebar relative top-0 bottom-0 right-0 px2 py2 col-3 sm-show'>
+        <div class='font-smaller fixed col-3 top-0 bottom-0 left-0 overflow-auto black bg-cloudy'>
+          <a href="/" class="h5 button block button-transparent"> </a>
+          <div class='px2'>
+              <a
+                href='#jss'
+                class='regular block'>
+                <code>Jss</code>
+              </a>
+                <a
+                  href='#jss/addaction'
+                  class='px1 regular block'>
+                  <code>#addAction</code>
+                </a>
+                <a
+                  href='#jss/addclassname'
+                  class='px1 regular block'>
+                  <code>#addClassName</code>
+                </a>
+                <a
+                  href='#jss/classnameprefix'
+                  class='px1 regular block'>
+                  <code>#classNamePrefix</code>
+                </a>
+                <a
+                  href='#jss/configuretrigger'
+                  class='px1 regular block'>
+                  <code>#configureTrigger</code>
+                </a>
+                <a
+                  href='#jss/findtriggers'
+                  class='px1 regular block'>
+                  <code>#findTriggers</code>
+                </a>
+                <a
+                  href='#jss/getactionelement'
+                  class='px1 regular block'>
+                  <code>#getActionElement</code>
+                </a>
+                <a
+                  href='#jss/hasstate'
+                  class='px1 regular block'>
+                  <code>#hasState</code>
+                </a>
+                <a
+                  href='#jss/init'
+                  class='px1 regular block'>
+                  <code>#init</code>
+                </a>
+                <a
+                  href='#jss/loaddata'
+                  class='px1 regular block'>
+                  <code>#loadData</code>
+                </a>
+                <a
+                  href='#jss/removeclassname'
+                  class='px1 regular block'>
+                  <code>#removeClassName</code>
+                </a>
+                <a
+                  href='#jss/removestate'
+                  class='px1 regular block'>
+                  <code>#removeState</code>
+                </a>
+                <a
+                  href='#jss/searchtriggersrecursiveinnerfunction'
+                  class='px1 regular block'>
+                  <code>#searchTriggersRecursiveInnerFunction</code>
+                </a>
+                <a
+                  href='#jss/setelement'
+                  class='px1 regular block'>
+                  <code>#setElement</code>
+                </a>
+                <a
+                  href='#jss/setstate'
+                  class='px1 regular block'>
+                  <code>#setState</code>
+                </a>
+                <a
+                  href='#jss/updatedata'
+                  class='px1 regular block'>
+                  <code>#updateData</code>
+                </a>
+                <a
+                  href='#jss/validateaction'
+                  class='px1 regular block'>
+                  <code>#validateAction</code>
+                </a>
+              <a
+                href='#jssservice'
+                class='regular block'>
+                <code>JssService</code>
+              </a>
+                <a
+                  href='#jssservice/addmodule'
+                  class='px1 regular block'>
+                  <code>.addModule</code>
+                </a>
+                <a
+                  href='#jssservice/getoption'
+                  class='px1 regular block'>
+                  <code>.getOption</code>
+                </a>
+                <a
+                  href='#jssservice/gettriggername'
+                  class='px1 regular block'>
+                  <code>.getTriggerName</code>
+                </a>
+                <a
+                  href='#jssservice/ismodule'
+                  class='px1 regular block'>
+                  <code>.isModule</code>
+                </a>
+                <a
+                  href='#jssservice/istrigger'
+                  class='px1 regular block'>
+                  <code>.isTrigger</code>
+                </a>
+                <a
+                  href='#jssservice/tocamelcase'
+                  class='px1 regular block'>
+                  <code>.toCamelCase</code>
+                </a>
+                <a
+                  href='#jssservice/tokebabcase'
+                  class='px1 regular block'>
+                  <code>.toKebabCase</code>
+                </a>
+                <a
+                  href='#jssservice/triggernameisallowed'
+                  class='px1 regular block'>
+                  <code>.triggerNameIsAllowed</code>
+                </a>
+          </div>
+        </div>
+      </div>
+      <div class='sm-col  col-9  flex flex-column'>
+        <div class='flex-auto full-width'>
+          <div class='px1'>
+<section id='jss'class='mt2 mb2 py1 px2 keyline-top'>
+  <h3 class='regular'>
+    <a class='black' href='#jss'>
+      <code>
+        Jss<span class='gray'></span>
+      </code>
+    </a>
+  </h3>
+  
+
+
+
+
+
+
+
+      <div class='section-indent'>
+<section id='jss/addaction'class='mt2 mb2 py1 px2 keyline-top'>
+  <h3 class='regular'>
+    <a class='black' href='#jss/addaction'>
+      <code>
+        addAction<span class='gray'>(request, fn, options)</span>
+      </code>
+    </a>
+  </h3>
+  <hr>
+<pre><code> Add Action
+</code></pre>
+<hr>
+<p>Adds an action to the object, list of possible requests can be found in Jss.actions</p>
+<p>| Options
+- addDefaults {boolean}                                                 True: add default classes, false: don't</p>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>request</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+            </td>
+            <td><p>The name of the request</p>
+</td>
+          </tr>
+          <tr>
+            <td>fn</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">function</a></code>
+            </td>
+            <td><p>The function which should be triggered</p>
+</td>
+          </tr>
+          <tr>
+            <td>options</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></code>
+            </td>
+            <td><p>Object with option parameters</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code></code>
+      :
+      <span class='force-inline'>
+        <p>true if a action is succesfully added, otherwise false.</p>
+
+      </span>
+
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
+<section id='jss/addclassname'class='mt2 mb2 py1 px2 keyline-top'>
+  <h3 class='regular'>
+    <a class='black' href='#jss/addclassname'>
+      <code>
+        addClassName<span class='gray'>(string)</span>
+      </code>
+    </a>
+  </h3>
+  <hr>
+<h2>Add class name</h2>
+<p>Adds a class name by string or array.
+Does NOT check for duplicates</p>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>string</td>
+            <td>
+              
+            </td>
+            <td></td>
+          </tr>
+      </table>
+    </p>
+
+
+      <h4>Returns</h4>
+      <code></code>
+      
+      <span class='force-inline'>
+        
+      </span>
+
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
+<section id='jss/classnameprefix'class='mt2 mb2 py1 px2 keyline-top'>
+  <h3 class='regular'>
+    <a class='black' href='#jss/classnameprefix'>
+      <code>
+        classNamePrefix<span class='gray'>([description])</span>
+      </code>
+    </a>
+  </h3>
+  <hr>
+<h2>Class name prefix</h2>
+<p>The prefix equals the modulename, or - when it's a trigger object - modulename--triggername</p>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>description</td>
+            <td>
+              <code>[<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>]</code>
+            </td>
+            <td></td>
+          </tr>
+      </table>
+    </p>
+
+
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code></code>
+      :
+      <span class='force-inline'>
+        <p>[description]</p>
+
+      </span>
+
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
+<section id='jss/configuretrigger'class='mt2 mb2 py1 px2 keyline-top'>
+  <h3 class='regular'>
+    <a class='black' href='#jss/configuretrigger'>
+      <code>
+        configureTrigger<span class='gray'></span>
+      </code>
+    </a>
+  </h3>
+  <hr>
+<h2>Configure Trigger</h2>
+
+
+
+
+      <h4>Returns</h4>
+      <code></code>
+      
+      <span class='force-inline'>
+        
+      </span>
+
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
+<section id='jss/findtriggers'class='mt2 mb2 py1 px2 keyline-top'>
+  <h3 class='regular'>
+    <a class='black' href='#jss/findtriggers'>
+      <code>
+        findTriggers<span class='gray'></span>
+      </code>
+    </a>
+  </h3>
+  <hr>
+<h2>Find Triggers</h2>
+
+
+
+
+      <h4>Returns</h4>
+      <code></code>
+      
+      <span class='force-inline'>
+        
+      </span>
+
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
+<section id='jss/getactionelement'class='mt2 mb2 py1 px2 keyline-top'>
+  <h3 class='regular'>
+    <a class='black' href='#jss/getactionelement'>
+      <code>
+        getActionElement<span class='gray'>(request)</span>
+      </code>
+    </a>
+  </h3>
+  <hr>
+<h2>Get action element</h2>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>request</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+            </td>
+            <td><p>The request</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></code></code>
+      :
+      <span class='force-inline'>
+        <p>An object with 2 properties: request &amp;&amp; element</p>
+
+      </span>
+
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
+<section id='jss/hasstate'class='mt2 mb2 py1 px2 keyline-top'>
+  <h3 class='regular'>
+    <a class='black' href='#jss/hasstate'>
+      <code>
+        hasState<span class='gray'>(string)</span>
+      </code>
+    </a>
+  </h3>
+  <hr>
+<h2>Has state</h2>
+<p>Checks if the parameter is already a state and returns true if so. Otherwise false.</p>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>string</td>
+            <td>
+              
+            </td>
+            <td></td>
+          </tr>
+      </table>
+    </p>
+
+
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code></code>
+      :
+      <span class='force-inline'>
+        <p>True if it has the given state, otherwise false</p>
+
+      </span>
+
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
+<section id='jss/init'class='mt2 mb2 py1 px2 keyline-top'>
+  <h3 class='regular'>
+    <a class='black' href='#jss/init'>
+      <code>
+        init<span class='gray'></span>
+      </code>
+    </a>
+  </h3>
+  <hr>
+<h2>Init</h2>
+<p>Notice the user that a init function needs to be added for controlling the triggers</p>
+
+
+
+
+      <h4>Returns</h4>
+      <code></code>
+      
+      <span class='force-inline'>
+        
+      </span>
+
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
+<section id='jss/loaddata'class='mt2 mb2 py1 px2 keyline-top'>
+  <h3 class='regular'>
+    <a class='black' href='#jss/loaddata'>
+      <code>
+        loadData<span class='gray'>(The)</span>
+      </code>
+    </a>
+  </h3>
+  <hr>
+<h2>Get data</h2>
+<p>Returns the value of the requested attribute. Search first for a data-[ATTRIBUTE] value
+If not found, it checks for the attribute in the default object. When that is not being
+found neither, the normal this[attribute] value is being returned.</p>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>The</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+            </td>
+            <td><p>NAME of the data attribute (data-NAME)</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code></code>
+      :
+      <span class='force-inline'>
+        <p>The value of the given attribute</p>
+
+      </span>
+
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
+<section id='jss/removeclassname'class='mt2 mb2 py1 px2 keyline-top'>
+  <h3 class='regular'>
+    <a class='black' href='#jss/removeclassname'>
+      <code>
+        removeClassName<span class='gray'>(string)</span>
+      </code>
+    </a>
+  </h3>
+  <hr>
+<h2>Remove class name</h2>
+<p>Removes the <code>this.element</code> classname
+- &quot;all&quot; || undefined        &gt; Removes ALL classnames</p>
+<ul>
+<li>&quot;allStates&quot; || &quot;states&quot;   &gt; Remove all STATES</li>
+<li>all other strings remove that specific string from the className</li>
+</ul>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>string</td>
+            <td>
+              
+            </td>
+            <td></td>
+          </tr>
+      </table>
+    </p>
+
+
+      <h4>Returns</h4>
+      <code></code>
+      
+      <span class='force-inline'>
+        
+      </span>
+
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
+<section id='jss/removestate'class='mt2 mb2 py1 px2 keyline-top'>
+  <h3 class='regular'>
+    <a class='black' href='#jss/removestate'>
+      <code>
+        removeState<span class='gray'>(The)</span>
+      </code>
+    </a>
+  </h3>
+  <hr>
+<h2>Remove state</h2>
+<p>Removes the state from the states array, and from the element.className</p>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>The</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+            </td>
+            <td><p>name of the state which should be removed</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+      <h4>Returns</h4>
+      <code></code>
+      
+      <span class='force-inline'>
+        
+      </span>
+
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
+<section id='jss/searchtriggersrecursiveinnerfunction'class='mt2 mb2 py1 px2 keyline-top'>
+  <h3 class='regular'>
+    <a class='black' href='#jss/searchtriggersrecursiveinnerfunction'>
+      <code>
+        searchTriggersRecursiveInnerFunction<span class='gray'></span>
+      </code>
+    </a>
+  </h3>
+  <hr>
+<h2>Search triggers recursive inner function</h2>
+<p>Recursive function which is executed bij findTriggers;</p>
+
+
+
+
+      <h4>Returns</h4>
+      <code></code>
+      
+      <span class='force-inline'>
+        
+      </span>
+
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
+<section id='jss/setelement'class='mt2 mb2 py1 px2 keyline-top'>
+  <h3 class='regular'>
+    <a class='black' href='#jss/setelement'>
+      <code>
+        setElement<span class='gray'></span>
+      </code>
+    </a>
+  </h3>
+  <hr>
+<h2>Set element</h2>
+<p>Add a domElement to <code>this</code></p>
+
+
+
+
+      <h4>Returns</h4>
+      <code></code>
+      
+      <span class='force-inline'>
+        
+      </span>
+
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
+<section id='jss/setstate'class='mt2 mb2 py1 px2 keyline-top'>
+  <h3 class='regular'>
+    <a class='black' href='#jss/setstate'>
+      <code>
+        setState<span class='gray'>(string)</span>
+      </code>
+    </a>
+  </h3>
+  <hr>
+<h2>Set State</h2>
+<p>This updates the state of the object. States are being added to the class name prefix with a double underscore.
+If you would have the module <code>envelope</code> and give it the state <code>open</code>. The class name <code>envelope__open</code> will be added.
+Whenever you remove the state <code>open</code>, the according class name will be removed as well.</p>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>string</td>
+            <td>
+              
+            </td>
+            <td></td>
+          </tr>
+      </table>
+    </p>
+
+
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code></code>
+      :
+      <span class='force-inline'>
+        <p>True on success, otherwise false (might already have the state)</p>
+
+      </span>
+
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
+<section id='jss/updatedata'class='mt2 mb2 py1 px2 keyline-top'>
+  <h3 class='regular'>
+    <a class='black' href='#jss/updatedata'>
+      <code>
+        updateData<span class='gray'>(The, The, The)</span>
+      </code>
+    </a>
+  </h3>
+  <hr>
+<h2>Update data</h2>
+<p>Set the value to the given attribute. And updates the data-[ATTRIBUTE] value</p>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>The</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+            </td>
+            <td><p>NAME of the data attribute (data-NAME=&quot;value&quot;)</p>
+</td>
+          </tr>
+          <tr>
+            <td>The</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+            </td>
+            <td><p>VALUE of the data attribute (data-name=&quot;VALUE&quot;)</p>
+</td>
+          </tr>
+          <tr>
+            <td>The</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">function</a></code>
+            </td>
+            <td><p>function which should be executed when updating this data attribute</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+      <h4>Returns</h4>
+      <code></code>
+      :
+      <span class='force-inline'>
+        <ul>
+<li></li>
+</ul>
+
+      </span>
+
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
+<section id='jss/validateaction'class='mt2 mb2 py1 px2 keyline-top'>
+  <h3 class='regular'>
+    <a class='black' href='#jss/validateaction'>
+      <code>
+        validateAction<span class='gray'>(request)</span>
+      </code>
+    </a>
+  </h3>
+  <hr>
+<h2>Validate action</h2>
+<p>Checks if parameter is a valid action, and logs an error when not.</p>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>request</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+            </td>
+            <td><p>The name of the request</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code></code>
+      :
+      <span class='force-inline'>
+        <p>true if a action is valid, otherwise false.</p>
+
+      </span>
+
+
+
+
+
+</section>
+      </div>
+
+</section>
+<section id='jssservice'class='mt2 mb2 py1 px2 keyline-top'>
+  <h3 class='regular'>
+    <a class='black' href='#jssservice'>
+      <code>
+        JssService<span class='gray'></span>
+      </code>
+    </a>
+  </h3>
+  
+
+
+
+
+
+
+      <div class='section-indent'>
+<section id='jssservice/addmodule'class='mt2 mb2 py1 px2 keyline-top'>
+  <h3 class='regular'>
+    <a class='black' href='#jssservice/addmodule'>
+      <code>
+        addModule<span class='gray'>(element, moduleName)</span>
+      </code>
+    </a>
+  </h3>
+  <hr>
+<h2>Add Module</h2>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>element</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></code>
+            </td>
+            <td><p>domElement</p>
+</td>
+          </tr>
+          <tr>
+            <td>moduleName</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+            </td>
+            <td><p>Name of the module</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code></code>
+      :
+      <span class='force-inline'>
+        <p>true if element is a module, otherwise false</p>
+
+      </span>
+
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
+<section id='jssservice/getoption'class='mt2 mb2 py1 px2 keyline-top'>
+  <h3 class='regular'>
+    <a class='black' href='#jssservice/getoption'>
+      <code>
+        getOption<span class='gray'>(name, optionList)</span>
+      </code>
+    </a>
+  </h3>
+  <hr>
+<h2>Get option</h2>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>name</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+            </td>
+            <td><p>Keyname in optionList</p>
+</td>
+          </tr>
+          <tr>
+            <td>optionList</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">array</a></code>
+            </td>
+            <td><p>Array with all possible options</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
+<section id='jssservice/gettriggername'class='mt2 mb2 py1 px2 keyline-top'>
+  <h3 class='regular'>
+    <a class='black' href='#jssservice/gettriggername'>
+      <code>
+        getTriggerName<span class='gray'>(element, moduleName)</span>
+      </code>
+    </a>
+  </h3>
+  <hr>
+<h2>Get trigger name</h2>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>element</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></code>
+            </td>
+            <td><p>domElement</p>
+</td>
+          </tr>
+          <tr>
+            <td>moduleName</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+            </td>
+            <td><p>Name of the module</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code></code>
+      :
+      <span class='force-inline'>
+        <p>Name of the trigger.</p>
+
+      </span>
+
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
+<section id='jssservice/ismodule'class='mt2 mb2 py1 px2 keyline-top'>
+  <h3 class='regular'>
+    <a class='black' href='#jssservice/ismodule'>
+      <code>
+        isModule<span class='gray'>(element, moduleName)</span>
+      </code>
+    </a>
+  </h3>
+  <hr>
+<h2>Is Module</h2>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>element</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></code>
+            </td>
+            <td><p>domElement</p>
+</td>
+          </tr>
+          <tr>
+            <td>moduleName</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+            </td>
+            <td><p>Name of the module</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code></code>
+      :
+      <span class='force-inline'>
+        <p>true if element is a module, otherwise false</p>
+
+      </span>
+
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
+<section id='jssservice/istrigger'class='mt2 mb2 py1 px2 keyline-top'>
+  <h3 class='regular'>
+    <a class='black' href='#jssservice/istrigger'>
+      <code>
+        isTrigger<span class='gray'>(element, moduleName)</span>
+      </code>
+    </a>
+  </h3>
+  <hr>
+<h2>Is Trigger</h2>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>element</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></code>
+            </td>
+            <td><p>domElement</p>
+</td>
+          </tr>
+          <tr>
+            <td>moduleName</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+            </td>
+            <td><p>Name of the module</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code></code>
+      :
+      <span class='force-inline'>
+        <p>true if element is a module, otherwise false</p>
+
+      </span>
+
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
+<section id='jssservice/tocamelcase'class='mt2 mb2 py1 px2 keyline-top'>
+  <h3 class='regular'>
+    <a class='black' href='#jssservice/tocamelcase'>
+      <code>
+        toCamelCase<span class='gray'>(input)</span>
+      </code>
+    </a>
+  </h3>
+  <hr>
+<h2>To CamelCase</h2>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>input</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+            </td>
+            <td><p>String or array which needs to be camelcased</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code></code>
+      :
+      <span class='force-inline'>
+        <p>a camelcased string</p>
+
+      </span>
+
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
+<section id='jssservice/tokebabcase'class='mt2 mb2 py1 px2 keyline-top'>
+  <h3 class='regular'>
+    <a class='black' href='#jssservice/tokebabcase'>
+      <code>
+        toKebabCase<span class='gray'>(input)</span>
+      </code>
+    </a>
+  </h3>
+  <hr>
+<h2>To kebab-case</h2>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>input</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+            </td>
+            <td><p>String or array which needs to be camelcased</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code></code>
+      :
+      <span class='force-inline'>
+        <p>a camelcased string</p>
+
+      </span>
+
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
+<section id='jssservice/triggernameisallowed'class='mt2 mb2 py1 px2 keyline-top'>
+  <h3 class='regular'>
+    <a class='black' href='#jssservice/triggernameisallowed'>
+      <code>
+        triggerNameIsAllowed<span class='gray'>(element, moduleName)</span>
+      </code>
+    </a>
+  </h3>
+  <hr>
+<h2>Trigger name is allowed</h2>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>element</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></code>
+            </td>
+            <td><p>domElement</p>
+</td>
+          </tr>
+          <tr>
+            <td>moduleName</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+            </td>
+            <td><p>Name of the module</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code></code>
+      :
+      <span class='force-inline'>
+        <p>True if the triggername is allowed, otherwise false.</p>
+
+      </span>
+
+
+
+
+
+</section>
+      </div>
+
+
+</section>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -28,6 +28,7 @@ JssController.findModules = function() {
         }); // End forEach
     }
 }
+
 document.addEventListener('DOMContentLoaded', function() {
     JssController.findModules();
     console.log(JssController);

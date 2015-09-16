@@ -1,19 +1,18 @@
 /*******************************************************************************
-
-    Actions
-
-    - validateAction(request)                                                   {string}
-    - addAction(request, fn, addDefaults)                                       {string, function, boolean}
-
+   *
+   *	Actions
+   *
+   *  	@author      Jeffrey Arts <sjeffff@gmail.com>
+   *    @copyright   2015
+   *
 *******************************************************************************/
-
 /**
  * -----------------------------------------------------------------------------
  *   Validate action
  * -----------------------------------------------------------------------------
  * Checks if parameter is a valid action, and logs an error when not.
  *
- * @param {string}                                                              The name of the request
+ * @param {string} request                                                      The name of the request
  * @return {boolean} true if a action is valid, otherwise false.
  */
 Jss.prototype.validateAction = function(request) {
@@ -42,9 +41,11 @@ Jss.prototype.validateAction = function(request) {
  * | Options
  * 		- addDefaults {boolean}                                                 True: add default classes, false: don't
  *
- * @param {string}                                                              The name of the request
- * @param {function}                                                            The function which should be triggered
- * @param {object}                                                              Options
+ *
+ *
+ * @param {string} request                                                      The name of the request
+ * @param {function} fn                                                         The function which should be triggered
+ * @param {object} options                                                      Object with option parameters
  * @return {boolean} true if a action is succesfully added, otherwise false.
  */
 Jss.prototype.addAction = function(request, fn, options) {
@@ -137,7 +138,7 @@ Jss.prototype.addAction = function(request, fn, options) {
  * -----------------------------------------------------------------------------
  * Get action element
  * -----------------------------------------------------------------------------
- * @param  {string}                                                             The request
+ * @param  {string} request                                                     The request
  * @return {object}                                                             An object with 2 properties: request && element
  */
 Jss.prototype.getActionElement = function(request) {

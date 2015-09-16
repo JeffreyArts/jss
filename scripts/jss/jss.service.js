@@ -1,5 +1,8 @@
 'use strict'
 
+/**
+ * @module JssService
+ */
 var JssService = {};
 
 // Edit this array to enable or disable default modules

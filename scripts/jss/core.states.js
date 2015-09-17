@@ -6,21 +6,23 @@
  * If you would have the module `envelope` and give it the state `open`. The class name `envelope__open` will be added.
  * Whenever you remove the state `open`, the according class name will be removed as well.
  *
- * @param  {string}
+ * @param  {string} str                                                         The name of the state which should be set (this is transformed to CamelCase)
  * @return {boolean}                                                            True on success, otherwise false (might already have the state)
  */
-Jss.prototype.setState = function(string) {
+Jss.prototype.setState = function(str) {
     var element, verifiedState, state, className;
 
     element         = this.element;
-    state           = JssService.toCamelCase(string);
+    state           = JssService.toCamelCase(str);
     className       = this.classNamePrefix() + "__is" + state;
+
     // Check if this.state is an array, and make it one if not.
     if (Array.isArray(this.state) == false ) {
         this.state = [];
     }
+
     // This if statement prevents that the same state is being set multiple times
-    if ( !this.hasState(string) ) {
+    if ( !this.hasState(str) ) {
         this.addClassName(className)
         this.state.push(state);
         return true;
@@ -35,11 +37,11 @@ Jss.prototype.setState = function(string) {
  * -----------------------------------------------------------------------------
  * Checks if the parameter is already a state and returns true if so. Otherwise false.
  *
- * @param  {string}
+ * @param  {string} str                                                         The state which will be checked for
  * @return {boolean}                                                            True if it has the given state, otherwise false
  */
-Jss.prototype.hasState = function(string) {
-    if (typeof this.state == "object" && this.state.indexOf(string) >= 0) {
+Jss.prototype.hasState = function(str) {
+    if (typeof this.state == "object" && this.state.indexOf(str) >= 0) {
         return true;
     } else {
         return false;
@@ -53,7 +55,7 @@ Jss.prototype.hasState = function(string) {
  * -----------------------------------------------------------------------------
  * Removes the state from the states array, and from the element.className
  *
- * @param  {string}                                                             The name of the state which should be removed
+ * @param  {string} str                                                         The name of the state which should be removed
  * @return {undefined}
  */
 Jss.prototype.removeState = function(str) {

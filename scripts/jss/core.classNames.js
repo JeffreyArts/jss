@@ -4,10 +4,9 @@
  * -----------------------------------------------------------------------------
  * The prefix equals the modulename, or - when it's a trigger object - modulename--triggername
  *
- * @param  {string}  [description]
- * @return {string}      [description]
+ * @return {string} The classname
  */
-Jss.prototype.classNamePrefix = function(data) {
+Jss.prototype.classNamePrefix = function() {
     if (this.type == "JssTrigger") {
         return this.moduleName + "--" + this.triggerName;
     } else {
@@ -24,7 +23,7 @@ Jss.prototype.classNamePrefix = function(data) {
  *  - "allStates" || "states"   > Remove all STATES
  *  - all other strings remove that specific string from the className
  *
- * @param {string}
+ * @param {string} input                                                        The classname (case-sensitive) which needs to be removed
  * @return {undefined}
  */
 Jss.prototype.removeClassName = function(input) {
@@ -60,7 +59,7 @@ Jss.prototype.removeClassName = function(input) {
  * Adds a class name by string or array.
  * Does NOT check for duplicates
  *
- * @param  {string}
+ * @param  {string} The classname to be added
  * @return {undefined}
  */
 Jss.prototype.addClassName = function(data) {

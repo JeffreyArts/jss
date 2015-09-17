@@ -48,6 +48,16 @@
                   <code>#getActionElement</code>
                 </a>
                 <a
+                  href='#jss/getheight'
+                  class='px1 regular block'>
+                  <code>#getHeight</code>
+                </a>
+                <a
+                  href='#jss/getwidth'
+                  class='px1 regular block'>
+                  <code>#getWidth</code>
+                </a>
+                <a
                   href='#jss/hasstate'
                   class='px1 regular block'>
                   <code>#hasState</code>
@@ -83,9 +93,19 @@
                   <code>#setElement</code>
                 </a>
                 <a
+                  href='#jss/setheight'
+                  class='px1 regular block'>
+                  <code>#setHeight</code>
+                </a>
+                <a
                   href='#jss/setstate'
                   class='px1 regular block'>
                   <code>#setState</code>
+                </a>
+                <a
+                  href='#jss/setwidth'
+                  class='px1 regular block'>
+                  <code>#setWidth</code>
                 </a>
                 <a
                   href='#jss/updatedata'
@@ -236,7 +256,7 @@
   <h3 class='regular'>
     <a class='black' href='#jss/addclassname'>
       <code>
-        addClassName<span class='gray'>(string)</span>
+        addClassName<span class='gray'>(The)</span>
       </code>
     </a>
   </h3>
@@ -254,11 +274,12 @@ Does NOT check for duplicates</p>
           <th class='col-6'>description</th>
         </thead>
           <tr>
-            <td>string</td>
+            <td>The</td>
             <td>
-              
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
             </td>
-            <td></td>
+            <td><p>classname to be added</p>
+</td>
           </tr>
       </table>
     </p>
@@ -282,7 +303,7 @@ Does NOT check for duplicates</p>
   <h3 class='regular'>
     <a class='black' href='#jss/classnameprefix'>
       <code>
-        classNamePrefix<span class='gray'>([description])</span>
+        classNamePrefix<span class='gray'></span>
       </code>
     </a>
   </h3>
@@ -291,29 +312,13 @@ Does NOT check for duplicates</p>
 <p>The prefix equals the modulename, or - when it's a trigger object - modulename--triggername</p>
 
 
-    <p>
-      <table class='table-light overflow-hidden bg-cloudy-light'>
-        <thead>
-          <th class='col-3'>parameter</th>
-          <th class='col-3'>type</th>
-          <th class='col-6'>description</th>
-        </thead>
-          <tr>
-            <td>description</td>
-            <td>
-              <code>[<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>]</code>
-            </td>
-            <td></td>
-          </tr>
-      </table>
-    </p>
 
 
       <h4>Returns</h4>
       <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code></code>
       :
       <span class='force-inline'>
-        <p>[description]</p>
+        <p>The classname</p>
 
       </span>
 
@@ -426,11 +431,71 @@ Does NOT check for duplicates</p>
 </section>
       </div>
       <div class='section-indent'>
+<section id='jss/getheight'class='mt2 mb2 py1 px2 keyline-top'>
+  <h3 class='regular'>
+    <a class='black' href='#jss/getheight'>
+      <code>
+        getHeight<span class='gray'></span>
+      </code>
+    </a>
+  </h3>
+  <hr>
+<h2>Get height</h2>
+<p>Returns the height of the <code>this.element</code></p>
+
+
+
+
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code></code>
+      :
+      <span class='force-inline'>
+        <p>The height of the element in pixels</p>
+
+      </span>
+
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
+<section id='jss/getwidth'class='mt2 mb2 py1 px2 keyline-top'>
+  <h3 class='regular'>
+    <a class='black' href='#jss/getwidth'>
+      <code>
+        getWidth<span class='gray'></span>
+      </code>
+    </a>
+  </h3>
+  <hr>
+<h2>Get width</h2>
+<p>Returns the width of the <code>this.element</code></p>
+
+
+
+
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code></code>
+      :
+      <span class='force-inline'>
+        <p>The width of the element in pixels</p>
+
+      </span>
+
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
 <section id='jss/hasstate'class='mt2 mb2 py1 px2 keyline-top'>
   <h3 class='regular'>
     <a class='black' href='#jss/hasstate'>
       <code>
-        hasState<span class='gray'>(string)</span>
+        hasState<span class='gray'>(str)</span>
       </code>
     </a>
   </h3>
@@ -447,11 +512,12 @@ Does NOT check for duplicates</p>
           <th class='col-6'>description</th>
         </thead>
           <tr>
-            <td>string</td>
+            <td>str</td>
             <td>
-              
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
             </td>
-            <td></td>
+            <td><p>The state which will be checked for</p>
+</td>
           </tr>
       </table>
     </p>
@@ -505,7 +571,7 @@ Does NOT check for duplicates</p>
   <h3 class='regular'>
     <a class='black' href='#jss/loaddata'>
       <code>
-        loadData<span class='gray'>(The)</span>
+        loadData<span class='gray'>(attribute)</span>
       </code>
     </a>
   </h3>
@@ -524,11 +590,11 @@ found neither, the normal this[attribute] value is being returned.</p>
           <th class='col-6'>description</th>
         </thead>
           <tr>
-            <td>The</td>
+            <td>attribute</td>
             <td>
               <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
             </td>
-            <td><p>NAME of the data attribute (data-NAME)</p>
+            <td><p>The NAME of the data attribute (data-NAME)</p>
 </td>
           </tr>
       </table>
@@ -554,7 +620,7 @@ found neither, the normal this[attribute] value is being returned.</p>
   <h3 class='regular'>
     <a class='black' href='#jss/removeclassname'>
       <code>
-        removeClassName<span class='gray'>(string)</span>
+        removeClassName<span class='gray'>(input)</span>
       </code>
     </a>
   </h3>
@@ -576,11 +642,12 @@ found neither, the normal this[attribute] value is being returned.</p>
           <th class='col-6'>description</th>
         </thead>
           <tr>
-            <td>string</td>
+            <td>input</td>
             <td>
-              
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
             </td>
-            <td></td>
+            <td><p>The classname (case-sensitive) which needs to be removed</p>
+</td>
           </tr>
       </table>
     </p>
@@ -604,7 +671,7 @@ found neither, the normal this[attribute] value is being returned.</p>
   <h3 class='regular'>
     <a class='black' href='#jss/removestate'>
       <code>
-        removeState<span class='gray'>(The)</span>
+        removeState<span class='gray'>(str)</span>
       </code>
     </a>
   </h3>
@@ -621,11 +688,11 @@ found neither, the normal this[attribute] value is being returned.</p>
           <th class='col-6'>description</th>
         </thead>
           <tr>
-            <td>The</td>
+            <td>str</td>
             <td>
               <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
             </td>
-            <td><p>name of the state which should be removed</p>
+            <td><p>The name of the state which should be removed</p>
 </td>
           </tr>
       </table>
@@ -704,11 +771,58 @@ found neither, the normal this[attribute] value is being returned.</p>
 </section>
       </div>
       <div class='section-indent'>
+<section id='jss/setheight'class='mt2 mb2 py1 px2 keyline-top'>
+  <h3 class='regular'>
+    <a class='black' href='#jss/setheight'>
+      <code>
+        setHeight<span class='gray'>(height)</span>
+      </code>
+    </a>
+  </h3>
+  <hr>
+<h2>Set height</h2>
+<p>Sets the height of the <code>this.element</code> by the given input (height)</p>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>height</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
+            </td>
+            <td><p>The height in pixels or percentage. Where numbers will be calculated to pixels so giving a height of 50 will result in a height of &quot;50px&quot;. If you want percentages pass the variable with a percentage sign 50 + &quot;%&quot;</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code></code>
+      :
+      <span class='force-inline'>
+        <p>True if setting the height was succesfull, otherwise false.</p>
+
+      </span>
+
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
 <section id='jss/setstate'class='mt2 mb2 py1 px2 keyline-top'>
   <h3 class='regular'>
     <a class='black' href='#jss/setstate'>
       <code>
-        setState<span class='gray'>(string)</span>
+        setState<span class='gray'>(str)</span>
       </code>
     </a>
   </h3>
@@ -727,11 +841,12 @@ Whenever you remove the state <code>open</code>, the according class name will b
           <th class='col-6'>description</th>
         </thead>
           <tr>
-            <td>string</td>
+            <td>str</td>
             <td>
-              
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
             </td>
-            <td></td>
+            <td><p>The name of the state which should be set (this is transformed to CamelCase)</p>
+</td>
           </tr>
       </table>
     </p>
@@ -752,11 +867,58 @@ Whenever you remove the state <code>open</code>, the according class name will b
 </section>
       </div>
       <div class='section-indent'>
+<section id='jss/setwidth'class='mt2 mb2 py1 px2 keyline-top'>
+  <h3 class='regular'>
+    <a class='black' href='#jss/setwidth'>
+      <code>
+        setWidth<span class='gray'>(width)</span>
+      </code>
+    </a>
+  </h3>
+  <hr>
+<h2>Set width</h2>
+<p>Sets the width of the <code>this.element</code> by the given input (width)</p>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>width</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
+            </td>
+            <td><p>The width in pixels or percentage. Where numbers will be calculated to pixels so giving a width of 50 will result in a width of &quot;50px&quot;. If you want to set a percentage, just pass the variable with a percentage sign (&quot;50%&quot;)</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code></code>
+      :
+      <span class='force-inline'>
+        <p>True if setting the height was succesfull, otherwise false.</p>
+
+      </span>
+
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
 <section id='jss/updatedata'class='mt2 mb2 py1 px2 keyline-top'>
   <h3 class='regular'>
     <a class='black' href='#jss/updatedata'>
       <code>
-        updateData<span class='gray'>(The, The, The)</span>
+        updateData<span class='gray'>(attribute, value, fn)</span>
       </code>
     </a>
   </h3>
@@ -773,27 +935,27 @@ Whenever you remove the state <code>open</code>, the according class name will b
           <th class='col-6'>description</th>
         </thead>
           <tr>
-            <td>The</td>
+            <td>attribute</td>
             <td>
               <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
             </td>
-            <td><p>NAME of the data attribute (data-NAME=&quot;value&quot;)</p>
+            <td><p>The NAME of the data attribute (data-NAME=&quot;value&quot;)</p>
 </td>
           </tr>
           <tr>
-            <td>The</td>
+            <td>value</td>
             <td>
               <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
             </td>
-            <td><p>VALUE of the data attribute (data-name=&quot;VALUE&quot;)</p>
+            <td><p>The VALUE of the data attribute (data-name=&quot;VALUE&quot;)</p>
 </td>
           </tr>
           <tr>
-            <td>The</td>
+            <td>fn</td>
             <td>
               <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">function</a></code>
             </td>
-            <td><p>function which should be executed when updating this data attribute</p>
+            <td><p>The function which should be executed when updating this data attribute</p>
 </td>
           </tr>
       </table>
@@ -802,12 +964,9 @@ Whenever you remove the state <code>open</code>, the according class name will b
 
       <h4>Returns</h4>
       <code></code>
-      :
+      
       <span class='force-inline'>
-        <ul>
-<li></li>
-</ul>
-
+        
       </span>
 
 

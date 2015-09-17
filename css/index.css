@@ -6224,6 +6224,16 @@ button.close {
 
 /**********************************
 *
+* 	Profile image upload
+*
+**********************************/
+.profile-image-upload--fileinput {
+  position: fixed;
+  right: 1990px; }
+
+/* Custom Styling */
+/**********************************
+*
 * 	Expand 
 * 
 **********************************/

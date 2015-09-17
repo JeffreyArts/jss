@@ -51,7 +51,9 @@ var location = {
 // Sass parsing
 gulp.task('sass', function() {
     return gulp.src(location.sass)
-        .pipe( pipe.sass )
+        .pipe( sass({
+            errLogToConsole: true
+        }) )
         .pipe( gulp.dest(destination.css) );
 });
 

@@ -99,7 +99,7 @@ ProfileImageUpload.prototype.init = function(){
 
     // Configure Fileinput
     self.configureTrigger("fileinput", function(trigger) {
-        // function readURL(input) {
+        function readURL(input) {
         //
         //     if (input.files && input.files[0]) {
         //         var reader = new FileReader();
@@ -108,13 +108,19 @@ ProfileImageUpload.prototype.init = function(){
         //             $('#blah').attr('src', e.target.result);
         //         }
         //
+        //
         //         reader.readAsDataURL(input.files[0]);
         //     }
-        // }
+        }
         trigger.addAction("change", function(fileinput) {
-            var filename = trigger.element.value;
+            var file     = trigger.element.files[0];
+            var filename = trigger.element.files[0].name;
             if( self.isImage(filename) ) {
-                console.log();
+                var imageFile = self.getImageSrc(file);
+                self.trigger("image",function(target){
+                    console.log(target.element, imageFile);
+                    target.element.src = imageFile
+                })
             }
 
         });
@@ -133,6 +139,11 @@ ProfileImageUpload.prototype.init = function(){
 ProfileImageUpload.prototype.isImage = function(value){
     return (/\.(gif|jpg|jpeg|tiff|png)$/i).test(value)
 }
+
+ProfileImageUpload.prototype.getImageSrc = function(file){
+    return URL.createObjectURL(file);
+}
+
 /**
  * -----------------------------------------------------------------------------
  * Parse image file

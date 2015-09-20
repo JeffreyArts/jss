@@ -6232,6 +6232,18 @@ button.close {
   right: 1990px; }
 
 /* Custom Styling */
+.profile-image-upload--label {
+  display: block;
+  border-radius: 100%;
+  border: 2px solid #ddd;
+  overflow: hidden;
+  width: 150px;
+  height: 150px; }
+
+.profile-image-upload--image {
+  max-width: 100%;
+  min-height: 100%; }
+
 /**********************************
 *
 * 	Expand 

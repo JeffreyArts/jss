@@ -23,5 +23,6 @@ JssModule.prototype.hasState           = Jss.prototype.hasState;
 JssModule.prototype.removeState        = Jss.prototype.removeState;
 
 // Data attributes
-JssModule.prototype.loadData           = Jss.prototype.loadData;
-JssModule.prototype.updateData         = Jss.prototype.updateData;
+JssModule.prototype.addData            = Jss.prototype.addData;
+JssModule.prototype.getData            = Jss.prototype.getData;
+JssModule.prototype.setData            = Jss.prototype.setData;

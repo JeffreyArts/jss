@@ -48,6 +48,11 @@
                   <code>#getActionElement</code>
                 </a>
                 <a
+                  href='#jss/getdataattribute'
+                  class='px1 regular block'>
+                  <code>#getDataAttribute</code>
+                </a>
+                <a
                   href='#jss/getheight'
                   class='px1 regular block'>
                   <code>#getHeight</code>
@@ -68,11 +73,6 @@
                   <code>#init</code>
                 </a>
                 <a
-                  href='#jss/loaddata'
-                  class='px1 regular block'>
-                  <code>#loadData</code>
-                </a>
-                <a
                   href='#jss/removeclassname'
                   class='px1 regular block'>
                   <code>#removeClassName</code>
@@ -86,6 +86,11 @@
                   href='#jss/searchtriggersrecursiveinnerfunction'
                   class='px1 regular block'>
                   <code>#searchTriggersRecursiveInnerFunction</code>
+                </a>
+                <a
+                  href='#jss/setdataattribute'
+                  class='px1 regular block'>
+                  <code>#setDataAttribute</code>
                 </a>
                 <a
                   href='#jss/setelement'
@@ -111,11 +116,6 @@
                   href='#jss/trigger'
                   class='px1 regular block'>
                   <code>#trigger</code>
-                </a>
-                <a
-                  href='#jss/updatedata'
-                  class='px1 regular block'>
-                  <code>#updateData</code>
                 </a>
                 <a
                   href='#jss/validateaction'
@@ -452,6 +452,55 @@ Does NOT check for duplicates</p>
 </section>
       </div>
       <div class='section-indent'>
+<section id='jss/getdataattribute'class='mt2 mb2 py1 px2 keyline-top'>
+  <h3 class='regular'>
+    <a class='black' href='#jss/getdataattribute'>
+      <code>
+        getDataAttribute<span class='gray'>(attribute)</span>
+      </code>
+    </a>
+  </h3>
+  <hr>
+<h2>Get data attribute value</h2>
+<p>Returns the value of the requested attribute. Search first for a data-[ATTRIBUTE] value
+If not found, it checks for the attribute in the default object. When that is not being
+found neither, the normal this[attribute] value is being returned.</p>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>attribute</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+            </td>
+            <td><p>The NAME of the data attribute (data-NAME)</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code></code>
+      :
+      <span class='force-inline'>
+        <p>The value of the given attribute</p>
+
+      </span>
+
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
 <section id='jss/getheight'class='mt2 mb2 py1 px2 keyline-top'>
   <h3 class='regular'>
     <a class='black' href='#jss/getheight'>
@@ -588,55 +637,6 @@ Does NOT check for duplicates</p>
 </section>
       </div>
       <div class='section-indent'>
-<section id='jss/loaddata'class='mt2 mb2 py1 px2 keyline-top'>
-  <h3 class='regular'>
-    <a class='black' href='#jss/loaddata'>
-      <code>
-        loadData<span class='gray'>(attribute)</span>
-      </code>
-    </a>
-  </h3>
-  <hr>
-<h2>Get data</h2>
-<p>Returns the value of the requested attribute. Search first for a data-[ATTRIBUTE] value
-If not found, it checks for the attribute in the default object. When that is not being
-found neither, the normal this[attribute] value is being returned.</p>
-
-
-    <p>
-      <table class='table-light overflow-hidden bg-cloudy-light'>
-        <thead>
-          <th class='col-3'>parameter</th>
-          <th class='col-3'>type</th>
-          <th class='col-6'>description</th>
-        </thead>
-          <tr>
-            <td>attribute</td>
-            <td>
-              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
-            </td>
-            <td><p>The NAME of the data attribute (data-NAME)</p>
-</td>
-          </tr>
-      </table>
-    </p>
-
-
-      <h4>Returns</h4>
-      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code></code>
-      :
-      <span class='force-inline'>
-        <p>The value of the given attribute</p>
-
-      </span>
-
-
-
-
-
-</section>
-      </div>
-      <div class='section-indent'>
 <section id='jss/removeclassname'class='mt2 mb2 py1 px2 keyline-top'>
   <h3 class='regular'>
     <a class='black' href='#jss/removeclassname'>
@@ -747,6 +747,60 @@ found neither, the normal this[attribute] value is being returned.</p>
 <p>Recursive function which is executed bij findTriggers;</p>
 
 
+
+
+      <h4>Returns</h4>
+      <code></code>
+      
+      <span class='force-inline'>
+        
+      </span>
+
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
+<section id='jss/setdataattribute'class='mt2 mb2 py1 px2 keyline-top'>
+  <h3 class='regular'>
+    <a class='black' href='#jss/setdataattribute'>
+      <code>
+        setDataAttribute<span class='gray'>(attribute, value)</span>
+      </code>
+    </a>
+  </h3>
+  <hr>
+<h2>Update data</h2>
+<p>Set the value to the given attribute. And updates the data-[ATTRIBUTE] value</p>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>attribute</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+            </td>
+            <td><p>The NAME of the data attribute (data-NAME=&quot;value&quot;)</p>
+</td>
+          </tr>
+          <tr>
+            <td>value</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+            </td>
+            <td><p>The VALUE of the data attribute (data-name=&quot;VALUE&quot;)</p>
+</td>
+          </tr>
+      </table>
+    </p>
 
 
       <h4>Returns</h4>
@@ -949,68 +1003,6 @@ Whenever you remove the state <code>open</code>, the according class name will b
 
 
 
-
-
-
-
-
-</section>
-      </div>
-      <div class='section-indent'>
-<section id='jss/updatedata'class='mt2 mb2 py1 px2 keyline-top'>
-  <h3 class='regular'>
-    <a class='black' href='#jss/updatedata'>
-      <code>
-        updateData<span class='gray'>(attribute, value, fn)</span>
-      </code>
-    </a>
-  </h3>
-  <hr>
-<h2>Update data</h2>
-<p>Set the value to the given attribute. And updates the data-[ATTRIBUTE] value</p>
-
-
-    <p>
-      <table class='table-light overflow-hidden bg-cloudy-light'>
-        <thead>
-          <th class='col-3'>parameter</th>
-          <th class='col-3'>type</th>
-          <th class='col-6'>description</th>
-        </thead>
-          <tr>
-            <td>attribute</td>
-            <td>
-              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
-            </td>
-            <td><p>The NAME of the data attribute (data-NAME=&quot;value&quot;)</p>
-</td>
-          </tr>
-          <tr>
-            <td>value</td>
-            <td>
-              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
-            </td>
-            <td><p>The VALUE of the data attribute (data-name=&quot;VALUE&quot;)</p>
-</td>
-          </tr>
-          <tr>
-            <td>fn</td>
-            <td>
-              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">function</a></code>
-            </td>
-            <td><p>The function which should be executed when updating this data attribute</p>
-</td>
-          </tr>
-      </table>
-    </p>
-
-
-      <h4>Returns</h4>
-      <code></code>
-      
-      <span class='force-inline'>
-        
-      </span>
 
 
 

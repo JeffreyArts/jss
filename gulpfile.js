@@ -31,6 +31,7 @@ var location = {
         './scripts/jss/jss.core.js',
         './scripts/jss/core.actions.js',
         './scripts/jss/core.classNames.js',
+        './scripts/jss/core.data.js',
         './scripts/jss/core.dataAttributes.js',
         './scripts/jss/core.styles.js',
         './scripts/jss/core.states.js',
@@ -93,7 +94,6 @@ gulp.task('watchAll',function() {
     gulp.watch('./scss/*.scss',['sass']);
     gulp.watch('./scss/*/*.scss',['sass']);
     gulp.watch([location.core, location.modules], ['build:core','build:modules']);
-    gulp.watch([location.core], ['document:core']);
 });
 
 
@@ -104,4 +104,5 @@ gulp.task('watchAll',function() {
 //
 // This are the commans you call with `gulp default` || `gulp otherCommand`
 //////////////////////////////////////////////////
-gulp.task('default', ['watchAll']);
+gulp.task('default', ['watchAll', 'sass','build:core','build:modules']);
+gulp.task('document', ['document:core']);

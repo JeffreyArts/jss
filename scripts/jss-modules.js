@@ -244,14 +244,14 @@ Truncate.prototype.init = function(){
     };
 
 
-    self.ellepsis   = self.loadData("ellepsis");                                 // "..." || undefined
-    self.lines      = parseInt(self.loadData("lines"),10);
+    self.ellepsis   = self.getData("ellepsis");                                 // "..." || undefined
+    self.lines      = parseInt(self.getData("lines"),10);
 
     self.lineHeight         = self.setDefaultLineHeight();
     self.originalText       = self.getText();
 
     if ( isNaN(parseInt(self.lines, 10))) {
-        self.updateData("lines", self.default.lines);
+        self.setData("lines", self.default.lines);
     }
 
     self.updateText();

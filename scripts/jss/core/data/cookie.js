@@ -6,45 +6,58 @@ Jss.prototype.dataDefaultsCookie = {
  * -----------------------------------------------------------------------------
  * Get cookie value
  * -----------------------------------------------------------------------------
- * Returns the value of the requested cookie. Search first for a data-[ATTRIBUTE] value
- * If not found, it checks for the attribute in the default object. When that is not being
- * found neither, the normal this[attribute] value is being returned.
+ * Returns cookie value.
+ * Original code is from MDN (https://developer.mozilla.org/en-US/docs/Web/API/Document/cookie)
  *
- * @param {string} attribute                                                    The NAME of the data attribute (data-NAME)
- * @return {string}                                                             The value of the given attribute
+ * @param {string} attribute                                                    The NAME of the cookie
+ * @return {string}                                                             The VALUE of the given attribute
  */
 Jss.prototype.getDataCookie = function(attribute) {
 
-    var result = undefined;
+    if (!attribute) { return null; }
+    return decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent(attribute).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || null;
 
-    if (typeof this.element.dataset[attribute] !== "undefined") {
-        result = this.element.dataset[attribute];
-    }
-
-    return this[attribute] = result;
 }
 
 
 /**
  * -----------------------------------------------------------------------------
- * Update data
+ * Set data cookie
  * -----------------------------------------------------------------------------
- * Set the value to the given attribute. And updates the data-[ATTRIBUTE] value
+ * Updates the cookie value.
+ * Original code is from MDN (https://developer.mozilla.org/en-US/docs/Web/API/Document/cookie)
  *
- * @param {string} attribute                                                    The NAME of the data attribute (data-NAME="value")
- * @param {string} value                                                        The VALUE of the data attribute (data-name="VALUE")
+ * @param {string} attribute                                                    The NAME of the cookie
+ * @param {string} value                                                        The VALUE of the cookie
  * @return {undefined}
  */
 
 Jss.prototype.setDataCookie = function(attribute, value, options) {
+    var endDate, path, domain, secureConnection;
 
-    // Update this.value + executing the binded function (if a function is binded)
-    this.setData(attribute, value);
-
-    // Update data attribute
-    if (typeof value !== "undefined") {
-        this.element.dataset[attribute] = this[attribute];
-    } else {
-        delete this.element.dataset[attribute];
+    if (typeof options === "object") {
+        endDate = JssService.getOption('endDate', options);
+        path   = JssService.getOption('path', options);
+        domain = JssService.getOption('domain', options);
+        secureConnection = JssService.getOption('secureConnection', options);
     }
+
+    if (!key || /^(?:expires|max\-age|path|domain|secure)$/i.test(key)) { return false; }
+    var sExpires = "";
+    if (endDate) {
+      switch (endDate.constructor) {
+        case Number:
+          sExpires = endDate === Infinity ? "; expires=Fri, 31 Dec 9999 23:59:59 GMT" : "; max-age=" + endDate;
+          break;
+        case String:
+          sExpires = "; expires=" + endDate;
+          break;
+        case Date:
+          sExpires = "; expires=" + endDate.toUTCString();
+          break;
+      }
+    }
+
+    document.cookie = encodeURIComponent(key) + "=" + encodeURIComponent(sValue) + sExpires + (domain ? "; domain=" + domain : "") + (path ? "; path=" + path : "") + (secureConnection ? "; secure" : "");
+    return true;
 }

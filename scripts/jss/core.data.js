@@ -17,7 +17,7 @@ Jss.prototype.watchList = {};
  *           		- setterWatchFunction {function}
  *           		- getterWatchFunction {function}
  */
-Jss.prototype.addData = function(attribute, value, options){
+Jss.prototype.addData = function(attribute, value, options) {
 
 
     // watchList[key] = fn;
@@ -28,15 +28,15 @@ Jss.prototype.addData = function(attribute, value, options){
     for (var i = 0; i < fallback.length; i++) {
         var type = fallback[i];
 
-        // Skip overwriting the default value
-            // Call this.addDataAttribute(value) || this.addDataCookie(value) etc...
-            console.log('setData' + JssService.toCamelCase(type));
-            if (value && value.length > 0){
-                this[attribute] = this['setData' + JssService.toCamelCase(type)](attribute,value);
-            }
+        if (value && value.length > 0) {
+            this['setData' + JssService.toCamelCase(type)](attribute, value); // Call this.addDataAttribute(value) || this.addDataCookie(value) etc...
+            this[attribute] = value;
+        }
     }
-
 }
+
+
+
 
 
 
@@ -55,7 +55,7 @@ Jss.prototype.setData = function(attribute, value, options) {
 
     this[attribute] = value;
 
-    if (typeof this.watchList[attribute] === "function") {                  // Use the watchlist to add functionality whenever a data attribute is updated
+    if (typeof this.watchList[attribute] === "function") { // Use the watchlist to add functionality whenever a data attribute is updated
         this.watchList[attribute]();
     }
 }

@@ -11,15 +11,7 @@
  */
 Jss.prototype.getDataAttribute = function(attribute) {
 
-    var result = undefined;
-
-    if (typeof this.element.dataset[attribute] !== "undefined") {
-        result = this.element.dataset[attribute];
-    } else if (typeof this[attribute] === "undefined" && typeof this.default === "object") {
-        result = this.setDataAttribute(attribute, this.default[attribute]);
-    }
-
-    return this[attribute] = result;
+    return this.element.dataset[attribute];
 }
 
 
@@ -36,9 +28,6 @@ Jss.prototype.getDataAttribute = function(attribute) {
 
 Jss.prototype.setDataAttribute = function(attribute, value) {
 
-    // Update this.value + executing the binded function (if a function is binded)
-    this.setData(attribute, value);
-
     // Update data attribute
     if (typeof value !== "undefined") {
         this.element.dataset[attribute] = this[attribute];
@@ -46,5 +35,5 @@ Jss.prototype.setDataAttribute = function(attribute, value) {
         delete this.element.dataset[attribute];
     }
 
-    return value;
+    return true;
 }

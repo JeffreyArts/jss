@@ -23,6 +23,6 @@ Test.prototype.init = function(){
         test: "ABC"
     }
     this.addData('test','Hup holland hup',{
-        fallback: ['attribute']
+        fallback: ['cookie']
     })
 }

@@ -37,8 +37,8 @@ Jss.prototype.setDataCookie = function(attribute, value, options) {
 
     if (typeof options === "object") {
         endDate = JssService.getOption('endDate', options);
-        path   = JssService.getOption('path', options);
-        domain = JssService.getOption('domain', options);
+        path    = JssService.getOption('path', options);
+        domain  = JssService.getOption('domain', options);
         secureConnection = JssService.getOption('secureConnection', options);
     }
 

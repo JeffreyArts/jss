@@ -1,7 +1,8 @@
 /**
  * List where the keys corresponds with this[key], and where the value is the function to be executed when the var is changed.
  */
-Jss.prototype.watchList = {};
+Jss.prototype.setterWatchList = {};
+Jss.prototype.getterWatchList = {};
 
 
 /**
@@ -22,6 +23,15 @@ Jss.prototype.addData = function(attribute, value, options) {
 
     // watchList[key] = fn;
     var fallback = JssService.getOption('fallback', options); // Returns an array
+    var setterWatchFunction = JssService.getOption('setterWatchFunction', options); // Returns an array
+
+    if (typeof setterWatchFunction === "function") {
+        this.setterWatchList[attribute] = setterWatchFunction;
+    }
+
+    if (typeof getterWatchFunction === "function") {
+        this.getterWatchList[attribute] = getterWatchFunction;
+    }
 
 
     this[attribute] = this.default[attribute]
@@ -55,8 +65,8 @@ Jss.prototype.setData = function(attribute, value, options) {
 
     this[attribute] = value;
 
-    if (typeof this.watchList[attribute] === "function") { // Use the watchlist to add functionality whenever a data attribute is updated
-        this.watchList[attribute]();
+    if (typeof this.setterWatchList[attribute] === "function") { // Use the watchlist to add functionality whenever a data attribute is updated
+        this.setterWatchList[attribute]();
     }
 }
 

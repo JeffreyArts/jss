@@ -12,18 +12,30 @@ Jss.prototype.watchList = {};
  *
  * @param {string} attribute                                                    The name of the attribute (this[attribute])
  * @param {*} value                                                             The value of this[attribute], could be anything...
- * @param {function} fn                                                         The function which should be executed when updating this data attribute
+ * @param {object} options
+ *        			- fallback {array}                                          This array defines the fallback flow for getting and setting the attribute value
+ *           		- setterWatchFunction {function}
+ *           		- getterWatchFunction {function}
  */
-Jss.prototype.addData = function(attribute, value, fn){
-    if (typeof fn === "function") {
-        watchList[key] = fn;
+Jss.prototype.addData = function(attribute, value, options){
+
+
+    // watchList[key] = fn;
+    var fallback = JssService.getOption('fallback', options); // Returns an array
+
+
+    this[attribute] = this.default[attribute]
+    for (var i = 0; i < fallback.length; i++) {
+        var type = fallback[i];
+
+        // Skip overwriting the default value
+            // Call this.addDataAttribute(value) || this.addDataCookie(value) etc...
+            console.log('setData' + JssService.toCamelCase(type));
+            if (value && value.length > 0){
+                this[attribute] = this['setData' + JssService.toCamelCase(type)](attribute,value);
+            }
     }
-    if (JssService.forbiddenProperties.indexOf(attribute) === -1) {
-        return this[attribute] = value;
-    } else {
-        console.error("Could not set property `" + attribute + "` because it is a forbidden property. See JssService.forbiddenProperties for the entire list.");
-        return false;
-    }
+
 }
 
 

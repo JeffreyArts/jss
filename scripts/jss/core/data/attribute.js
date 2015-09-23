@@ -1,4 +1,3 @@
-
 /**
  * -----------------------------------------------------------------------------
  * Get data attribute value
@@ -10,7 +9,7 @@
  * @param {string} attribute                                                    The NAME of the data attribute (data-NAME)
  * @return {string}                                                             The value of the given attribute
  */
-Jss.prototype.getDataAttribute = function(attribute){
+Jss.prototype.getDataAttribute = function(attribute) {
 
     var result = undefined;
 
@@ -26,7 +25,7 @@ Jss.prototype.getDataAttribute = function(attribute){
 
 /**
  * -----------------------------------------------------------------------------
- * Update data
+ * Update data attribute
  * -----------------------------------------------------------------------------
  * Set the value to the given attribute. And updates the data-[ATTRIBUTE] value
  *
@@ -46,5 +45,6 @@ Jss.prototype.setDataAttribute = function(attribute, value) {
     } else {
         delete this.element.dataset[attribute];
     }
-}
 
+    return value;
+}

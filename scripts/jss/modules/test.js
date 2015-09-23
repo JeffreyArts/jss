@@ -1,42 +1,28 @@
+'use strict'
+
+//----------------------------------------------
+//  Module defaults
+//----------------------------------------------
 
 var Test = function(element) {
-
-    //----------------------------------------------
-    //  Module defaults
-    //----------------------------------------------
-
-    var self = this;
-    self.moduleName = "test";
-    self.setElement(element);
-
-    //----------------------------------------------
-    //  Module customs
-    //----------------------------------------------
-
-    self.lightSwitch = false;
-
-    self.addAction('mouseOut',function(){
-
-        if (self.lightSwitch) {
-            self.setState("Closed");
-            self.removeState("Open");
-            self.lightSwitch = false;
-        } else {
-            self.setState("Open");
-            self.removeState("Closed");
-            self.lightSwitch = true;
-        }
-    }, {
-        addDefaults: true
-    });
-    self.addAction('hover',function(){
-
-    }, {
-        addDefaults: true
-    });
+    this.moduleName = "test"; // This is the name which corresponds with the className && JssService.activeModuless
 }
-
-
-
 Test.prototype = Object.create(Jss.prototype);
 JssService.addModule("test");
+
+
+
+
+//------------------------------------------
+//  Module customs
+//------------------------------------------
+
+Test.prototype.init = function(){
+    console.log("test",this);
+    this.default = {
+        test: "ABC"
+    }
+    this.addData('test','Hup holland hup',{
+        fallback: ['attribute']
+    })
+}

@@ -157,21 +157,28 @@ JssService.getOption = function(name, optionList) {
         return false;
     }
 
-    var r;
+    var res;
 
     switch (name) {
         case "addDefaults":
             if (optionList[name] !== false || typeof optionList[name] === "undefined") {
-                r = true;
+                res = true;
             } else {
-                r = false;
+                res = false;
+            }
+        break;
+        case "fallback":
+            if (Array.isArray(optionList[name])) {
+                res = optionList[name];
+            } else if (typeof optionList[name] === "string"){
+                res = [optionList[name]];
             }
         break;
         default:
-        r = optionList[name]
+        res = optionList[name]
     }
 
-    return r;
+    return res;
 }
 
 /**

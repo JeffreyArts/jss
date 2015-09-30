@@ -42,7 +42,7 @@ Jss.prototype.setDataCookie = function(attribute, value, options) {
         secureConnection = JssService.getOption('secureConnection', options);
     }
 
-    if (!key || /^(?:expires|max\-age|path|domain|secure)$/i.test(key)) { return false; }
+    if (!attribute || /^(?:expires|max\-age|path|domain|secure)$/i.test(attribute)) { return false; }
     var sExpires = "";
     if (endDate) {
       switch (endDate.constructor) {
@@ -58,6 +58,6 @@ Jss.prototype.setDataCookie = function(attribute, value, options) {
       }
     }
 
-    document.cookie = encodeURIComponent(key) + "=" + encodeURIComponent(sValue) + sExpires + (domain ? "; domain=" + domain : "") + (path ? "; path=" + path : "") + (secureConnection ? "; secure" : "");
+    document.cookie = encodeURIComponent(attribute) + "=" + encodeURIComponent(value) + sExpires + (domain ? "; domain=" + domain : "") + (path ? "; path=" + path : "") + (secureConnection ? "; secure" : "");
     return true;
 }

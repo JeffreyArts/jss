@@ -32,6 +32,7 @@ var location = {
         './scripts/jss/core.actions.js',
         './scripts/jss/core.classNames.js',
         './scripts/jss/core.data.js',
+        './scripts/jss/core/data/ajax.js',
         './scripts/jss/core/data/attribute.js',
         './scripts/jss/core/data/cookie.js',
         './scripts/jss/core.styles.js',

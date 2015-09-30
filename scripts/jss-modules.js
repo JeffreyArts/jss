@@ -194,13 +194,17 @@ JssService.addModule("test");
 //------------------------------------------
 
 Test.prototype.init = function(){
-    console.log("test",this);
     this.default = {
         test: "ABC"
     }
-    this.addData('test','Hup holland hup',{
-        fallback: ['cookie']
+    this.getData('test',{
+        fallback: ['ajax','cookie','attribute'],
+        
+        ajax: {
+            url: 'http://localhost'
+        }
     })
+    console.log("test", this.test,this);
 }
 
 'use strict'

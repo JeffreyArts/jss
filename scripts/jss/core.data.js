@@ -23,7 +23,8 @@ Jss.prototype.addData = function(attribute, value, options) {
 
     // watchList[key] = fn;
     var fallback = JssService.getOption('fallback', options); // Returns an array
-    var setterWatchFunction = JssService.getOption('setterWatchFunction', options); // Returns an array
+    var setterWatchFunction = JssService.getOption('setterWatchFunction', options); // Function
+    var getterWatchFunction = JssService.getOption('getterWatchList', options); // Function
 
     if (typeof setterWatchFunction === "function") {
         this.setterWatchList[attribute] = setterWatchFunction;
@@ -103,19 +104,30 @@ Jss.prototype.setData = function(attribute, value, options) {
  *        				- dataAjax {string} url
  */
 Jss.prototype.getData = function(attribute, options) {
-    if (typeof options === "object") {
-        if (options.dataAttribute) {
-            // Load Attribute value
-            this[attribute] = this.getDataAttribute(attribute)
-        } else if (options.dataDefault) {
-            // Load Default value
-            this[attribute] = this.default[attribute];
-        } else if (typeof options.dataAjax === "string") {
-            // Make a AJAX GET call
-            this[attribute] = this.getDataAjax(options.dataAjax, attribute)
+    var fallback = JssService.getOption('fallback', options); // Returns an array
+    var value = false;
+
+
+    if (!fallback) {
+        fallback = ['attribute'];
+    }
+
+
+    for (var i = 0; i < fallback.length; i++) {
+        var type = JssService.toCamelCase(fallback[i]);
+        var customOptions = false;
+
+        if (typeof options == "object") {
+            customOptions = options[fallback[i].toLowerCase()];
         }
-    } else {
-        this[attribute] = this.getDataAttribute(attribute)
+
+        if (!value || value.length < 0) {
+            if (typeof this['getData' + type] !== "function") {
+                console.error('this.getData' + type + ' is not a function. Probably ' + type + ' is not a available data option');
+                continue;
+            }
+            value = this['getData' + type]( attribute, customOptions ); // Call this.getDataAttribute(value) || this.getDataCookie(value) || this.getDataAjax(value) etc...
+        }
     }
 
     // Call the getter watch function, if defined;
@@ -123,5 +135,5 @@ Jss.prototype.getData = function(attribute, options) {
         this.getterWatchList[attribute]();
     }
 
-    return this[attribute];
+    return this[attribute] = value;
 }

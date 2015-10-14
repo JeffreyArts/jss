@@ -174,8 +174,6 @@ StickyHeight.prototype.init = function(){
     this.setHeight(this.getHeight());
 }
 
-'use strict'
-
 //----------------------------------------------
 //  Module defaults
 //----------------------------------------------
@@ -194,14 +192,17 @@ JssService.addModule("test");
 //------------------------------------------
 
 Test.prototype.init = function(){
-    console.log("test",this);
+
     this.default = {
         test: "ABC"
-    }
+    };
+
     this.addData('test','Hup holland hup',{
-        fallback: ['cookie']
-    })
-}
+        fallback: ['cookie'],
+        getterWatchFunction: function(){console.log("Get this.test")},
+        setterWatchFunction: function(){console.log("Set this.test -> Hup Holland Hup")}
+    });
+};
 
 'use strict'
 

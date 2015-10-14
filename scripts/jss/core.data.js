@@ -35,6 +35,11 @@ Jss.prototype.addData = function(attribute, value, options) {
 
 
     this[attribute] = this.default[attribute]
+    if (typeof fallback !== "object") {
+        console.warning("No fallback array is added to the addData function, specify in the third parameter an object with at least {fallback:[]}");
+        return false;
+    }
+
     for (var i = 0; i < fallback.length; i++) {
         var type = fallback[i];
 
@@ -64,7 +69,21 @@ Jss.prototype.addData = function(attribute, value, options) {
 Jss.prototype.setData = function(attribute, value, options) {
 
     this[attribute] = value;
+    var fallback = JssService.getOption('fallback', options); // Returns an array
 
+    if (Array.isArray(fallback)) {
+
+        for (var i = 0; i < fallback.length; i++) {
+            var type = fallback[i];
+
+            if (value && value.length > 0) {
+                this['setData' + JssService.toCamelCase(type)](attribute, value); // Call this.addDataAttribute(value) || this.addDataCookie(value) etc...
+                this[attribute] = value;
+            }
+        }
+    }
+
+    // Call the setter watch function, if defined;
     if (typeof this.setterWatchList[attribute] === "function") { // Use the watchlist to add functionality whenever a data attribute is updated
         this.setterWatchList[attribute]();
     }
@@ -97,6 +116,11 @@ Jss.prototype.getData = function(attribute, options) {
         }
     } else {
         this[attribute] = this.getDataAttribute(attribute)
+    }
+
+    // Call the getter watch function, if defined;
+    if (typeof this.getterWatchList[attribute] == "function") {
+        this.getterWatchList[attribute]();
     }
 
     return this[attribute];

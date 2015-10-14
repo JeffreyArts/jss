@@ -195,16 +195,17 @@ JssService.addModule("test");
 
 Test.prototype.init = function(){
     this.default = {
-        test: "ABC"
+        isValid: "false"
     }
-    this.getData('test',{
+
+    this.getData('isValid',{
         fallback: ['ajax','cookie','attribute'],
-        
+
         ajax: {
-            url: 'http://localhost'
+            url: 'http://localhost:3000/api/users/241/oauth/token?access_token=afd69160535d79529885016f0cb143d9ac181b98839a4f549bb3aec96e1f31a5&nocache=1444802312863'
         }
-    })
-    console.log("test", this.test,this);
+    });
+    
 }
 
 'use strict'

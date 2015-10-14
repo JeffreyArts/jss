@@ -93,15 +93,21 @@ Jss.prototype.getData = function(attribute, options) {
         fallback = ['attribute'];
     }
 
+
     for (var i = 0; i < fallback.length; i++) {
         var type = JssService.toCamelCase(fallback[i]);
+        var customOptions = false;
+
+        if (typeof options == "object") {
+            customOptions = options[fallback[i].toLowerCase()];
+        }
 
         if (!value || value.length < 0) {
             if (typeof this['getData' + type] !== "function") {
-                console.error('this.getData' + type + ' is not a function. Probaly ' + type + ' is not a available data option');
+                console.error('this.getData' + type + ' is not a function. Probably ' + type + ' is not a available data option');
                 continue;
             }
-            value = this['getData' + type]( attribute ); // Call this.getDataAttribute(value) || this.getDataCookie(value) || this.getDataAjax(value) etc...
+            value = this['getData' + type]( attribute, customOptions ); // Call this.getDataAttribute(value) || this.getDataCookie(value) || this.getDataAjax(value) etc...
         }
     }
 

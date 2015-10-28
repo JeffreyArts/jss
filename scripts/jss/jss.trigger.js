@@ -1,5 +1,3 @@
-'use strict'
-
 var JssTrigger = function(element, options) {
     this.setElement(element);
 

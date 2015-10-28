@@ -1,9 +1,7 @@
-'use strict'
-
 /**
  * @module JssService
  */
-var JssService = {};
+JssService = {};
 
 // Edit this array to enable or disable default modules
 JssService.activeModules   = []
@@ -160,6 +158,8 @@ JssService.getOption = function(name, optionList) {
     var res;
 
     switch (name) {
+
+        // Only set `addDefaults` to false when it is explicitly set.
         case "addDefaults":
             if (optionList[name] !== false || typeof optionList[name] === "undefined") {
                 res = true;
@@ -168,8 +168,11 @@ JssService.getOption = function(name, optionList) {
             }
         break;
         case "fallback":
-            if (Array.isArray(optionList[name])) {
+            if ( Array.isArray(optionList[name]) ) {
                 res = optionList[name];
+                if (res.length===0) {
+                    res = false;
+                }
             } else if (typeof optionList[name] === "string"){
                 res = [optionList[name]];
             }

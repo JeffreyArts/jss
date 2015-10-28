@@ -46,9 +46,26 @@ var location = {
     ],
     modules: [
         './scripts/jss/modules/*.js'
+    ],
+
+    testable: [
+        './scripts/jss/jss.service.js',
+        './scripts/jss/jss.core.js',
+        './scripts/jss/core.actions.js',
+        './scripts/jss/core.classNames.js',
+        './scripts/jss/core.data.js',
+        './scripts/jss/core/data/ajax.js',
+        './scripts/jss/core/data/attribute.js',
+        './scripts/jss/core/data/cookie.js',
+        './scripts/jss/core.styles.js',
+        './scripts/jss/core.states.js',
+        './scripts/jss/core.varWatching.js',
+
+        './scripts/jss/jss.module.js',
+        './scripts/jss/jss.trigger.js',
+
     ]
 }
-
 
 
 // Sass parsing
@@ -66,6 +83,14 @@ gulp.task('build:core', function(){
     return gulp.src(location.core)
         .pipe(plumber())
         .pipe(concat('jss.js'))
+        .pipe(gulp.dest(destination.core))
+});
+
+// Concat jss testable
+gulp.task('build:testable', function(){
+    return gulp.src(location.testable)
+        .pipe(plumber())
+        .pipe(concat('jss.test.js'))
         .pipe(gulp.dest(destination.core))
 });
 
@@ -98,6 +123,10 @@ gulp.task('watchAll',function() {
     gulp.watch([location.core, location.modules], ['build:core','build:modules']);
 });
 
+// Watch documentation & test
+gulp.task('watch-test', function() {
+    gulp.watch(destination.core, ['document:core', 'build:testable']);
+});
 
 
 //////////////////////////////////////////////////
@@ -108,3 +137,7 @@ gulp.task('watchAll',function() {
 //////////////////////////////////////////////////
 gulp.task('default', ['watchAll', 'sass','build:core','build:modules']);
 gulp.task('document', ['document:core']);
+gulp.task('test', ['build:testable']);
+
+// Call document & test when the default task is completed, run this next to the default task
+gulp.task('dev', ['watch-test']);

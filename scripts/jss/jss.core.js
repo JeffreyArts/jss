@@ -1,11 +1,9 @@
-'use strict'
-
 /**
  * @module Jss
  * @author      Jeffrey Arts <sjeffff@gmail.com>
  * @copyright   2015
  */
-var Jss = function(){};
+Jss = function(){};
 
 Jss.prototype.type      = "Jss"
 Jss.prototype.triggers  = false;

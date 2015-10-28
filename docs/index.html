@@ -28,6 +28,16 @@
                   <code>#addClassName</code>
                 </a>
                 <a
+                  href='#jss/adddata'
+                  class='px1 regular block'>
+                  <code>#addData</code>
+                </a>
+                <a
+                  href='#jss/ajaxhelper'
+                  class='px1 regular block'>
+                  <code>#ajaxHelper</code>
+                </a>
+                <a
                   href='#jss/classnameprefix'
                   class='px1 regular block'>
                   <code>#classNamePrefix</code>
@@ -48,9 +58,24 @@
                   <code>#getActionElement</code>
                 </a>
                 <a
+                  href='#jss/getdata'
+                  class='px1 regular block'>
+                  <code>#getData</code>
+                </a>
+                <a
+                  href='#jss/getdataajax'
+                  class='px1 regular block'>
+                  <code>#getDataAjax</code>
+                </a>
+                <a
                   href='#jss/getdataattribute'
                   class='px1 regular block'>
                   <code>#getDataAttribute</code>
+                </a>
+                <a
+                  href='#jss/getdatacookie'
+                  class='px1 regular block'>
+                  <code>#getDataCookie</code>
                 </a>
                 <a
                   href='#jss/getheight'
@@ -88,9 +113,24 @@
                   <code>#searchTriggersRecursiveInnerFunction</code>
                 </a>
                 <a
+                  href='#jss/setdata'
+                  class='px1 regular block'>
+                  <code>#setData</code>
+                </a>
+                <a
+                  href='#jss/setdataajax'
+                  class='px1 regular block'>
+                  <code>#setDataAjax</code>
+                </a>
+                <a
                   href='#jss/setdataattribute'
                   class='px1 regular block'>
                   <code>#setDataAttribute</code>
+                </a>
+                <a
+                  href='#jss/setdatacookie'
+                  class='px1 regular block'>
+                  <code>#setDataCookie</code>
                 </a>
                 <a
                   href='#jss/setelement'
@@ -106,6 +146,11 @@
                   href='#jss/setstate'
                   class='px1 regular block'>
                   <code>#setState</code>
+                </a>
+                <a
+                  href='#jss/setterwatchlist'
+                  class='px1 regular block'>
+                  <code>#setterWatchList</code>
                 </a>
                 <a
                   href='#jss/setwidth'
@@ -304,6 +349,87 @@ Does NOT check for duplicates</p>
 </section>
       </div>
       <div class='section-indent'>
+<section id='jss/adddata'class='mt2 mb2 py1 px2 keyline-top'>
+  <h3 class='regular'>
+    <a class='black' href='#jss/adddata'>
+      <code>
+        addData<span class='gray'>(attribute, value, options)</span>
+      </code>
+    </a>
+  </h3>
+  <hr>
+<h2>Add data</h2>
+<p>Add a (default) value for the given attribute.</p>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>attribute</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+            </td>
+            <td><p>The name of the attribute (this[attribute])</p>
+</td>
+          </tr>
+          <tr>
+            <td>value</td>
+            <td>
+              Any
+            </td>
+            <td><p>The value of this[attribute], could be anything...</p>
+</td>
+          </tr>
+          <tr>
+            <td>options</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></code>
+            </td>
+            <td><p>setterWatchFunction {function}
+- getterWatchFunction {function}</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
+<section id='jss/ajaxhelper'class='mt2 mb2 py1 px2 keyline-top'>
+  <h3 class='regular'>
+    <a class='black' href='#jss/ajaxhelper'>
+      <code>
+        ajaxHelper<span class='gray'></span>
+      </code>
+    </a>
+  </h3>
+  <hr>
+<h2>Ajax (helper function)</h2>
+<p>Based on Atom.js by Todd Motto
+http://toddmotto.com/writing-a-standalone-ajax-xhr-javascript-micro-library/</p>
+
+
+
+
+
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
 <section id='jss/classnameprefix'class='mt2 mb2 py1 px2 keyline-top'>
   <h3 class='regular'>
     <a class='black' href='#jss/classnameprefix'>
@@ -452,6 +578,118 @@ Does NOT check for duplicates</p>
 </section>
       </div>
       <div class='section-indent'>
+<section id='jss/getdata'class='mt2 mb2 py1 px2 keyline-top'>
+  <h3 class='regular'>
+    <a class='black' href='#jss/getdata'>
+      <code>
+        getData<span class='gray'>(attribute, value, options)</span>
+      </code>
+    </a>
+  </h3>
+  <hr>
+<h2>Get data</h2>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>attribute</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>value</td>
+            <td>
+              Any
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>options</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></code>
+            </td>
+            <td><p>dataDefault {boolean}
+- dataAttribute {boolean}
+- dataAjax {string} url</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
+<section id='jss/getdataajax'class='mt2 mb2 py1 px2 keyline-top'>
+  <h3 class='regular'>
+    <a class='black' href='#jss/getdataajax'>
+      <code>
+        getDataAjax<span class='gray'>(attribute, options)</span>
+      </code>
+    </a>
+  </h3>
+  <hr>
+<h2>Get data: Ajax</h2>
+<pre><code>    | Options |
+    - url      {string}                                                     The request url
+    - jsonKey  {string}                                                     The target key, if nested use a dot notation. If not set the attribute parameter will be used.</code></pre>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>attribute</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+            </td>
+            <td><p>The NAME of the inner variable (this.NAME), is also used as the key for the GET Request {NAME: value}</p>
+</td>
+          </tr>
+          <tr>
+            <td>options</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></code>
+            </td>
+            <td><p>Object with parameters used to make a GET request</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code></code>
+      :
+      <span class='force-inline'>
+        <p>The value of the given attribute, or false if an erro occured.</p>
+
+      </span>
+
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
 <section id='jss/getdataattribute'class='mt2 mb2 py1 px2 keyline-top'>
   <h3 class='regular'>
     <a class='black' href='#jss/getdataattribute'>
@@ -491,6 +729,54 @@ found neither, the normal this[attribute] value is being returned.</p>
       :
       <span class='force-inline'>
         <p>The value of the given attribute</p>
+
+      </span>
+
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
+<section id='jss/getdatacookie'class='mt2 mb2 py1 px2 keyline-top'>
+  <h3 class='regular'>
+    <a class='black' href='#jss/getdatacookie'>
+      <code>
+        getDataCookie<span class='gray'>(attribute)</span>
+      </code>
+    </a>
+  </h3>
+  <hr>
+<h2>Get cookie value</h2>
+<p>Returns cookie value.
+Original code is from MDN (https://developer.mozilla.org/en-US/docs/Web/API/Document/cookie)</p>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>attribute</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+            </td>
+            <td><p>The NAME of the cookie</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code></code>
+      :
+      <span class='force-inline'>
+        <p>The VALUE of the given attribute</p>
 
       </span>
 
@@ -763,6 +1049,86 @@ found neither, the normal this[attribute] value is being returned.</p>
 </section>
       </div>
       <div class='section-indent'>
+<section id='jss/setdata'class='mt2 mb2 py1 px2 keyline-top'>
+  <h3 class='regular'>
+    <a class='black' href='#jss/setdata'>
+      <code>
+        setData<span class='gray'>(attribute, value, options)</span>
+      </code>
+    </a>
+  </h3>
+  <hr>
+<h2>Set data</h2>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>attribute</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>value</td>
+            <td>
+              Any
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>options</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></code>
+            </td>
+            <td><p>dataAttribute {boolean}
+- ajax {string} url</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
+<section id='jss/setdataajax'class='mt2 mb2 py1 px2 keyline-top'>
+  <h3 class='regular'>
+    <a class='black' href='#jss/setdataajax'>
+      <code>
+        setDataAjax<span class='gray'></span>
+      </code>
+    </a>
+  </h3>
+  <hr>
+<h2>Set data: Ajax</h2>
+<p>Makes a post request to the options.url in a object {attribute: value}</p>
+<pre><code>    | Options |
+    - url      {string}                                                     The request url
+    - jsonKey  {string}                                                     The target key, if nested use a dot notation. If not set the attribute parameter will be used.</code></pre>
+
+
+
+
+
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
 <section id='jss/setdataattribute'class='mt2 mb2 py1 px2 keyline-top'>
   <h3 class='regular'>
     <a class='black' href='#jss/setdataattribute'>
@@ -772,7 +1138,7 @@ found neither, the normal this[attribute] value is being returned.</p>
     </a>
   </h3>
   <hr>
-<h2>Update data</h2>
+<h2>Update data attribute</h2>
 <p>Set the value to the given attribute. And updates the data-[ATTRIBUTE] value</p>
 
 
@@ -797,6 +1163,61 @@ found neither, the normal this[attribute] value is being returned.</p>
               <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
             </td>
             <td><p>The VALUE of the data attribute (data-name=&quot;VALUE&quot;)</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+      <h4>Returns</h4>
+      <code></code>
+      
+      <span class='force-inline'>
+        
+      </span>
+
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
+<section id='jss/setdatacookie'class='mt2 mb2 py1 px2 keyline-top'>
+  <h3 class='regular'>
+    <a class='black' href='#jss/setdatacookie'>
+      <code>
+        setDataCookie<span class='gray'>(attribute, value)</span>
+      </code>
+    </a>
+  </h3>
+  <hr>
+<h2>Set data cookie</h2>
+<p>Updates the cookie value.
+Original code is from MDN (https://developer.mozilla.org/en-US/docs/Web/API/Document/cookie)</p>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>attribute</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+            </td>
+            <td><p>The NAME of the cookie</p>
+</td>
+          </tr>
+          <tr>
+            <td>value</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+            </td>
+            <td><p>The VALUE of the cookie</p>
 </td>
           </tr>
       </table>
@@ -934,6 +1355,27 @@ Whenever you remove the state <code>open</code>, the according class name will b
         <p>True on success, otherwise false (might already have the state)</p>
 
       </span>
+
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
+<section id='jss/setterwatchlist'class='mt2 mb2 py1 px2 keyline-top'>
+  <h3 class='regular'>
+    <a class='black' href='#jss/setterwatchlist'>
+      <code>
+        setterWatchList<span class='gray'></span>
+      </code>
+    </a>
+  </h3>
+  <p>List where the keys corresponds with this[key], and where the value is the function to be executed when the var is changed.</p>
+
+
+
+
 
 
 

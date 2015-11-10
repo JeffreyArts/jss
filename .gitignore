@@ -1,2 +1,4 @@
 /node_modules
 /bower_components
+/unit-tests/bower_components
+/unit-tests/node_modules

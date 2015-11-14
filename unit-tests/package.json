@@ -4,7 +4,6 @@
   "dependencies": {
     "expect": "1.12.2",
     "mocha": "2.0.1",
-    "mocha-phantomjs": "^4.0.1",
-    "node-dom": "0.1.0"
+    "mocha-phantomjs": "^4.0.1"
   }
 }

@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <!-- encoding must be set for mocha's special characters to render properly -->
+    <link rel="stylesheet" href="node_modules/mocha/mocha.css" />
+  </head>
+  <body>
+    <div id="mocha"></div>
+
+
+    <article>
+        <h4>Test title</h4>
+        <p class="truncate" data-ellepsis="..." data-lines="2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam praesentium cum exercitationem deserunt adipisci maiores nostrum laborum, saepe architecto quae eaque, natus deleniti quod blanditiis dolorum provident dolor ea corrupti.</p>
+    </article>
+
+
+
+    <script src="node_modules/mocha/mocha.js"></script>
+    <script src="node_modules/lodash/index.js"></script>
+    <script src="node_modules/expect/umd/expect.js"></script>
+    <script>
+      mocha.ui('bdd')
+      //expect = chai.expect
+    </script>
+    <script src="../lib/jss.js"></script>
+    <script src="../scripts/jss-modules.js"></script>
+    <script src="test.js"></script>
+    <script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+        mocha.run()
+    });
+
+    </script>
+  </body>
+</html>

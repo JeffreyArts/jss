@@ -3,8 +3,15 @@ var  JssController = {};
 JssController.modules 		= []; // Result array with objects of all the found modules
 JssController.activeModules 	= JssService.activeModules;
 
-JssController.findModules = function() {
-    var allElements = document.getElementsByTagName("*");                       // Array with all domElements
+/**
+ * Rewrite this function so that you can pass in a domElement instead of it always using document. (document can be a default either way)
+ */
+JssController.findModules = function(target) {
+    if (typeof target !== 'object') {
+        target = document;
+    }
+
+    var allElements = target.getElementsByTagName("*");                       // Array with all domElements
     var test = [];
     var self = this;
     for (var i=0; i < allElements.length; i++) {
@@ -27,7 +34,7 @@ JssController.findModules = function() {
             }
         }); // End forEach
     }
-}
+};
 
 document.addEventListener('DOMContentLoaded', function() {
     JssController.findModules();

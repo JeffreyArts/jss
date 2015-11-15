@@ -21,9 +21,9 @@ Jss.prototype.state     = undefined;                                            
 Jss.prototype.findTriggers = function(element) {
     this.triggers = [];                                                         // If this is not set, all modules will have the same reference point to this.triggers.
     // Module is created, now look for any module triggers
-    this.searchTriggersRecursiveInnerFunction(this.element)
+    this.searchTriggersRecursiveInnerFunction(this.element);
 
-}
+};
 
 /**
  * -----------------------------------------------------------------------------

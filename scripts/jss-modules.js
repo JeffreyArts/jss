@@ -8,7 +8,7 @@ var Expand = function(element) {
     this.moduleName = "expand"; // This is the name which corresponds with the className && JssService.activeModuless
 }
 Expand.prototype = Object.create(Jss.prototype);
-JssService.addModule("expand");
+JssService.addModule("expand"); // By doing this, you'll add it automaticly to the framework
 
 
 

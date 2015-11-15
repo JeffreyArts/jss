@@ -1,4 +1,8 @@
 var JssTrigger = function(element, options) {
+    if (typeof element == 'undefined' ) {
+        return;
+    }
+
     this.setElement(element);
 
     if (typeof options === "object") {

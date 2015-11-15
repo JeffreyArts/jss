@@ -56,7 +56,6 @@ JssController.findModules = function(target) {
         // Loop through the (active) modules array and add/instantiate them
         self.activeModules.forEach( addActiveModule ); // End forEach
     }
-
     // Return the amound of found modules
     return foundModules;
 };

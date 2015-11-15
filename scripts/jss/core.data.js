@@ -114,7 +114,7 @@ Jss.prototype.getData = function(attribute, options) {
             value = this['getData' + type]( attribute, customOptions ); // Call this.getDataAttribute(value) || this.getDataCookie(value) || this.getDataAjax(value) etc...
         }
     }
-    console.log(this.getterWatchList);
+    //console.log(this.getterWatchList);
     // Call the getter watch function, if defined;
     if (typeof this.getterWatchList[attribute] == "function") {
         this.getterWatchList[attribute]();

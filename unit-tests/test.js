@@ -11,55 +11,49 @@ describe('Check vital signs', function() {
             expect(JssController.activeModules).toBeAn('array');
             done();
         });
-
         it('Expect JssController.findModules to be a function', function(done){
             expect(JssController.findModules).toBeA('function');
             done();
         });
-    });
 
-/* Working tests, but I want to move them to a different test file
+        describe('Function Tests', function() {
+            describe('findModules', function() {
+                // Clean JssController
+                JssController.activeModules = [];
+                JssController.modules = [];
 
-    // Clean JssController
-    JssController.activeModules = [];
-    JssController.modules = [];
-
-    describe('Testing JssController.findModules() for a domElement which contains the following HTML', function() {
-        describe('<p class="truncate" data-ellepsis="..." data-lines="2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam praesentium cum exercitationem deserunt adipisci maiores nostrum laborum, saepe architecto quae eaque, natus deleniti quod blanditiis dolorum provident dolor ea corrupti.</p>', function() {
-            var dom = document.createElement('div');
-            dom.insertAdjacentHTML( 'beforeend', '<p class="truncate" data-ellepsis="..." data-lines="2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam praesentium cum exercitationem deserunt adipisci maiores nostrum laborum, saepe architecto quae eaque, natus deleniti quod blanditiis dolorum provident dolor ea corrupti.</p>' );
+                var dom = document.createElement('div');
+                dom.insertAdjacentHTML( 'beforeend', '<p class="truncate" data-ellepsis="..." data-lines="2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam praesentium cum exercitationem deserunt adipisci maiores nostrum laborum, saepe architecto quae eaque, natus deleniti quod blanditiis dolorum provident dolor ea corrupti.</p>' );
 
 
 
-            it('Expect findModules to be able to handle a domElement', function(done){
-                expect(JssController.findModules(dom)).toBeAn('array');
-                done();
-            });
+                it('Expect findModules to be able to handle a domElement', function(done){
+                    expect(JssController.findModules(dom)).toBeAn('array');
+                    done();
+                });
 
-            it('Expect findModules to find 0 modules ', function(done){
-                expect(JssController.findModules(dom).length).toBe(1);
-                done();
-            });
-
-            describe('Add `truncate` to the activeModules array', function(){
-
-                JssController.activeModules.push('truncate');
-
-                it('Expect findModules to find 1 module ', function(done){
+                it('Expect findModules to find 0 modules when activeModules array is empty', function(done){
                     expect(JssController.findModules(dom).length).toBe(1);
                     done();
                 });
 
-                it('Expect findModules to find the `truncate` module ', function(done){
+
+                JssController.activeModules.push('truncate');
+
+                it('Expect findModules to find 1 module when activeModules array contains `truncate`', function(done){
+                    expect(JssController.findModules(dom).length).toBe(1);
+                    done();
+                });
+
+                it('Expect findModules to find the `truncate` module when activeModules array contains `truncate`', function(done){
                     console.log(JssController.findModules(dom));
                     expect(JssController.findModules(dom)[0].moduleName).toBe('truncate');
                     done();
                 });
             });
-
         });
     });
-*/
+
     describe('JssTrigger', function() {
         var t = new JssTrigger();
         it('Expect JssTrigger be an object', function(done){
@@ -184,5 +178,79 @@ describe('Check vital signs', function() {
             expect(t.setData).toBeAn('function');
             done();
         });
+    });
+
+    describe('JssService', function() {
+        it('Expect JssService be an object', function(done){
+            expect(JssService).toBeA('object');
+            done();
+        });
+
+        it('Expect JssService.activeModules be an array', function(done){
+            expect(JssService.activeModules).toBeA('array');
+            done();
+        });
+
+        it('Expect JssService.dev be a boolean', function(done){
+            expect(JssService.dev).toBeA('boolean');
+            done();
+        });
+
+        it('Expect JssService.actions be an object', function(done){
+            expect(JssService.actions).toBeA('object');
+            done();
+        });
+
+        it('Expect JssService.enterDelay be a number', function(done){
+            expect(JssService.enterDelay).toBeA('number');
+            done();
+        });
+
+        it('Expect JssService.forbiddenProperties be an array', function(done){
+            expect(JssService.forbiddenProperties).toBeA('array');
+            done();
+        });
+
+        it('Expect JssService.isModule be a function', function(done){
+            expect(JssService.isModule).toBeA('function');
+            done();
+        });
+
+        it('Expect JssService.addModule be a function', function(done){
+            expect(JssService.addModule).toBeA('function');
+            done();
+        });
+
+        it('Expect JssService.toCamelCase be a function', function(done){
+            expect(JssService.toCamelCase).toBeA('function');
+            done();
+        });
+
+        it('Expect JssService.toKebabCase be a function', function(done){
+            expect(JssService.toKebabCase).toBeA('function');
+            done();
+        });
+
+        it('Expect JssService.getOption be a function', function(done){
+            expect(JssService.getOption).toBeA('function');
+            done();
+        });
+
+        it('Expect JssService.isTrigger be a function', function(done){
+            expect(JssService.isTrigger).toBeA('function');
+            done();
+        });
+
+        it('Expect JssService.getTriggerName be a function', function(done){
+            expect(JssService.getTriggerName).toBeA('function');
+            done();
+        });
+
+        it('Expect JssService.triggerNameIsAllowed be a function', function(done){
+            expect(JssService.triggerNameIsAllowed).toBeA('function');
+            done();
+        });
+
+
     });
 });

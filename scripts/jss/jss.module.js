@@ -3,6 +3,7 @@ var JssModule = function(){};
 JssModule.prototype.type               = "JssModule";
 JssModule.prototype.init               = Jss.prototype.init;
 JssModule.prototype.setElement         = Jss.prototype.setElement;
+JssModule.prototype.triggers           = Jss.prototype.triggers;
 
 // Triggers
 JssModule.prototype.findTriggers       = Jss.prototype.findTriggers;

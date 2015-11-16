@@ -1,5 +1,13 @@
+JssService.dev = false;
 
 describe('Check vital signs', function() {
+
+///////////////////////////////////////////////////////////////
+//
+//  Jss Controller
+//
+///////////////////////////////////////////////////////////////
+
     describe('JssController', function() {
 
         it('Expect JssController.modules to be an array', function(done){
@@ -15,6 +23,12 @@ describe('Check vital signs', function() {
             expect(JssController.findModules).toBeA('function');
             done();
         });
+
+    ///////////////////////////////////////////////////////////////
+    //
+    //  Jss Controller - Function
+    //
+    ///////////////////////////////////////////////////////////////
 
         describe('Function Tests', function() {
             describe('findModules', function() {
@@ -53,6 +67,12 @@ describe('Check vital signs', function() {
             });
         });
     });
+
+///////////////////////////////////////////////////////////////
+//
+//  Jss Trigger
+//
+///////////////////////////////////////////////////////////////
 
     describe('JssTrigger', function() {
         var t = new JssTrigger();
@@ -96,6 +116,11 @@ describe('Check vital signs', function() {
         });
     });
 
+///////////////////////////////////////////////////////////////
+//
+//  Jss Module
+//
+///////////////////////////////////////////////////////////////
 
     describe('JssModule', function() {
         var t = new JssModule();
@@ -115,6 +140,12 @@ describe('Check vital signs', function() {
             done();
         });
 
+        it('Expect JssModule.triggers to be an array', function(done){
+            expect(t.triggers).toBeAn('array');
+            done();
+        });
+
+        //
         it('Expect JssModule.findTriggers to be a function', function(done){
             expect(t.findTriggers).toBeAn('function');
             done();
@@ -178,7 +209,45 @@ describe('Check vital signs', function() {
             expect(t.setData).toBeAn('function');
             done();
         });
+
+    ///////////////////////////////////////////////////////////////
+    //
+    //  Jss Module - Function Tests
+    //
+    ///////////////////////////////////////////////////////////////
+
+        describe('Function Tests', function() {
+
+            var dom = document.createElement('div');
+                dom.className = 'test';
+
+            t = new JssModule(dom);
+
+            it('Expect JssModule.init to return `undefined` (since it does nothing on default)', function(done){
+                expect(t.init()).toBe(undefined);
+                done();
+            });
+
+            it('Expect JssModule.configureTrigger to be false (since the trigger `name` does not exist)', function(done){
+                expect(t.configureTrigger('name', function(){})).toBe(false);
+                done();
+            });
+
+            dom.insertAdjacentHTML( 'beforeend', '<p class="test--trigger"></p>' );
+            t = new JssModule(dom);
+
+            // it('Expect JssModule.findTriggers to return `undefined` (since it does nothing on default)', function(done){
+            //     expect(t.findTriggers(dom)).toBe(undefined);
+            //     done();
+            // });
+        });
     });
+
+///////////////////////////////////////////////////////////////
+//
+//  Jss Service
+//
+///////////////////////////////////////////////////////////////
 
     describe('JssService', function() {
         it('Expect JssService be an object', function(done){

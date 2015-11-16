@@ -24,48 +24,6 @@ describe('Check vital signs', function() {
             done();
         });
 
-    ///////////////////////////////////////////////////////////////
-    //
-    //  Jss Controller - Function
-    //
-    ///////////////////////////////////////////////////////////////
-
-        describe('Function Tests', function() {
-            describe('findModules', function() {
-                // Clean JssController
-                JssController.activeModules = [];
-                JssController.modules = [];
-
-                var dom = document.createElement('div');
-                dom.insertAdjacentHTML( 'beforeend', '<p class="truncate" data-ellepsis="..." data-lines="2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam praesentium cum exercitationem deserunt adipisci maiores nostrum laborum, saepe architecto quae eaque, natus deleniti quod blanditiis dolorum provident dolor ea corrupti.</p>' );
-
-
-
-                it('Expect findModules to be able to handle a domElement', function(done){
-                    expect(JssController.findModules(dom)).toBeAn('array');
-                    done();
-                });
-
-                it('Expect findModules to find 0 modules when activeModules array is empty', function(done){
-                    expect(JssController.findModules(dom).length).toBe(1);
-                    done();
-                });
-
-
-                JssController.activeModules.push('truncate');
-
-                it('Expect findModules to find 1 module when activeModules array contains `truncate`', function(done){
-                    expect(JssController.findModules(dom).length).toBe(1);
-                    done();
-                });
-
-                it('Expect findModules to find the `truncate` module when activeModules array contains `truncate`', function(done){
-                    console.log(JssController.findModules(dom));
-                    expect(JssController.findModules(dom)[0].moduleName).toBe('truncate');
-                    done();
-                });
-            });
-        });
     });
 
 ///////////////////////////////////////////////////////////////
@@ -209,39 +167,8 @@ describe('Check vital signs', function() {
             expect(t.setData).toBeAn('function');
             done();
         });
-
-    ///////////////////////////////////////////////////////////////
-    //
-    //  Jss Module - Function Tests
-    //
-    ///////////////////////////////////////////////////////////////
-
-        describe('Function Tests', function() {
-
-            var dom = document.createElement('div');
-                dom.className = 'test';
-
-            t = new JssModule(dom);
-
-            it('Expect JssModule.init to return `undefined` (since it does nothing on default)', function(done){
-                expect(t.init()).toBe(undefined);
-                done();
-            });
-
-            it('Expect JssModule.configureTrigger to be false (since the trigger `name` does not exist)', function(done){
-                expect(t.configureTrigger('name', function(){})).toBe(false);
-                done();
-            });
-
-            dom.insertAdjacentHTML( 'beforeend', '<p class="test--trigger"></p>' );
-            t = new JssModule(dom);
-
-            // it('Expect JssModule.findTriggers to return `undefined` (since it does nothing on default)', function(done){
-            //     expect(t.findTriggers(dom)).toBe(undefined);
-            //     done();
-            // });
-        });
     });
+
 
 ///////////////////////////////////////////////////////////////
 //
@@ -320,6 +247,92 @@ describe('Check vital signs', function() {
             done();
         });
 
+    });
 
+
+
+describe('Function Tests', function() {
+///////////////////////////////////////////////////////////////
+//
+//  Jss Module
+//
+///////////////////////////////////////////////////////////////
+
+
+        var dom = document.createElement('div');
+            dom.className = 'test';
+
+        t = new JssModule(dom);
+
+        describe('JssModule', function() {
+            describe('Defaults', function() {
+                it('Expect JssModule.init to return `undefined` (since it does nothing on default)', function(done){
+                    expect(t.init()).toBe(undefined);
+                    done();
+                });
+            });
+
+            describe('configureTrigger', function() {
+                it('Expect JssModule.configureTrigger to be false (since the trigger `name` does not exist)', function(done){
+                    expect(t.configureTrigger('name', function(){})).toBe(false);
+                    done();
+                });
+            });
+        });
+
+
+
+
+
+        ///////////////////////////////////////////////////////////////
+        //
+        //  Jss Controller
+        //
+        ///////////////////////////////////////////////////////////////
+
+        describe('JssController', function() {
+            describe('findModules', function() {
+                // Clean JssController
+                JssController.activeModules = [];
+                JssController.modules = [];
+
+                var dom = document.createElement('div');
+                dom.insertAdjacentHTML( 'beforeend', '<p class="truncate" data-ellepsis="..." data-lines="2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam praesentium cum exercitationem deserunt adipisci maiores nostrum laborum, saepe architecto quae eaque, natus deleniti quod blanditiis dolorum provident dolor ea corrupti.</p>' );
+
+
+
+                it('Expect findModules to be able to handle a domElement', function(done){
+                    expect(JssController.findModules(dom)).toBeAn('array');
+                    done();
+                });
+
+                it('Expect findModules to find 0 modules when activeModules array is empty', function(done){
+                    expect(JssController.findModules(dom).length).toBe(1);
+                    done();
+                });
+
+                // Add truncate to active modules
+                JssController.activeModules.push('truncate');
+
+                it('Expect findModules to find 1 module when activeModules array contains `truncate`', function(done){
+                    expect(JssController.findModules(dom).length).toBe(1);
+                    done();
+                });
+
+                it('Expect findModules to find the `truncate` module when activeModules array contains `truncate`', function(done){
+                    console.log(JssController.findModules(dom));
+                    expect(JssController.findModules(dom)[0].moduleName).toBe('truncate');
+                    done();
+                });
+            });
+        });
+
+        dom.insertAdjacentHTML( 'beforeend', '<p class="test--trigger"></p>' );
+        t = new JssModule(dom);
+
+        // it('Expect JssModule.findTriggers to return `undefined` (since it does nothing on default)', function(done){
+        //     expect(t.findTriggers(dom)).toBe(undefined);
+        //     done();
+        // });
     });
 });

@@ -265,19 +265,6 @@ describe('Function Tests', function() {
         t = new JssModule(dom);
 
         describe('JssModule', function() {
-            describe('Defaults', function() {
-                it('Expect JssModule.init to return `undefined` (since it does nothing on default)', function(done){
-                    expect(t.init()).toBe(undefined);
-                    done();
-                });
-            });
-
-            describe('configureTrigger', function() {
-                it('Expect JssModule.configureTrigger to be false (since the trigger `name` does not exist)', function(done){
-                    expect(t.configureTrigger('name', function(){})).toBe(false);
-                    done();
-                });
-            });
         });
 
 

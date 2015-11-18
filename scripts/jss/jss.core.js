@@ -104,6 +104,13 @@ Jss.prototype.searchTriggersRecursiveInnerFunction = function(element) {
  * @return {undefined}
  */
 Jss.prototype.configureTrigger = function(trigger, fn) {
+    if (typeof fn != "function") {
+        if (JssService.dev) {
+            console.error('Second parameter `fn` should be a function');
+        }
+        return false;
+    }
+
     if ( typeof this.triggers[trigger] == "object") {
 
         for (var i = 0; i < this.triggers[trigger].length; i++) {
@@ -124,9 +131,10 @@ Jss.prototype.configureTrigger = function(trigger, fn) {
  * -----------------------------------------------------------------------------
  * Notice the user that a init function needs to be added for controlling the triggers
  *
+ * @param {function} fn                                                         A function which should be calles when initiating the module/trigger
  * @return {undefined}
  */
-Jss.prototype.init = function(func) {
+Jss.prototype.init = function(fn) {
     if (JssService.dev) {
         console.info(this.moduleName + ": Add a prototype.init function to add triggers and stuff")
     }

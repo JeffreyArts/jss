@@ -59,14 +59,23 @@ Jss.prototype.removeClassName = function(input) {
  * Adds a class name by string or array.
  * Does NOT check for duplicates
  *
- * @param  {string} The classname to be added
- * @return {undefined}
+ * @param  {string} name                                                        The classname to be added
+ * @return {boolean} true on succes, false if an error occurs
  */
-Jss.prototype.addClassName = function(data) {
-    this.element.className += " ";
-    if (typeof data == "string") {
-        this.element.className += data;
-    } else {
-        this.element.className += data.join(" ")
+Jss.prototype.addClassName = function(className) {
+    // If this.element is not a domElement, then we can not set it's classname...
+    if (typeof this.element == "undefined") {
+        return false;
     }
-}
+
+    if (Array.isArray(name)) {
+        className = className.join(" ");
+    }
+
+    this.element.className += " ";
+    if (typeof name == "string") {
+        this.element.className += className;
+        return true;
+    }
+    return false;
+};

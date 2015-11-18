@@ -3,7 +3,11 @@
  * @author      Jeffrey Arts <sjeffff@gmail.com>
  * @copyright   2015
  */
-Jss = function(){};
+Jss = function(domElement){
+    if (typeof domElement == 'object') {
+        this.element = domElement;
+    }
+};
 
 Jss.prototype.type      = "Jss"
 Jss.prototype.triggers  = [];
@@ -108,7 +112,7 @@ Jss.prototype.configureTrigger = function(trigger, fn) {
         if (JssService.dev) {
             console.error('Second parameter `fn` should be a function');
         }
-        return false;
+        return null;
     }
 
     if ( typeof this.triggers[trigger] == "object") {
@@ -121,7 +125,7 @@ Jss.prototype.configureTrigger = function(trigger, fn) {
     } else if (JssService.dev) {
         console.error("You are trying to configure an undefined trigger.")
     }
-    return false;
+    return null;
 }
 
 

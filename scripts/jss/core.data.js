@@ -32,8 +32,17 @@ Jss.prototype.addData = function(attribute, value, options) {
         this.getterWatchList[attribute] = getterWatchFunction;
     }
 
-    // Set the default value
-    return this[attribute] = value;
+    // Check if value already exists
+    if (typeof this[attribute] != 'undefined') {
+        if (typeof this[attribute] == typeof value) {
+            this[attribute] = value;
+        }
+    } else {
+        // Set the default value
+        this[attribute] = value;
+    }
+
+    return  this[attribute];
 }
 
 
@@ -84,6 +93,7 @@ Jss.prototype.setData = function(attribute, value, options) {
  * @param {string} attribute
  * @param {*} value
  * @param {object} options
+ *        				- fallback {array}
  *        				- dataDefault {boolean}
  *        				- dataAttribute {boolean}
  *        				- dataAjax {string} url
@@ -94,7 +104,7 @@ Jss.prototype.getData = function(attribute, options) {
 
 
     if (!fallback) {
-        fallback = ['attribute'];
+        return this[attribute];
     }
 
 

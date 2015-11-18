@@ -10,7 +10,10 @@
  * @return {string}                                                             The value of the given attribute
  */
 Jss.prototype.getDataAttribute = function(attribute) {
-
+    // Return false if there is no domElement
+    if (typeof this.element != "object") {
+        return null;
+    }
     return this.element.dataset[attribute];
 }
 

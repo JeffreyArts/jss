@@ -17,6 +17,10 @@
  */
 Jss.prototype.validateAction = function(request) {
     var result;
+    if (typeof request != 'string') {
+        return false;
+    }
+
     request = this.getActionElement(request).request
     for (var action in JssService.actions) {
         if (JssService.actions[action].indexOf(request.toLowerCase()) > -1) {
@@ -51,12 +55,19 @@ Jss.prototype.validateAction = function(request) {
 Jss.prototype.addAction = function(request, fn, options) {
 
     var self        = this;
-    var action      = self.validateAction(request)
+    var action      = self.validateAction(request);
     var actions     = [];
     var t = self.getActionElement(request);
+    if (t === null) {
+        return null;
+    }
     var element     = t.element;
-    var request     = t.request;
+    request     = t.request;    // Overwrite original request variable
     t = undefined;
+
+    if (typeof element != 'object') {
+        return null;
+    }
 
     // Options
     var addDefaults = JssService.getOption("addDefaults", options);
@@ -136,6 +147,10 @@ Jss.prototype.addAction = function(request, fn, options) {
                 } , false));
             }
         break;
+        default:
+        // If the request is not within the switch, it does not exist. So return null;
+            return null
+        break;
     }
 
 
@@ -158,6 +173,11 @@ Jss.prototype.getActionElement = function(request) {
     var prefix = false;
     var newRequest  = request;
     var element = self.element;
+
+    if (typeof request != "string") {
+        return null;
+    }
+
     // Set prefix if it exists
     if (request.indexOf(".") > 0) {
         var t       = request.split("."),
